@@ -200,6 +200,54 @@ from any reference.
   simulation doesn't have a clean single "stroke" boundary to snapshot
   around, so it's just Clear.
 
+### Minesweeper specifics
+
+Classic Beginner-difficulty ruleset (`#minesweeper-window`, `ms`-prefixed):
+`MS_COLS`/`MS_ROWS` = 9×9, `MS_MINES` = 10. Unlike Sand Art/Falling Sand,
+this is event-driven, not a `requestAnimationFrame` loop — 81 real
+`<button>` cells built once by `msNewGame()`, each with its own click/
+`contextmenu` listener closed over its index.
+
+- Mines are placed on the **first click**, not at game start (`msPlaceMines`
+  excludes the clicked cell and its 8 neighbors), so you can never lose on
+  your first move and usually get a decent opening.
+- `msReveal()` is a recursive flood fill: a revealed cell with `count === 0`
+  reveals all its neighbors too, which is what produces the classic
+  cascading-open-area effect. 81 cells max, so recursion depth is a
+  non-issue.
+- Right-click (`contextmenu`, default prevented) toggles a flag. Since
+  right-click doesn't exist on touch, `#ms-flag-mode` is a toggle button
+  that makes left-click flag instead of reveal — needed for the game to be
+  playable on mobile at all.
+- The mine counter and timer are plain styled `<div>`s (`.ms-display`,
+  red-on-black monospace), not real 7-segment graphics — `msFormatCounter()`
+  handles the sign so a counter that goes negative (over-flagged) still
+  reads sensibly, e.g. `-01`.
+- Numbers 1–8 use the traditional Minesweeper color-per-number convention
+  (`.ms-cell.n1`…`.n8`) — that color mapping is a decades-old genre
+  convention across essentially every clone, not any single implementation's
+  IP.
+
+### Memory Match specifics
+
+A from-scratch Concentration/pairs game (`#memorymatch-window`,
+`mm`-prefixed). 4×4 grid, `MM_SYMBOLS` (8 emoji) each duplicated and
+shuffled (`mmShuffle`, Fisher–Yates) into 16 `.mm-card` buttons.
+
+- Each card is a real 3D flip (`.mm-card-inner` with `transform-style:
+  preserve-3d`, `rotateY(180deg)` on `.flipped`/`.matched`), not a
+  show/hide swap — `.mm-card-front`/`.mm-card-back` use
+  `backface-visibility:hidden` so only one face is ever visible at a time.
+- `mmFlip()` allows at most 2 cards face-up at once (`mmFlippedIdx`). On the
+  2nd flip it increments the move counter and locks input (`mmLocked`) so
+  you can't flip a 3rd card mid-check; on a match both cards get `.matched`
+  (stay face-up, unclickable) and unlock immediately, on a mismatch both
+  flip back after a 700ms `setTimeout` so you have time to actually see
+  what you got wrong.
+- No `prefers-reduced-motion` special-case needed here — the flip is a
+  short, contained transform on a single small element, not the kind of
+  large/parallax motion that convention is meant to guard against.
+
 ## Design system
 
 - XP title bar blue: gradient from `#5aa6ff` → `#0c4bc0`.

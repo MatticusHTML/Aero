@@ -404,6 +404,128 @@
     touch-action: none;
   }
 
+  #minesweeper-window { width: 300px; }
+  .ms-topbar {
+    background: #ece9d8;
+    border-bottom: 1px solid #b8b5a5;
+    padding: 6px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+  }
+  .ms-display {
+    font-family: 'Lucida Console', 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 15px;
+    color: #ff3b30;
+    background: #1a0000;
+    border-radius: 3px;
+    padding: 2px 6px;
+    letter-spacing: 2px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.7);
+    min-width: 40px;
+    text-align: center;
+  }
+  .ms-smiley {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    background: linear-gradient(180deg, #eaf6ff 0%, #9fc7e0 45%, #6ba3c9 100%);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.8);
+  }
+  .ms-smiley:active { transform: translateY(1px); }
+  .ms-body { padding: 10px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .ms-grid {
+    display: grid;
+    gap: 1px;
+    background: #8a8878;
+    border: 2px solid #8a8878;
+    box-shadow: inset 1px 1px 0 rgba(0,0,0,0.3);
+  }
+  .ms-cell {
+    width: 26px; height: 26px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    font-weight: bold;
+    font-family: Tahoma, sans-serif;
+    cursor: pointer;
+    background: #d3d0c4;
+    border: none;
+    box-shadow: inset 2px 2px 0 rgba(255,255,255,0.8), inset -2px -2px 0 rgba(0,0,0,0.25);
+    padding: 0;
+    user-select: none;
+  }
+  .ms-cell.revealed {
+    background: #c6c3b6;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.15);
+    cursor: default;
+  }
+  .ms-cell.exploded { background: #e04030; }
+  .ms-cell.n1 { color: #1049e0; }
+  .ms-cell.n2 { color: #1a7a1a; }
+  .ms-cell.n3 { color: #d61a1a; }
+  .ms-cell.n4 { color: #0b1f6e; }
+  .ms-cell.n5 { color: #7a1a1a; }
+  .ms-cell.n6 { color: #1a7a7a; }
+  .ms-cell.n7 { color: #111; }
+  .ms-cell.n8 { color: #666; }
+  .ms-mode-btn.active { background: linear-gradient(180deg, #8ff2e6, #2aa9d6); }
+  .ms-status { font-size: 11px; color: #444; min-height: 14px; }
+
+  #memorymatch-window { width: 340px; }
+  .mm-topbar {
+    background: #ece9d8;
+    border-bottom: 1px solid #b8b5a5;
+    padding: 6px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    font-size: 12px;
+    color: #222;
+  }
+  .mm-body { padding: 10px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .mm-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .mm-card {
+    width: 66px; height: 66px;
+    perspective: 500px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+  .mm-card-inner {
+    position: relative;
+    width: 100%; height: 100%;
+    transition: transform 0.4s;
+    transform-style: preserve-3d;
+  }
+  .mm-card.flipped .mm-card-inner,
+  .mm-card.matched .mm-card-inner { transform: rotateY(180deg); }
+  .mm-card-front, .mm-card-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.4);
+  }
+  .mm-card-front {
+    background: linear-gradient(180deg, #5aa6ff 0%, #0c4bc0 100%);
+    color: rgba(255,255,255,0.7);
+    font-size: 20px;
+    font-weight: bold;
+  }
+  .mm-card-back {
+    background: #fff;
+    transform: rotateY(180deg);
+  }
+  .mm-card.matched .mm-card-back { background: #dff5e6; }
+  .mm-status { font-size: 12px; color: #333; }
+
   .taskbar {
     position: fixed;
     bottom: 0; left: 0; right: 0;
@@ -714,6 +836,46 @@
       <canvas class="fs-canvas" id="fs-canvas" aria-label="Falling sand simulation surface"></canvas>
     </div>
   </div>
+
+  <div class="window closed" id="minesweeper-window" data-closable="true" style="left: 380px; top: 200px;">
+    <div class="titlebar">
+      <span>💣 Minesweeper</span>
+      <div class="buttons">
+        <button class="min" aria-label="Minimize">_</button>
+        <button class="max" aria-label="Maximize">□</button>
+        <button class="close" aria-label="Close">✕</button>
+      </div>
+    </div>
+    <div class="ms-topbar">
+      <div class="ms-display" id="ms-mine-count">010</div>
+      <button class="ms-smiley" id="ms-smiley" title="New game" aria-label="New game">🙂</button>
+      <div class="ms-display" id="ms-timer">000</div>
+    </div>
+    <div class="ms-body">
+      <button class="sa-btn ms-mode-btn" id="ms-flag-mode" title="Toggle flag mode for touch devices">🚩 Flag mode</button>
+      <div class="ms-grid" id="ms-grid"></div>
+      <div class="ms-status" id="ms-status">Left-click to reveal, right-click to flag.</div>
+    </div>
+  </div>
+
+  <div class="window closed" id="memorymatch-window" data-closable="true" style="left: 420px; top: 260px;">
+    <div class="titlebar">
+      <span>🧠 Memory Match</span>
+      <div class="buttons">
+        <button class="min" aria-label="Minimize">_</button>
+        <button class="max" aria-label="Maximize">□</button>
+        <button class="close" aria-label="Close">✕</button>
+      </div>
+    </div>
+    <div class="mm-topbar">
+      <span>Moves: <span id="mm-moves">0</span></span>
+      <button class="sa-btn" id="mm-restart">🔄 New Game</button>
+    </div>
+    <div class="mm-body">
+      <div class="mm-grid" id="mm-grid"></div>
+      <div class="mm-status" id="mm-status">Find all the pairs.</div>
+    </div>
+  </div>
 </div>
 
 <div class="taskbar">
@@ -751,6 +913,8 @@
     <button class="task-item" id="taskbar-notepad">📝 notes.txt - Notepad</button>
     <button class="task-item" id="taskbar-sandart" style="display:none;">🏖️ Sand Art</button>
     <button class="task-item" id="taskbar-fallingsand" style="display:none;">⏳ Falling Sand</button>
+    <button class="task-item" id="taskbar-minesweeper" style="display:none;">💣 Minesweeper</button>
+    <button class="task-item" id="taskbar-memorymatch" style="display:none;">🧠 Memory Match</button>
   </div>
   <div class="tray"><span id="clock">--:--</span></div>
 </div>
@@ -762,6 +926,8 @@
   <div class="start-menu-divider"></div>
   <div class="start-menu-item" id="menu-sandart" tabindex="0">🏖️ Sand Art</div>
   <div class="start-menu-item" id="menu-fallingsand" tabindex="0">⏳ Falling Sand</div>
+  <div class="start-menu-item" id="menu-minesweeper" tabindex="0">💣 Minesweeper</div>
+  <div class="start-menu-item" id="menu-memorymatch" tabindex="0">🧠 Memory Match</div>
   <div class="start-menu-divider"></div>
   <div class="start-menu-item" id="menu-shutdown" tabindex="0">⏻ Shut Down... <span class="hint">(nice try)</span></div>
 </div>
@@ -1113,7 +1279,9 @@
     { win: document.getElementById('player-window'), btn: taskbarTrack },
     { win: document.getElementById('notepad-window'), btn: document.getElementById('taskbar-notepad') },
     { win: document.getElementById('sandart-window'), btn: document.getElementById('taskbar-sandart') },
-    { win: document.getElementById('fallingsand-window'), btn: document.getElementById('taskbar-fallingsand') }
+    { win: document.getElementById('fallingsand-window'), btn: document.getElementById('taskbar-fallingsand') },
+    { win: document.getElementById('minesweeper-window'), btn: document.getElementById('taskbar-minesweeper') },
+    { win: document.getElementById('memorymatch-window'), btn: document.getElementById('taskbar-memorymatch') }
   ];
 
   function isWindowHidden(win) {
@@ -1262,6 +1430,14 @@
   });
   document.getElementById('menu-fallingsand').addEventListener('click', function() {
     openWindow(document.getElementById('fallingsand-window'), document.getElementById('taskbar-fallingsand'));
+    startMenu.classList.remove('open');
+  });
+  document.getElementById('menu-minesweeper').addEventListener('click', function() {
+    openWindow(document.getElementById('minesweeper-window'), document.getElementById('taskbar-minesweeper'));
+    startMenu.classList.remove('open');
+  });
+  document.getElementById('menu-memorymatch').addEventListener('click', function() {
+    openWindow(document.getElementById('memorymatch-window'), document.getElementById('taskbar-memorymatch'));
     startMenu.classList.remove('open');
   });
   document.getElementById('menu-shutdown').addEventListener('click', function() {
@@ -1784,6 +1960,244 @@
   function fsStartLoopIfNeeded() {
     if (!fsLoopRunning) { fsLoopRunning = true; requestAnimationFrame(fsLoop); }
   }
+
+  // ---- Minesweeper ----
+  var MS_COLS = 9, MS_ROWS = 9, MS_MINES = 10;
+  var msCells = [];
+  var msStarted = false;
+  var msOver = false;
+  var msTimer = 0;
+  var msTimerInterval = null;
+  var msFlagMode = false;
+  var msGrid = document.getElementById('ms-grid');
+  var msMineCountEl = document.getElementById('ms-mine-count');
+  var msTimerEl = document.getElementById('ms-timer');
+  var msSmiley = document.getElementById('ms-smiley');
+  var msStatus = document.getElementById('ms-status');
+
+  function msFormatCounter(n) {
+    var sign = n < 0 ? '-' : '';
+    var s = String(Math.abs(n));
+    while (s.length < (sign ? 2 : 3)) s = '0' + s;
+    return sign + s;
+  }
+
+  function msNewGame() {
+    clearInterval(msTimerInterval);
+    msTimerInterval = null;
+    msTimer = 0;
+    msTimerEl.textContent = msFormatCounter(0);
+    msStarted = false;
+    msOver = false;
+    msFlagMode = false;
+    document.getElementById('ms-flag-mode').classList.remove('active');
+    msSmiley.textContent = '🙂';
+    msStatus.textContent = 'Left-click to reveal, right-click to flag.';
+    msMineCountEl.textContent = msFormatCounter(MS_MINES);
+    msCells = [];
+    msGrid.innerHTML = '';
+    msGrid.style.gridTemplateColumns = 'repeat(' + MS_COLS + ', 26px)';
+    for (var i = 0; i < MS_COLS * MS_ROWS; i++) {
+      var btn = document.createElement('button');
+      btn.className = 'ms-cell';
+      btn.type = 'button';
+      (function(idx) {
+        btn.addEventListener('click', function() { msHandleClick(idx); });
+        btn.addEventListener('contextmenu', function(e) { e.preventDefault(); msToggleFlag(idx); });
+      })(i);
+      msGrid.appendChild(btn);
+      msCells.push({ mine: false, revealed: false, flagged: false, count: 0, el: btn });
+    }
+  }
+
+  function msNeighbors(idx) {
+    var x = idx % MS_COLS, y = (idx / MS_COLS) | 0;
+    var arr = [];
+    for (var dy = -1; dy <= 1; dy++) {
+      for (var dx = -1; dx <= 1; dx++) {
+        if (dx === 0 && dy === 0) continue;
+        var nx = x + dx, ny = y + dy;
+        if (nx >= 0 && nx < MS_COLS && ny >= 0 && ny < MS_ROWS) arr.push(ny * MS_COLS + nx);
+      }
+    }
+    return arr;
+  }
+
+  function msPlaceMines(excludeIdx) {
+    var excluded = [excludeIdx].concat(msNeighbors(excludeIdx));
+    var placed = 0;
+    while (placed < MS_MINES) {
+      var idx = Math.floor(Math.random() * MS_COLS * MS_ROWS);
+      if (excluded.indexOf(idx) !== -1 || msCells[idx].mine) continue;
+      msCells[idx].mine = true;
+      placed++;
+    }
+    for (var i = 0; i < msCells.length; i++) {
+      if (msCells[i].mine) continue;
+      var neighbors = msNeighbors(i);
+      var count = 0;
+      for (var j = 0; j < neighbors.length; j++) if (msCells[neighbors[j]].mine) count++;
+      msCells[i].count = count;
+    }
+  }
+
+  function msReveal(idx) {
+    var cell = msCells[idx];
+    if (cell.revealed || cell.flagged) return;
+    cell.revealed = true;
+    cell.el.classList.add('revealed');
+    if (cell.count > 0) {
+      cell.el.textContent = cell.count;
+      cell.el.classList.add('n' + cell.count);
+    } else {
+      cell.el.textContent = '';
+      var neighbors = msNeighbors(idx);
+      for (var i = 0; i < neighbors.length; i++) msReveal(neighbors[i]);
+    }
+  }
+
+  function msGameOver(explodedIdx) {
+    msOver = true;
+    clearInterval(msTimerInterval);
+    msSmiley.textContent = '😵';
+    msStatus.textContent = 'Boom! Click the face to try again.';
+    msCells.forEach(function(cell, i) {
+      if (cell.mine) {
+        cell.el.classList.add('revealed');
+        cell.el.textContent = '💣';
+        if (i === explodedIdx) cell.el.classList.add('exploded');
+      } else if (cell.flagged) {
+        cell.el.textContent = '❌';
+      }
+    });
+  }
+
+  function msCheckWin() {
+    var revealedCount = msCells.filter(function(c) { return c.revealed; }).length;
+    if (revealedCount !== MS_COLS * MS_ROWS - MS_MINES) return;
+    msOver = true;
+    clearInterval(msTimerInterval);
+    msSmiley.textContent = '😎';
+    msStatus.textContent = 'You win!';
+    msCells.forEach(function(cell) {
+      if (cell.mine && !cell.flagged) {
+        cell.flagged = true;
+        cell.el.textContent = '🚩';
+      }
+    });
+    msMineCountEl.textContent = msFormatCounter(0);
+  }
+
+  function msToggleFlag(idx) {
+    if (msOver) return;
+    var cell = msCells[idx];
+    if (cell.revealed) return;
+    cell.flagged = !cell.flagged;
+    cell.el.textContent = cell.flagged ? '🚩' : '';
+    var flaggedCount = msCells.filter(function(c) { return c.flagged; }).length;
+    msMineCountEl.textContent = msFormatCounter(MS_MINES - flaggedCount);
+  }
+
+  function msHandleClick(idx) {
+    if (msOver) return;
+    var cell = msCells[idx];
+    if (msFlagMode) { msToggleFlag(idx); return; }
+    if (cell.flagged || cell.revealed) return;
+    if (!msStarted) {
+      msStarted = true;
+      msPlaceMines(idx);
+      msTimerInterval = setInterval(function() {
+        msTimer = Math.min(999, msTimer + 1);
+        msTimerEl.textContent = msFormatCounter(msTimer);
+      }, 1000);
+    }
+    if (cell.mine) { msGameOver(idx); return; }
+    msReveal(idx);
+    msCheckWin();
+  }
+
+  msSmiley.addEventListener('click', msNewGame);
+  document.getElementById('ms-flag-mode').addEventListener('click', function(e) {
+    msFlagMode = !msFlagMode;
+    e.currentTarget.classList.toggle('active', msFlagMode);
+  });
+  msNewGame();
+
+  // ---- Memory Match ----
+  var MM_SYMBOLS = ['💧', '🫧', '🌊', '💿', '📀', '🖥️', '💾', '🎵'];
+  var mmCards = [];
+  var mmFlippedIdx = [];
+  var mmMoves = 0;
+  var mmLocked = false;
+  var mmGrid = document.getElementById('mm-grid');
+  var mmMovesEl = document.getElementById('mm-moves');
+  var mmStatus = document.getElementById('mm-status');
+
+  function mmShuffle(arr) {
+    for (var i = arr.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+    }
+    return arr;
+  }
+
+  function mmNewGame() {
+    mmMoves = 0;
+    mmMovesEl.textContent = '0';
+    mmFlippedIdx = [];
+    mmLocked = false;
+    mmStatus.textContent = 'Find all the pairs.';
+    var symbols = mmShuffle(MM_SYMBOLS.concat(MM_SYMBOLS));
+    mmCards = [];
+    mmGrid.innerHTML = '';
+    symbols.forEach(function(sym, i) {
+      var card = document.createElement('button');
+      card.className = 'mm-card';
+      card.type = 'button';
+      card.innerHTML = '<div class="mm-card-inner"><div class="mm-card-front">?</div><div class="mm-card-back">' + sym + '</div></div>';
+      card.addEventListener('click', function() { mmFlip(i); });
+      mmGrid.appendChild(card);
+      mmCards.push({ symbol: sym, matched: false, el: card });
+    });
+  }
+
+  function mmCheckWin() {
+    if (mmCards.every(function(c) { return c.matched; })) {
+      mmStatus.textContent = '🎉 Matched in ' + mmMoves + ' moves!';
+    }
+  }
+
+  function mmFlip(idx) {
+    if (mmLocked) return;
+    var card = mmCards[idx];
+    if (card.matched || card.el.classList.contains('flipped')) return;
+    if (mmFlippedIdx.length >= 2) return;
+    card.el.classList.add('flipped');
+    mmFlippedIdx.push(idx);
+    if (mmFlippedIdx.length === 2) {
+      mmMoves++;
+      mmMovesEl.textContent = String(mmMoves);
+      mmLocked = true;
+      var a = mmCards[mmFlippedIdx[0]], b = mmCards[mmFlippedIdx[1]];
+      if (a.symbol === b.symbol) {
+        a.matched = true; b.matched = true;
+        a.el.classList.add('matched'); b.el.classList.add('matched');
+        mmFlippedIdx = [];
+        mmLocked = false;
+        mmCheckWin();
+      } else {
+        setTimeout(function() {
+          a.el.classList.remove('flipped');
+          b.el.classList.remove('flipped');
+          mmFlippedIdx = [];
+          mmLocked = false;
+        }, 700);
+      }
+    }
+  }
+
+  document.getElementById('mm-restart').addEventListener('click', mmNewGame);
+  mmNewGame();
 
   function updateClock() {
     var now = new Date();
