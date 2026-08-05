@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frutiger Aero Jukebox</title>
+<style>
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Tahoma, Verdana, Geneva, sans-serif;
+    overflow-x: hidden;
+  }
+
+  .desktop {
+    position: relative;
+    min-height: 100vh;
+    padding-bottom: 56px; /* room for taskbar */
+    background: linear-gradient(160deg, #08356e 0%, #0d6cb8 20%, #26a9db 42%, #4fd3c4 66%, #a3ecc9 100%);
+  }
+
+  .desktop::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(255,255,255,0.28), transparent 45%),
+      radial-gradient(circle at 82% 15%, rgba(255,255,255,0.18), transparent 40%),
+      radial-gradient(circle at 60% 78%, rgba(255,255,255,0.12), transparent 50%);
+    pointer-events: none;
+  }
+
+  .bubble {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.55), rgba(255,255,255,0.05) 60%, transparent 70%);
+    pointer-events: none;
+    animation: float 9s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-22px); }
+  }
+
+  .desktop-icons {
+    position: absolute;
+    top: 20px; left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    z-index: 1;
+  }
+  .icon { width: 76px; text-align: center; cursor: default; user-select: none; }
+  .icon-glyph { font-size: 30px; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35)); }
+  .icon span {
+    display: inline-block;
+    margin-top: 4px;
+    font-size: 11px;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+    padding: 1px 4px;
+    border-radius: 2px;
+  }
+  .icon:hover span { background: rgba(20, 90, 200, 0.55); }
+
+  .window {
+    position: absolute;
+    width: 380px;
+    max-width: 92vw;
+    border-radius: 9px 9px 4px 4px;
+    box-shadow: 0 14px 34px rgba(0,10,25,0.45), 0 0 0 1px rgba(255,255,255,0.35);
+    z-index: 5;
+    background: #ece9d8;
+  }
+  .window.shake { animation: shake 0.4s; }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(6px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+  }
+
+  .titlebar {
+    background: linear-gradient(180deg, #5aa6ff 0%, #2f7cf0 10%, #0e57d6 45%, #1763e0 55%, #0c4bc0 100%);
+    color: white;
+    font-weight: bold;
+    font-size: 13px;
+    padding: 5px 5px 5px 9px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: grab;
+    user-select: none;
+    border-radius: 9px 9px 0 0;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.35);
+  }
+  .titlebar:active { cursor: grabbing; }
+  .titlebar .buttons { display: flex; gap: 3px; }
+  .titlebar button {
+    width: 20px; height: 19px;
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 3px;
+    background: linear-gradient(180deg, #7cbcff, #2f6fe0);
+    color: white;
+    font-size: 11px;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+  }
+  .titlebar button.close { background: linear-gradient(180deg, #ff9186, #d8291a); }
+  .titlebar button:active { filter: brightness(0.85); }
+
+  .menu-bar {
+    background: #ece9d8;
+    border-bottom: 1px solid #b8b5a5;
+    display: flex;
+    gap: 14px;
+    padding: 3px 10px;
+    font-size: 12px;
+    color: #222;
+  }
+
+  .player-body {
+    background: linear-gradient(180deg, #2c3d4f 0%, #17222d 100%);
+    padding: 14px;
+    border-radius: 0 0 4px 4px;
+    color: #d7e6f0;
+  }
+
+  .visualizer {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 64px;
+    background: rgba(0,0,0,0.35);
+    border-radius: 5px;
+    padding: 6px;
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.5);
+    margin-bottom: 10px;
+  }
+  .vis-bar {
+    flex: 1;
+    height: 4%;
+    min-height: 2px;
+    background: linear-gradient(180deg, #8ff2e6, #2aa9d6);
+    border-radius: 2px 2px 0 0;
+    box-shadow: 0 0 6px rgba(120, 230, 220, 0.65);
+    transition: height 0.15s ease;
+  }
+
+  .track-info { text-align: center; margin-bottom: 10px; }
+  .track-title { font-size: 15px; font-weight: bold; color: #fff; }
+  .track-artist { font-size: 11px; color: #9db6c7; margin-top: 2px; }
+
+  .seek-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    color: #b7cdda;
+    margin-bottom: 10px;
+  }
+  input[type="range"] {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 5px;
+    border-radius: 3px;
+    background: rgba(255,255,255,0.18);
+    outline: none;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 13px; height: 13px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #ffffff, #8fd8ea);
+    box-shadow: 0 0 5px rgba(140, 230, 220, 0.9);
+    cursor: pointer;
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 13px; height: 13px;
+    border: none;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #ffffff, #8fd8ea);
+    cursor: pointer;
+  }
+
+  .controls-row { display: flex; align-items: center; justify-content: center; gap: 12px; }
+  .ctrl-btn {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: none;
+    position: relative;
+    background: linear-gradient(180deg, #eaf6ff 0%, #9fc7e0 45%, #6ba3c9 100%);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.8);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .ctrl-btn:active { transform: translateY(1px); }
+  .ctrl-btn.small { width: 32px; height: 32px; }
+  .ctrl-btn svg { width: 16px; height: 16px; }
+
+  .volume-control { display: flex; align-items: center; gap: 6px; margin-left: 8px; }
+  .volume-control input[type="range"] { width: 60px; }
+
+  .playlist {
+    margin-top: 12px;
+    max-height: 120px;
+    overflow-y: auto;
+    background: rgba(0,0,0,0.28);
+    border-radius: 5px;
+    padding: 4px;
+  }
+  .playlist-item { padding: 5px 8px; font-size: 12px; border-radius: 3px; cursor: pointer; color: #cfe4ee; }
+  .playlist-item:hover { background: rgba(255,255,255,0.08); }
+  .playlist-item.active { background: rgba(120, 220, 210, 0.25); color: #fff; font-weight: bold; }
+
+  .notepad-text {
+    width: 100%;
+    height: 190px;
+    border: none;
+    resize: vertical;
+    padding: 10px;
+    font-family: 'Lucida Console', 'Courier New', monospace;
+    font-size: 12.5px;
+    line-height: 1.5;
+    background: #fff;
+    color: #111;
+    outline: none;
+    border-radius: 0 0 4px 4px;
+    display: block;
+  }
+
+  .taskbar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 40px;
+    background: linear-gradient(180deg, #2f7cf0 0%, #0e4fc0 50%, #0a3d99 100%);
+    display: flex;
+    align-items: center;
+    padding: 0 6px;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.35);
+    z-index: 500;
+  }
+  .start-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 30px;
+    padding: 0 14px 0 8px;
+    border-radius: 5px;
+    border: none;
+    background: linear-gradient(180deg, #7fd85a, #2f9e2f);
+    color: white;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 3px rgba(0,0,0,0.3);
+  }
+  .start-btn .flag { font-style: normal; font-size: 15px; }
+
+  .taskbar-items { display: flex; gap: 6px; margin-left: 10px; flex: 1; overflow: hidden; }
+  .task-item {
+    height: 28px;
+    padding: 0 10px;
+    border-radius: 3px;
+    border: 1px solid rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.1);
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
+  }
+  .task-item.active { background: rgba(255,255,255,0.28); }
+
+  .tray {
+    color: white; font-size: 12px; padding: 0 12px;
+    background: rgba(0,0,0,0.15); height: 28px;
+    display: flex; align-items: center; border-radius: 3px;
+  }
+
+  .start-menu {
+    position: fixed;
+    bottom: 40px; left: 4px;
+    width: 210px;
+    background: #fff;
+    border-radius: 6px 6px 6px 0;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    overflow: hidden;
+    display: none;
+    z-index: 501;
+    font-size: 13px;
+  }
+  .start-menu.open { display: block; }
+  .start-menu-header { background: linear-gradient(90deg, #2f7cf0, #0c4bc0); color: white; font-weight: bold; padding: 10px 12px; }
+  .start-menu-item { padding: 9px 14px; cursor: pointer; color: #222; }
+  .start-menu-item:hover { background: #cfe4fb; }
+  .start-menu-item .hint { font-size: 10px; color: #888; }
+  .start-menu-divider { height: 1px; background: #ddd; margin: 4px 0; }
+
+  .shutdown-overlay {
+    position: fixed; inset: 0;
+    background: #000; color: #fff;
+    display: none; align-items: center; justify-content: center;
+    font-size: 20px; z-index: 999; text-align: center; padding: 20px;
+  }
+  .shutdown-overlay.show { display: flex; }
+
+  button:focus-visible, input:focus-visible, textarea:focus-visible, .icon:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bubble { animation: none; }
+    .vis-bar { transition: none; }
+    .window.shake { animation: none; }
+  }
+
+  @media (max-width: 860px) {
+    .window { position: static !important; width: 92%; margin: 16px auto; }
+    .desktop-icons { flex-direction: row; flex-wrap: wrap; gap: 14px; }
+  }
+</style>
+</head>
+<body>
+<div class="desktop" id="desktop">
+  <div class="bubble" style="width:60px; height:60px; top:15%; left:70%; animation-delay:0s;"></div>
+  <div class="bubble" style="width:34px; height:34px; top:55%; left:8%; animation-delay:2s;"></div>
+  <div class="bubble" style="width:46px; height:46px; top:75%; left:55%; animation-delay:4s;"></div>
+
+  <div class="desktop-icons">
+    <div class="icon" tabindex="0"><div class="icon-glyph">🎵</div><span>My Music</span></div>
+    <div class="icon" tabindex="0"><div class="icon-glyph">🗑️</div><span>Recycle Bin</span></div>
+    <div class="icon" tabindex="0"><div class="icon-glyph">💾</div><span>old_internet.zip</span></div>
+  </div>
+
+  <div class="window" id="player-window" style="left: 40px; top: 60px;">
+    <div class="titlebar">
+      <span>🎵 Windows Media Player</span>
+      <div class="buttons">
+        <button class="min" aria-label="Minimize">_</button>
+        <button class="max" aria-label="Maximize">□</button>
+        <button class="close" aria-label="Close">✕</button>
+      </div>
+    </div>
+    <div class="player-body">
+      <div class="visualizer" id="visualizer"></div>
+      <div class="track-info">
+        <div class="track-title" id="track-title">-</div>
+        <div class="track-artist" id="track-artist">-</div>
+      </div>
+      <div class="seek-row">
+        <span id="time-current">0:00</span>
+        <input type="range" id="seek-bar" min="0" max="100" value="0" aria-label="Seek">
+        <span id="time-total">0:00</span>
+      </div>
+      <div class="controls-row">
+        <button class="ctrl-btn small" id="prev-btn" title="Previous" aria-label="Previous track">
+          <svg viewBox="0 0 24 24" fill="#12384f"><path d="M6 6h2v12H6zM20 6L10 12l10 6z"/></svg>
+        </button>
+        <button class="ctrl-btn" id="play-btn" title="Play/Pause" aria-label="Play or pause">
+          <svg viewBox="0 0 24 24" fill="#12384f" class="icon-play"><path d="M8 5v14l11-7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="#12384f" class="icon-pause" style="display:none;"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+        </button>
+        <button class="ctrl-btn small" id="next-btn" title="Next" aria-label="Next track">
+          <svg viewBox="0 0 24 24" fill="#12384f"><path d="M16 6h2v12h-2zM4 6l10 6-10 6z"/></svg>
+        </button>
+        <div class="volume-control">
+          <span aria-hidden="true">🔊</span>
+          <input type="range" id="volume-bar" min="0" max="100" value="70" aria-label="Volume">
+        </div>
+      </div>
+      <div class="playlist" id="playlist"></div>
+    </div>
+  </div>
+
+  <div class="window" id="notepad-window" style="left: 450px; top: 110px;">
+    <div class="titlebar">
+      <span id="notepad-title">📝 notes.txt - Notepad</span>
+      <div class="buttons">
+        <button class="min" aria-label="Minimize">_</button>
+        <button class="max" aria-label="Maximize">□</button>
+        <button class="close" aria-label="Close">✕</button>
+      </div>
+    </div>
+    <div class="menu-bar">
+      <span>File</span><span>Edit</span><span>Format</span><span>View</span><span>Help</span>
+    </div>
+    <textarea class="notepad-text" id="notepad-text" spellcheck="false" aria-label="Notes about the current track"></textarea>
+  </div>
+</div>
+
+<div class="taskbar">
+  <button class="start-btn" id="start-btn"><span class="flag" aria-hidden="true">⊞</span>start</button>
+  <div class="taskbar-items">
+    <button class="task-item active" id="taskbar-track">🎵 -</button>
+    <button class="task-item" id="taskbar-notepad">📝 notes.txt - Notepad</button>
+  </div>
+  <div class="tray"><span id="clock">--:--</span></div>
+</div>
+
+<div class="start-menu" id="start-menu">
+  <div class="start-menu-header">Matticus</div>
+  <div class="start-menu-item" id="menu-player" tabindex="0">🎵 Windows Media Player</div>
+  <div class="start-menu-item" id="menu-notepad" tabindex="0">📝 Notepad</div>
+  <div class="start-menu-divider"></div>
+  <div class="start-menu-item" id="menu-shutdown" tabindex="0">⏻ Shut Down... <span class="hint">(nice try)</span></div>
+</div>
+
+<div class="shutdown-overlay" id="shutdown-overlay">It is now safe to close this tab.</div>
+
+<audio id="audio-el" preload="none"></audio>
+
+<script>
+(function() {
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var tracks = [
+    {
+      title: "Waterline",
+      artist: "Frutiger Aero Radio",
+      file: "music/waterline.mp3",
+      duration: 194,
+      note: "man this one just sounds like a loading screen for a nicer internet. all clean gradients and blue light. makes me wanna get a glass of water and stare at a fish tank screensaver."
+    },
+    {
+      title: "Dial-Up Sunrise",
+      artist: "Frutiger Aero Radio",
+      file: "music/dial-up-sunrise.mp3",
+      duration: 221,
+      note: "this one's got that early 2000s 'the future is gonna be so shiny' energy. like everything was about to get better because the internet said so. kind of miss believing that."
+    },
+    {
+      title: "Glass & Chrome",
+      artist: "Frutiger Aero Radio",
+      file: "music/glass-and-chrome.mp3",
+      duration: 187,
+      note: "so glossy it should come with a screen protector. every sound in this one has a little highlight bevel on it. extremely msn messenger nudge core."
+    },
+    {
+      title: "Bubblejet Dreams",
+      artist: "Frutiger Aero Radio",
+      file: "music/bubblejet-dreams.mp3",
+      duration: 205,
+      note: "bubbly and a little squeaky, like the sound an inkjet printer would make if it had dreams. weirdly comforting."
+    },
+    {
+      title: "Windows Dreaming",
+      artist: "Frutiger Aero Radio",
+      file: "music/windows-dreaming.mp3",
+      duration: 240,
+      note: "this is the one where you just stare at the default wallpaper and forget you were supposed to be doing homework. no notes today, just vibes."
+    }
+  ];
+
+  var currentIndex = 0;
+  var isPlaying = false;
+  var usingRealAudio = false;
+  var simElapsed = 0;
+  var simTimer = null;
+  var visTimer = null;
+  var zCounter = 10;
+
+  var audioEl = document.getElementById('audio-el');
+  var playBtn = document.getElementById('play-btn');
+  var iconPlay = playBtn.querySelector('.icon-play');
+  var iconPause = playBtn.querySelector('.icon-pause');
+  var seekBar = document.getElementById('seek-bar');
+  var volumeBar = document.getElementById('volume-bar');
+  var timeCurrent = document.getElementById('time-current');
+  var timeTotal = document.getElementById('time-total');
+  var trackTitleEl = document.getElementById('track-title');
+  var trackArtistEl = document.getElementById('track-artist');
+  var playlistEl = document.getElementById('playlist');
+  var notepadText = document.getElementById('notepad-text');
+  var taskbarTrack = document.getElementById('taskbar-track');
+  var visualizer = document.getElementById('visualizer');
+
+  var NUM_BARS = 24;
+  for (var i = 0; i < NUM_BARS; i++) {
+    var bar = document.createElement('div');
+    bar.className = 'vis-bar';
+    visualizer.appendChild(bar);
+  }
+  var bars = document.querySelectorAll('.vis-bar');
+
+  function formatTime(s) {
+    s = Math.max(0, Math.floor(s));
+    var m = Math.floor(s / 60);
+    var sec = String(s % 60).padStart(2, '0');
+    return m + ':' + sec;
+  }
+
+  function startVisualizer() {
+    clearInterval(visTimer);
+    if (reduceMotion) return;
+    visTimer = setInterval(function() {
+      bars.forEach(function(bar) {
+        bar.style.height = (8 + Math.random() * 92) + '%';
+      });
+    }, 160);
+  }
+  function stopVisualizer() {
+    clearInterval(visTimer);
+    bars.forEach(function(bar) { bar.style.height = '4%'; });
+  }
+
+  function typeNotepad(text) {
+    clearInterval(notepadText._typer);
+    if (reduceMotion) {
+      notepadText.value = text;
+      return;
+    }
+    notepadText.value = '';
+    var idx = 0;
+    notepadText._typer = setInterval(function() {
+      notepadText.value += text.charAt(idx);
+      idx++;
+      if (idx >= text.length) clearInterval(notepadText._typer);
+    }, 16);
+  }
+
+  function updatePlaylist() {
+    playlistEl.innerHTML = '';
+    tracks.forEach(function(t, i) {
+      var item = document.createElement('div');
+      item.className = 'playlist-item' + (i === currentIndex ? ' active' : '');
+      item.textContent = (i === currentIndex && isPlaying ? '\u25B6 ' : '') + t.title;
+      item.addEventListener('click', function() { loadTrack(i, true); });
+      playlistEl.appendChild(item);
+    });
+  }
+
+  function setPlayIcon(playing) {
+    iconPlay.style.display = playing ? 'none' : '';
+    iconPause.style.display = playing ? '' : 'none';
+  }
+
+  function loadTrack(index, autoplay) {
+    currentIndex = (index + tracks.length) % tracks.length;
+    var track = tracks[currentIndex];
+
+    clearInterval(simTimer);
+    simTimer = null;
+    simElapsed = 0;
+    usingRealAudio = false;
+    audioEl.pause();
+    audioEl.src = track.file;
+    audioEl.load();
+
+    trackTitleEl.textContent = track.title;
+    trackArtistEl.textContent = track.artist;
+    timeTotal.textContent = formatTime(track.duration);
+    timeCurrent.textContent = '0:00';
+    seekBar.value = 0;
+    taskbarTrack.textContent = '🎵 ' + track.title;
+
+    typeNotepad(track.note);
+
+    if (autoplay) {
+      play();
+    } else {
+      isPlaying = false;
+      setPlayIcon(false);
+      stopVisualizer();
+      updatePlaylist();
+    }
+  }
+
+  function play() {
+    isPlaying = true;
+    setPlayIcon(true);
+    startVisualizer();
+    updatePlaylist();
+
+    var p = audioEl.play();
+    if (p && typeof p.then === 'function') {
+      p.then(function() {
+        usingRealAudio = true;
+      }).catch(function() {
+        usingRealAudio = false;
+        startSimTimer();
+      });
+    }
+    setTimeout(function() {
+      if (isPlaying && !usingRealAudio && !simTimer) startSimTimer();
+    }, 350);
+  }
+
+  function pause() {
+    isPlaying = false;
+    setPlayIcon(false);
+    audioEl.pause();
+    clearInterval(simTimer);
+    simTimer = null;
+    stopVisualizer();
+    updatePlaylist();
+  }
+
+  function togglePlay() { if (isPlaying) pause(); else play(); }
+
+  function startSimTimer() {
+    clearInterval(simTimer);
+    var track = tracks[currentIndex];
+    simTimer = setInterval(function() {
+      simElapsed++;
+      seekBar.value = (simElapsed / track.duration) * 100;
+      timeCurrent.textContent = formatTime(simElapsed);
+      if (simElapsed >= track.duration) nextTrack();
+    }, 1000);
+  }
+
+  function nextTrack() { loadTrack(currentIndex + 1, isPlaying); }
+  function prevTrack() { loadTrack(currentIndex - 1, isPlaying); }
+
+  audioEl.addEventListener('timeupdate', function() {
+    if (usingRealAudio && isPlaying && audioEl.duration) {
+      seekBar.value = (audioEl.currentTime / audioEl.duration) * 100;
+      timeCurrent.textContent = formatTime(audioEl.currentTime);
+    }
+  });
+  audioEl.addEventListener('ended', function() { nextTrack(); });
+  audioEl.addEventListener('error', function() {
+    usingRealAudio = false;
+    if (isPlaying && !simTimer) startSimTimer();
+  });
+
+  playBtn.addEventListener('click', togglePlay);
+  document.getElementById('next-btn').addEventListener('click', nextTrack);
+  document.getElementById('prev-btn').addEventListener('click', prevTrack);
+
+  seekBar.addEventListener('input', function() {
+    var track = tracks[currentIndex];
+    var pct = seekBar.value / 100;
+    if (usingRealAudio && audioEl.duration) {
+      audioEl.currentTime = pct * audioEl.duration;
+    } else {
+      simElapsed = pct * track.duration;
+      timeCurrent.textContent = formatTime(simElapsed);
+    }
+  });
+
+  volumeBar.addEventListener('input', function() { audioEl.volume = volumeBar.value / 100; });
+  audioEl.volume = 0.7;
+
+  function bringToFront(el) { zCounter++; el.style.zIndex = zCounter; }
+
+  function makeDraggable(win) {
+    var handle = win.querySelector('.titlebar');
+    var dragging = false, offsetX = 0, offsetY = 0;
+
+    function start(clientX, clientY) {
+      if (window.innerWidth < 860) return;
+      dragging = true;
+      bringToFront(win);
+      var rect = win.getBoundingClientRect();
+      offsetX = clientX - rect.left;
+      offsetY = clientY - rect.top;
+    }
+    function move(clientX, clientY) {
+      if (!dragging) return;
+      var maxLeft = window.innerWidth - 60;
+      var maxTop = window.innerHeight - 40;
+      var newLeft = Math.min(maxLeft, Math.max(0, clientX - offsetX));
+      var newTop = Math.min(maxTop, Math.max(0, clientY - offsetY));
+      win.style.left = newLeft + 'px';
+      win.style.top = newTop + 'px';
+    }
+    function end() { dragging = false; }
+
+    handle.addEventListener('mousedown', function(e) { start(e.clientX, e.clientY); e.preventDefault(); });
+    document.addEventListener('mousemove', function(e) { move(e.clientX, e.clientY); });
+    document.addEventListener('mouseup', end);
+
+    handle.addEventListener('touchstart', function(e) {
+      var t = e.touches[0]; start(t.clientX, t.clientY);
+    }, { passive: true });
+    document.addEventListener('touchmove', function(e) {
+      if (!dragging) return;
+      var t = e.touches[0]; move(t.clientX, t.clientY);
+    }, { passive: true });
+    document.addEventListener('touchend', end);
+
+    win.addEventListener('mousedown', function() { bringToFront(win); });
+  }
+  document.querySelectorAll('.window').forEach(makeDraggable);
+
+  document.querySelectorAll('.close').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      var win = e.target.closest('.window');
+      win.classList.add('shake');
+      setTimeout(function() { win.classList.remove('shake'); }, 400);
+    });
+  });
+
+  document.getElementById('taskbar-notepad').addEventListener('click', function() {
+    bringToFront(document.getElementById('notepad-window'));
+  });
+  taskbarTrack.addEventListener('click', function() {
+    bringToFront(document.getElementById('player-window'));
+  });
+
+  var startMenu = document.getElementById('start-menu');
+  document.getElementById('start-btn').addEventListener('click', function(e) {
+    startMenu.classList.toggle('open');
+    e.stopPropagation();
+  });
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('#start-menu') && !e.target.closest('#start-btn')) {
+      startMenu.classList.remove('open');
+    }
+  });
+  document.getElementById('menu-player').addEventListener('click', function() {
+    bringToFront(document.getElementById('player-window'));
+    startMenu.classList.remove('open');
+  });
+  document.getElementById('menu-notepad').addEventListener('click', function() {
+    bringToFront(document.getElementById('notepad-window'));
+    startMenu.classList.remove('open');
+  });
+  document.getElementById('menu-shutdown').addEventListener('click', function() {
+    startMenu.classList.remove('open');
+    var overlay = document.getElementById('shutdown-overlay');
+    overlay.classList.add('show');
+    setTimeout(function() { overlay.classList.remove('show'); }, 1700);
+  });
+
+  function updateClock() {
+    var now = new Date();
+    var h = now.getHours();
+    var m = String(now.getMinutes()).padStart(2, '0');
+    var ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12; if (h === 0) h = 12;
+    document.getElementById('clock').textContent = h + ':' + m + ' ' + ampm;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  loadTrack(0, false);
+})();
+</script>
+</body>
+</html>
