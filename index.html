@@ -107,6 +107,8 @@
 
   .window {
     position: absolute;
+    display: flex;
+    flex-direction: column;
     width: 380px;
     max-width: 92vw;
     border-radius: 9px 9px 4px 4px;
@@ -122,6 +124,22 @@
     60% { transform: translateX(-4px); }
     80% { transform: translateX(4px); }
   }
+  .window.minimized { display: none; }
+  .window.closed { display: none; }
+  .window.maximized {
+    position: fixed !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: calc(100vh - 40px) !important;
+    border-radius: 0;
+  }
+  .window.maximized .player-body,
+  .window.maximized .sandart-body { flex: 1; display: flex; flex-direction: column; }
+  .window.maximized .playlist { flex: 1; max-height: none; }
+  .window.maximized .notepad-text { flex: 1; height: auto; }
+  .window.maximized .sandart-canvas-wrap { flex: 1; }
 
   .titlebar {
     background: linear-gradient(180deg, #5aa6ff 0%, #2f7cf0 10%, #0e57d6 45%, #1763e0 55%, #0c4bc0 100%);
@@ -274,6 +292,83 @@
     display: block;
   }
 
+  #sandart-window { width: 480px; }
+
+  .sandart-toolbar {
+    background: #ece9d8;
+    border-bottom: 1px solid #b8b5a5;
+    padding: 6px 8px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+  }
+  .sa-btn {
+    border: 1px solid rgba(0,0,0,0.25);
+    border-radius: 4px;
+    background: linear-gradient(180deg, #fdfdfd, #d6d9de);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+    padding: 4px 8px;
+    font-size: 13px;
+    line-height: 1;
+    cursor: pointer;
+    color: #222;
+  }
+  .sa-btn:active { filter: brightness(0.9); }
+  .sa-btn:disabled { opacity: 0.4; cursor: default; }
+  .sa-sep { width: 1px; align-self: stretch; background: #b8b5a5; margin: 0 2px; }
+  .sa-mode-tabs { display: flex; gap: 4px; }
+  .sa-mode-tabs .sa-btn.active { background: linear-gradient(180deg, #8ff2e6, #2aa9d6); color: #0b2733; font-weight: bold; }
+  .sa-swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 6px 8px;
+    background: #d9d6c6;
+    border-bottom: 1px solid #b8b5a5;
+    max-height: 92px;
+    overflow-y: auto;
+  }
+  .sa-swatch {
+    width: 18px; height: 18px;
+    border-radius: 3px;
+    border: 1px solid rgba(0,0,0,0.35);
+    cursor: pointer;
+    padding: 0;
+  }
+  .sa-swatch.active { outline: 2px solid #0c4bc0; outline-offset: 1px; }
+  .sa-gradient-swatch {
+    width: 46px; height: 18px;
+    border-radius: 3px;
+    border: 1px solid rgba(0,0,0,0.35);
+    cursor: pointer;
+    padding: 0;
+  }
+  .sa-gradient-swatch.active { outline: 2px solid #0c4bc0; outline-offset: 1px; }
+  .sandart-canvas-wrap {
+    position: relative;
+    min-height: 260px;
+    background: #0b1420;
+    border-radius: 0 0 4px 4px;
+    overflow: hidden;
+  }
+  .sandart-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    image-rendering: pixelated;
+    cursor: crosshair;
+    touch-action: none;
+  }
+  .sandart-status {
+    position: absolute;
+    left: 8px; bottom: 6px;
+    font-size: 10px;
+    color: rgba(255,255,255,0.6);
+    pointer-events: none;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+  }
+
   .taskbar {
     position: fixed;
     bottom: 0; left: 0; right: 0;
@@ -369,6 +464,7 @@
 
   @media (max-width: 860px) {
     .window { position: static !important; width: 92%; margin: 16px auto; }
+    .window.maximized { height: auto !important; }
     .desktop-icons { flex-direction: row; flex-wrap: wrap; gap: 14px; }
   }
 </style>
@@ -445,6 +541,33 @@
     </div>
     <textarea class="notepad-text" id="notepad-text" spellcheck="false" aria-label="Notes about the current track"></textarea>
   </div>
+
+  <div class="window closed" id="sandart-window" data-closable="true" style="left: 140px; top: 220px;">
+    <div class="titlebar">
+      <span>🏖️ Sand Art</span>
+      <div class="buttons">
+        <button class="min" aria-label="Minimize">_</button>
+        <button class="max" aria-label="Maximize">□</button>
+        <button class="close" aria-label="Close">✕</button>
+      </div>
+    </div>
+    <div class="sandart-toolbar">
+      <button class="sa-btn" id="sa-undo" title="Undo" aria-label="Undo">↶</button>
+      <button class="sa-btn" id="sa-redo" title="Redo" aria-label="Redo">↷</button>
+      <button class="sa-btn" id="sa-download" title="Download" aria-label="Download image">⭳ Save</button>
+      <button class="sa-btn" id="sa-reset" title="Reset" aria-label="Reset canvas">🗑 Reset</button>
+      <div class="sa-sep"></div>
+      <div class="sa-mode-tabs">
+        <button class="sa-btn active" id="sa-mode-color">Color</button>
+        <button class="sa-btn" id="sa-mode-gradient">Gradient</button>
+      </div>
+    </div>
+    <div class="sa-swatches" id="sa-swatches"></div>
+    <div class="sandart-canvas-wrap" id="sandart-canvas-wrap">
+      <canvas class="sandart-canvas" id="sandart-canvas" aria-label="Sand drawing surface"></canvas>
+      <div class="sandart-status" id="sa-status">Draw and let it settle.</div>
+    </div>
+  </div>
 </div>
 
 <div class="taskbar">
@@ -480,6 +603,7 @@
   <div class="taskbar-items">
     <button class="task-item active" id="taskbar-track">🎵 -</button>
     <button class="task-item" id="taskbar-notepad">📝 notes.txt - Notepad</button>
+    <button class="task-item" id="taskbar-sandart" style="display:none;">🏖️ Sand Art</button>
   </div>
   <div class="tray"><span id="clock">--:--</span></div>
 </div>
@@ -488,6 +612,8 @@
   <div class="start-menu-header">Matticus</div>
   <div class="start-menu-item" id="menu-player" tabindex="0">🎵 Windows Media Player</div>
   <div class="start-menu-item" id="menu-notepad" tabindex="0">📝 Notepad</div>
+  <div class="start-menu-divider"></div>
+  <div class="start-menu-item" id="menu-sandart" tabindex="0">🏖️ Sand Art</div>
   <div class="start-menu-divider"></div>
   <div class="start-menu-item" id="menu-shutdown" tabindex="0">⏻ Shut Down... <span class="hint">(nice try)</span></div>
 </div>
@@ -833,7 +959,38 @@
   volumeBar.addEventListener('input', function() { audioEl.volume = volumeBar.value / 100; });
   audioEl.volume = 0.7;
 
-  function bringToFront(el) { zCounter++; el.style.zIndex = zCounter; }
+  var focusedWindow = document.getElementById('player-window');
+
+  var windowTaskbarPairs = [
+    { win: document.getElementById('player-window'), btn: taskbarTrack },
+    { win: document.getElementById('notepad-window'), btn: document.getElementById('taskbar-notepad') },
+    { win: document.getElementById('sandart-window'), btn: document.getElementById('taskbar-sandart') }
+  ];
+
+  function isWindowHidden(win) {
+    return win.classList.contains('minimized') || win.classList.contains('closed');
+  }
+
+  function updateTaskbarActiveStates() {
+    windowTaskbarPairs.forEach(function(p) {
+      p.btn.classList.toggle('active', p.win === focusedWindow && !isWindowHidden(p.win));
+    });
+    var sandartWin = document.getElementById('sandart-window');
+    if (!isWindowHidden(sandartWin)) saStartLoopIfNeeded();
+  }
+
+  function bringToFront(el) {
+    zCounter++;
+    el.style.zIndex = zCounter;
+    focusedWindow = el;
+    updateTaskbarActiveStates();
+  }
+
+  function openWindow(win, btn) {
+    win.classList.remove('closed', 'minimized');
+    if (btn) btn.style.display = '';
+    bringToFront(win);
+  }
 
   function makeDraggable(win) {
     var handle = win.querySelector('.titlebar');
@@ -841,6 +998,7 @@
 
     function start(clientX, clientY) {
       if (window.innerWidth < 860) return;
+      if (win.classList.contains('maximized')) return;
       dragging = true;
       bringToFront(win);
       var rect = win.getBoundingClientRect();
@@ -871,23 +1029,62 @@
     }, { passive: true });
     document.addEventListener('touchend', end);
 
-    win.addEventListener('mousedown', function() { bringToFront(win); });
+    win.addEventListener('mousedown', function() {
+      if (!isWindowHidden(win)) bringToFront(win);
+    });
   }
   document.querySelectorAll('.window').forEach(makeDraggable);
+
+  document.querySelectorAll('.min').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      var win = e.target.closest('.window');
+      win.classList.add('minimized');
+      if (focusedWindow === win) focusedWindow = null;
+      updateTaskbarActiveStates();
+    });
+  });
+
+  document.querySelectorAll('.max').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      var win = e.target.closest('.window');
+      win.classList.toggle('maximized');
+      e.target.textContent = win.classList.contains('maximized') ? '❐' : '□';
+      bringToFront(win);
+    });
+  });
 
   document.querySelectorAll('.close').forEach(function(btn) {
     btn.addEventListener('click', function(e) {
       var win = e.target.closest('.window');
-      win.classList.add('shake');
-      setTimeout(function() { win.classList.remove('shake'); }, 400);
+      if (win.dataset.closable === 'true') {
+        win.classList.add('closed');
+        win.classList.remove('minimized');
+        var pair = windowTaskbarPairs.filter(function(p) { return p.win === win; })[0];
+        if (pair) pair.btn.style.display = 'none';
+        if (focusedWindow === win) focusedWindow = null;
+        updateTaskbarActiveStates();
+      } else {
+        win.classList.add('shake');
+        setTimeout(function() { win.classList.remove('shake'); }, 400);
+      }
     });
   });
 
-  document.getElementById('taskbar-notepad').addEventListener('click', function() {
-    bringToFront(document.getElementById('notepad-window'));
-  });
-  taskbarTrack.addEventListener('click', function() {
-    bringToFront(document.getElementById('player-window'));
+  windowTaskbarPairs.forEach(function(p) {
+    p.btn.addEventListener('click', function() {
+      if (p.win.classList.contains('closed')) {
+        openWindow(p.win, p.btn);
+      } else if (p.win.classList.contains('minimized')) {
+        p.win.classList.remove('minimized');
+        bringToFront(p.win);
+      } else if (focusedWindow === p.win) {
+        p.win.classList.add('minimized');
+        focusedWindow = null;
+        updateTaskbarActiveStates();
+      } else {
+        bringToFront(p.win);
+      }
+    });
   });
 
   var startMenu = document.getElementById('start-menu');
@@ -901,11 +1098,15 @@
     }
   });
   document.getElementById('menu-player').addEventListener('click', function() {
-    bringToFront(document.getElementById('player-window'));
+    openWindow(document.getElementById('player-window'), taskbarTrack);
     startMenu.classList.remove('open');
   });
   document.getElementById('menu-notepad').addEventListener('click', function() {
-    bringToFront(document.getElementById('notepad-window'));
+    openWindow(document.getElementById('notepad-window'), document.getElementById('taskbar-notepad'));
+    startMenu.classList.remove('open');
+  });
+  document.getElementById('menu-sandart').addEventListener('click', function() {
+    openWindow(document.getElementById('sandart-window'), document.getElementById('taskbar-sandart'));
     startMenu.classList.remove('open');
   });
   document.getElementById('menu-shutdown').addEventListener('click', function() {
@@ -914,6 +1115,254 @@
     overlay.classList.add('show');
     setTimeout(function() { overlay.classList.remove('show'); }, 1700);
   });
+
+  // ---- Sand Art ----
+  var SA_COLS = 176, SA_ROWS = 118;
+  var SA_EMPTY_RGB = [11, 20, 32]; // matches .sandart-canvas-wrap background
+
+  var SA_SWATCHES = [
+    '#ffffff', '#dfdfdf', '#bfbfbf', '#9f9f9f', '#7f7f7f', '#5f5f5f', '#3f3f3f', '#1f1f1f', '#000000',
+    '#a8efff', '#b5d0ff', '#e0b5ff', '#ffb4de', '#ffbcbc', '#ffd1b4', '#ffeeaa', '#ffff9a', '#e4f9c1',
+    '#63e1ff', '#7baaff', '#c67aff', '#ff79c2', '#ff8888', '#ffac79', '#ffe067', '#ffff49', '#cef28f',
+    '#2bcfff', '#4a87ff', '#ac49ff', '#ff48a6', '#ff5b5b', '#ff8a47', '#ffce2f', '#fffd07', '#b6e565',
+    '#00bafe', '#2469ff', '#9123f3', '#f3228a', '#ff3737', '#ff6c20', '#ffba04', '#fff200', '#9dd241',
+    '#00a1e7', '#074dff', '#7607d8', '#d7066f', '#ff1b1b', '#ff5103', '#eea300', '#ffdc00', '#83b925',
+    '#0085c8', '#0036e9', '#5a00b4', '#b10053', '#e90808', '#f43900', '#d08800', '#d6b700', '#689a10',
+    '#006192', '#0022b7', '#3e0087', '#800037', '#ac0000', '#c42500', '#9f6700', '#ab9200', '#4c7602'
+  ];
+
+  var SA_GRADIENTS = [
+    { name: 'Sunset', stops: ['#2b1055', '#7597de', '#ff8a5c', '#ffd76a'] },
+    { name: 'Ocean', stops: ['#012a4a', '#0466a3', '#61c9d6', '#c9f5ff'] },
+    { name: 'Thermal', stops: ['#000033', '#7a00ff', '#ff003c', '#ffb400', '#ffff8a'] },
+    { name: 'Ember', stops: ['#1a0000', '#7a0d00', '#ff4400', '#ffbb00'] },
+    { name: 'Rainbow', stops: ['#ff3b3b', '#ffb800', '#ffe93b', '#43d17a', '#3b9bff', '#a15bff'] },
+    { name: 'Pastel Dune', stops: ['#ffe5d4', '#ffc9de', '#c9d4ff', '#c9fff0'] }
+  ];
+  function saHexToRgb(hex) {
+    var n = parseInt(hex.slice(1), 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  }
+  SA_GRADIENTS.forEach(function(g) { g.rgbStops = g.stops.map(saHexToRgb); });
+
+  function saGradientColorAt(grad, t) {
+    var stops = grad.rgbStops;
+    var scaled = t * (stops.length - 1);
+    var i = Math.min(Math.floor(scaled), stops.length - 2);
+    var localT = scaled - i;
+    var a = stops[i], b = stops[i + 1];
+    return [
+      Math.round(a[0] + (b[0] - a[0]) * localT),
+      Math.round(a[1] + (b[1] - a[1]) * localT),
+      Math.round(a[2] + (b[2] - a[2]) * localT)
+    ];
+  }
+
+  var saCanvas = document.getElementById('sandart-canvas');
+  var saCtx = saCanvas.getContext('2d');
+  saCanvas.width = SA_COLS;
+  saCanvas.height = SA_ROWS;
+  var saImageData = saCtx.createImageData(SA_COLS, SA_ROWS);
+  var saGrid = new Int32Array(SA_COLS * SA_ROWS).fill(-1); // -1 = empty, else packed 0xRRGGBB
+  var saFrameCount = 0;
+  var saLoopRunning = false;
+  var saPaintMode = 'color';
+  var saCurrentColorHex = '#ffd1b4';
+  var saCurrentColor = saHexToRgb(saCurrentColorHex);
+  var saCurrentGradient = SA_GRADIENTS[0];
+  var saUndoStack = [];
+  var saRedoStack = [];
+  var SA_UNDO_LIMIT = 20;
+  var saStatus = document.getElementById('sa-status');
+  var saSwatchesEl = document.getElementById('sa-swatches');
+  var saModeColorBtn = document.getElementById('sa-mode-color');
+  var saModeGradientBtn = document.getElementById('sa-mode-gradient');
+
+  function saGetColorRgb(x) {
+    if (saPaintMode === 'color') return saCurrentColor;
+    return saGradientColorAt(saCurrentGradient, x / (SA_COLS - 1));
+  }
+  function saPack(rgb) { return (rgb[0] << 16) | (rgb[1] << 8) | rgb[2]; }
+
+  function saStep() {
+    var flipDir = (saFrameCount++ & 1) === 0;
+    for (var y = SA_ROWS - 2; y >= 0; y--) {
+      var xStart = flipDir ? 0 : SA_COLS - 1;
+      var xEnd = flipDir ? SA_COLS : -1;
+      var xStep = flipDir ? 1 : -1;
+      for (var x = xStart; x !== xEnd; x += xStep) {
+        var idx = y * SA_COLS + x;
+        var c = saGrid[idx];
+        if (c === -1) continue;
+        var belowIdx = idx + SA_COLS;
+        if (saGrid[belowIdx] === -1) {
+          saGrid[belowIdx] = c; saGrid[idx] = -1; continue;
+        }
+        var canLeft = x > 0 && saGrid[belowIdx - 1] === -1;
+        var canRight = x < SA_COLS - 1 && saGrid[belowIdx + 1] === -1;
+        if (canLeft && canRight) {
+          if (Math.random() < 0.5) saGrid[belowIdx - 1] = c; else saGrid[belowIdx + 1] = c;
+          saGrid[idx] = -1;
+        } else if (canLeft) {
+          saGrid[belowIdx - 1] = c; saGrid[idx] = -1;
+        } else if (canRight) {
+          saGrid[belowIdx + 1] = c; saGrid[idx] = -1;
+        }
+      }
+    }
+  }
+
+  function saRender() {
+    var data = saImageData.data;
+    for (var i = 0; i < saGrid.length; i++) {
+      var c = saGrid[i];
+      var o = i * 4;
+      if (c === -1) {
+        data[o] = SA_EMPTY_RGB[0]; data[o + 1] = SA_EMPTY_RGB[1]; data[o + 2] = SA_EMPTY_RGB[2];
+      } else {
+        data[o] = (c >> 16) & 255; data[o + 1] = (c >> 8) & 255; data[o + 2] = c & 255;
+      }
+      data[o + 3] = 255;
+    }
+    saCtx.putImageData(saImageData, 0, 0);
+  }
+
+  function saSpawnAt(gx, gy) {
+    var radius = 3;
+    for (var dy = -radius; dy <= radius; dy++) {
+      for (var dx = -radius; dx <= radius; dx++) {
+        if (dx * dx + dy * dy > radius * radius) continue;
+        if (Math.random() > 0.55) continue;
+        var x = gx + dx, y = gy + dy;
+        if (x < 0 || x >= SA_COLS || y < 0 || y >= SA_ROWS) continue;
+        var idx = y * SA_COLS + x;
+        if (saGrid[idx] !== -1) continue;
+        saGrid[idx] = saPack(saGetColorRgb(x));
+      }
+    }
+  }
+
+  function saGridCoordsFromEvent(e) {
+    var rect = saCanvas.getBoundingClientRect();
+    var t = e.touches && e.touches[0];
+    var clientX = t ? t.clientX : e.clientX;
+    var clientY = t ? t.clientY : e.clientY;
+    return {
+      x: Math.floor((clientX - rect.left) / rect.width * SA_COLS),
+      y: Math.floor((clientY - rect.top) / rect.height * SA_ROWS)
+    };
+  }
+
+  function saPushUndoSnapshot() {
+    saUndoStack.push(saGrid.slice());
+    if (saUndoStack.length > SA_UNDO_LIMIT) saUndoStack.shift();
+    saRedoStack.length = 0;
+  }
+
+  var saPointerDown = false;
+  var saLastGX = 0, saLastGY = 0;
+  function saPointerDownHandler(e) {
+    saPointerDown = true;
+    saPushUndoSnapshot();
+    var p = saGridCoordsFromEvent(e);
+    saLastGX = p.x; saLastGY = p.y;
+    saSpawnAt(p.x, p.y);
+    e.preventDefault();
+  }
+  function saPointerMoveHandler(e) {
+    if (!saPointerDown) return;
+    var p = saGridCoordsFromEvent(e);
+    saLastGX = p.x; saLastGY = p.y;
+    saSpawnAt(p.x, p.y);
+  }
+  function saPointerUpHandler() { saPointerDown = false; }
+
+  saCanvas.addEventListener('mousedown', saPointerDownHandler);
+  document.addEventListener('mousemove', saPointerMoveHandler);
+  document.addEventListener('mouseup', saPointerUpHandler);
+  saCanvas.addEventListener('touchstart', saPointerDownHandler, { passive: false });
+  saCanvas.addEventListener('touchmove', function(e) { saPointerMoveHandler(e); e.preventDefault(); }, { passive: false });
+  document.addEventListener('touchend', saPointerUpHandler);
+
+  function renderSaColorSwatches() {
+    saSwatchesEl.innerHTML = '';
+    SA_SWATCHES.forEach(function(hex) {
+      var b = document.createElement('button');
+      b.className = 'sa-swatch' + (saCurrentColorHex === hex ? ' active' : '');
+      b.style.background = hex;
+      b.setAttribute('aria-label', hex);
+      b.addEventListener('click', function() {
+        saCurrentColorHex = hex;
+        saCurrentColor = saHexToRgb(hex);
+        renderSaColorSwatches();
+        saStatus.textContent = hex + ' selected.';
+      });
+      saSwatchesEl.appendChild(b);
+    });
+  }
+  function renderSaGradientSwatches() {
+    saSwatchesEl.innerHTML = '';
+    SA_GRADIENTS.forEach(function(g) {
+      var b = document.createElement('button');
+      b.className = 'sa-gradient-swatch' + (saCurrentGradient === g ? ' active' : '');
+      b.style.background = 'linear-gradient(90deg,' + g.stops.join(',') + ')';
+      b.title = g.name;
+      b.setAttribute('aria-label', 'Gradient ' + g.name);
+      b.addEventListener('click', function() {
+        saCurrentGradient = g;
+        renderSaGradientSwatches();
+        saStatus.textContent = 'Gradient ' + g.name + ' selected.';
+      });
+      saSwatchesEl.appendChild(b);
+    });
+  }
+  saModeColorBtn.addEventListener('click', function() {
+    saPaintMode = 'color';
+    saModeColorBtn.classList.add('active');
+    saModeGradientBtn.classList.remove('active');
+    renderSaColorSwatches();
+  });
+  saModeGradientBtn.addEventListener('click', function() {
+    saPaintMode = 'gradient';
+    saModeGradientBtn.classList.add('active');
+    saModeColorBtn.classList.remove('active');
+    renderSaGradientSwatches();
+  });
+  renderSaColorSwatches();
+
+  document.getElementById('sa-undo').addEventListener('click', function() {
+    if (!saUndoStack.length) return;
+    saRedoStack.push(saGrid.slice());
+    saGrid.set(saUndoStack.pop());
+  });
+  document.getElementById('sa-redo').addEventListener('click', function() {
+    if (!saRedoStack.length) return;
+    saUndoStack.push(saGrid.slice());
+    saGrid.set(saRedoStack.pop());
+  });
+  document.getElementById('sa-reset').addEventListener('click', function() {
+    saPushUndoSnapshot();
+    saGrid.fill(-1);
+  });
+  document.getElementById('sa-download').addEventListener('click', function() {
+    saRender();
+    var link = document.createElement('a');
+    link.download = 'sand-art.png';
+    link.href = saCanvas.toDataURL('image/png');
+    link.click();
+  });
+
+  function saLoop() {
+    var win = document.getElementById('sandart-window');
+    if (isWindowHidden(win)) { saLoopRunning = false; return; }
+    if (saPointerDown) saSpawnAt(saLastGX, saLastGY);
+    saStep();
+    saRender();
+    requestAnimationFrame(saLoop);
+  }
+  function saStartLoopIfNeeded() {
+    if (!saLoopRunning) { saLoopRunning = true; requestAnimationFrame(saLoop); }
+  }
 
   function updateClock() {
     var now = new Date();

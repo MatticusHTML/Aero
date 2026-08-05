@@ -49,10 +49,94 @@ Static site, no build step, deploys straight to GitHub Pages.
   file doesn't exist yet or fails to load. Don't remove the simulated-timer
   fallback; it's what keeps the demo functional before real audio files are
   added.
-- `makeDraggable` — drag handling for both windows, disabled below a 860px
-  viewport width (mobile stacks windows statically instead).
+- `makeDraggable` — drag handling for all windows, disabled below a 860px
+  viewport width (mobile stacks windows statically instead) and while a
+  window is `.maximized`.
 - Visualizer bars are randomized, not real frequency analysis (no Web Audio
   API hookup yet). Would be a reasonable future enhancement.
+
+## Window chrome (minimize / maximize / close)
+
+Every `.window` (player, notepad, Sand Art, and any future one) shares the
+same chrome logic, driven by `windowTaskbarPairs` — an array of
+`{ win, btn }` pairing each window element to its taskbar button:
+
+- **Minimize** (`.min`): adds `.minimized` (`display:none` via CSS). The
+  taskbar button stays visible; clicking it restores the window.
+- **Maximize** (`.max`): toggles `.maximized` (fills the desktop via
+  `position:fixed`, CSS `!important`) and swaps the button glyph between
+  `□` and `❐`. `.player-body`/`.sandart-body`, `.playlist`, and
+  `.notepad-text` get `flex:1` under `.maximized` so they actually grow to
+  fill the extra space rather than leaving it blank. Neutralized on mobile
+  (`@media max-width:860px`) since windows are already static/full-width there.
+- **Close** (`.close`): checks `data-closable="true"` on the window.
+  - Absent (player, notepad) — the X is **decorative only**: shakes the
+    window (`.shake`), nothing closes. This is intentional — don't wire up a
+    real close for these two; they're the permanent core UI.
+  - Present (Sand Art, future minigames) — a real close: adds `.closed`
+    (`display:none`) and hides the window's taskbar button until it's
+    reopened from the Start Menu.
+- **Taskbar click** replicates real XP behavior: closed → open; minimized →
+  restore; focused → minimize; unfocused-but-open → just focus. This all
+  routes through `bringToFront()` → `updateTaskbarActiveStates()`, which
+  keeps `.task-item.active` in sync with whichever window is actually
+  focused/visible.
+- `openWindow(win, btn)` is the one function that both opens a closed app
+  and un-minimizes an already-open one — use it for both taskbar buttons and
+  Start Menu items rather than calling `bringToFront` directly, so closed
+  apps launch correctly from either place.
+
+## Adding a minigame to the Start Menu
+
+Sand Art (`#sandart-window`) is the template — copy its pattern for the next
+one:
+
+1. A `.window.closed` div with `data-closable="true"` (so its X actually
+   closes it), placed inside `#desktop` alongside the other windows.
+2. A taskbar button (`.task-item`, `style="display:none"` initially) added
+   to `.taskbar-items`.
+3. A `.start-menu-item` in `#start-menu` whose click handler calls
+   `openWindow(theWindowEl, theTaskbarBtn)`.
+4. Add the `{ win, btn }` pair to `windowTaskbarPairs` so minimize/maximize/
+   taskbar-sync all work automatically — no per-window logic needed beyond that.
+5. Because the window starts `display:none` (`.closed`), any `<canvas>`
+   inside it should use a **fixed backing resolution** set directly via
+   `canvas.width`/`canvas.height` (this works even while hidden) and scale
+   visually with CSS `width:100%; height:100%` — don't depend on
+   `getBoundingClientRect()` at setup time, only inside pointer-event
+   handlers (which can't fire while hidden anyway).
+
+### Sand Art specifics
+
+A from-scratch falling-sand toy (inspired by sandart.app, redrawn rather
+than copied — the exact "Din"/"Hybrid Genesis" pattern presets from that
+site aren't reproduced, only its Color/Gradient paint-type concept and its
+72-swatch color grid, which was captured verbatim for authenticity).
+
+- `SA_COLS`/`SA_ROWS` (176×118) — fixed grid resolution, decoupled from
+  display size on purpose (see point 5 above).
+- `saGrid` — `Int32Array`, one packed `0xRRGGBB` int per cell, `-1` = empty.
+- `saStep()` — classic cellular automaton: each occupied cell falls straight
+  down if empty below, else slides diagonally left/right if either is open.
+  Scan direction (`flipDir`) alternates every frame to avoid a directional
+  drift bias.
+- `saRender()` — writes the whole grid into one `ImageData` and
+  `putImageData`s it in one call, rather than per-cell `fillRect`, so frame
+  cost stays flat regardless of how much sand is on screen.
+- `saLoop()` is a standard `requestAnimationFrame` self-scheduling loop,
+  gated by `isWindowHidden()` at the top of each frame — it stops
+  rescheduling (and `saLoopRunning = false`) the moment the window is
+  minimized or closed, and `saStartLoopIfNeeded()` (called from
+  `updateTaskbarActiveStates()` whenever the window is visible) restarts it.
+  This means the simulation doesn't run while you can't see it.
+- Paint modes: `color` (flat hex from the swatch grid) or `gradient`
+  (position-based interpolation across a named preset's stops, keyed by the
+  grain's spawn X coordinate — creates vertical colored streaks as you draw,
+  like a sand-art bottle). Both are plain hand-authored presets in
+  `SA_GRADIENTS`, not reverse-engineered from the reference site.
+- Undo/redo snapshot the whole `saGrid` (`Int32Array.slice()`) on
+  `pointerdown`/Reset — capped at `SA_UNDO_LIMIT` (20) — rather than diffing,
+  since the grid is small enough that full snapshots are cheap.
 
 ## Design system
 
