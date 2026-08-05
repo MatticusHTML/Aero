@@ -26,10 +26,14 @@ Static site, no build step, deploys straight to GitHub Pages.
 - Optional `segments` field on a track — for long mixes/megamixes made of
   multiple songs. Array of `{ t: "H:MM:SS" or "M:SS", season, title }`, sorted
   ascending. `checkSegments()` compares elapsed playback time (real or
-  simulated) against each `seg.sec` (parsed from `t` once at load) and
-  retypes the notepad with the current segment once its timestamp is
-  crossed, replacing the track's static `note`. The `note` still shows as
-  the opening message while the track is loaded/paused.
+  simulated) against each `seg.sec` (parsed from `t` once at load) to find
+  which segment's range the current position falls in, and sets the notepad
+  text directly (no typewriter animation) whenever that range changes,
+  replacing the track's static `note`. It's a direct set rather than
+  `typeNotepad()` on purpose — segment changes can fire in a burst while
+  scrubbing/seeking, and restarting a char-by-char animation on every one of
+  those made the notepad look stuck mid-type. The `note` still shows as the
+  opening message (with the typewriter effect) while the track is loaded/paused.
 - Player logic (`loadTrack`, `play`, `pause`, `startSimTimer`) — handles both
   real audio playback AND a simulated playback timer for tracks whose MP3
   file doesn't exist yet or fails to load. Don't remove the simulated-timer

@@ -453,41 +453,6 @@
 
   var tracks = [
     {
-      title: "Waterline",
-      artist: "Frutiger Aero Radio",
-      file: "music/waterline.mp3",
-      duration: 194,
-      note: "man this one just sounds like a loading screen for a nicer internet. all clean gradients and blue light. makes me wanna get a glass of water and stare at a fish tank screensaver."
-    },
-    {
-      title: "Dial-Up Sunrise",
-      artist: "Frutiger Aero Radio",
-      file: "music/dial-up-sunrise.mp3",
-      duration: 221,
-      note: "this one's got that early 2000s 'the future is gonna be so shiny' energy. like everything was about to get better because the internet said so. kind of miss believing that."
-    },
-    {
-      title: "Glass & Chrome",
-      artist: "Frutiger Aero Radio",
-      file: "music/glass-and-chrome.mp3",
-      duration: 187,
-      note: "so glossy it should come with a screen protector. every sound in this one has a little highlight bevel on it. extremely msn messenger nudge core."
-    },
-    {
-      title: "Bubblejet Dreams",
-      artist: "Frutiger Aero Radio",
-      file: "music/bubblejet-dreams.mp3",
-      duration: 205,
-      note: "bubbly and a little squeaky, like the sound an inkjet printer would make if it had dreams. weirdly comforting."
-    },
-    {
-      title: "Windows Dreaming",
-      artist: "Frutiger Aero Radio",
-      file: "music/windows-dreaming.mp3",
-      duration: 240,
-      note: "this is the one where you just stare at the default wallpaper and forget you were supposed to be doing homework. no notes today, just vibes."
-    },
-    {
       title: "the future I was promised",
       artist: "EchidnaMX",
       file: "music/the-future-i-was-promised.mp3",
@@ -629,7 +594,8 @@
     if (idx >= 0 && idx !== currentSegmentIndex) {
       currentSegmentIndex = idx;
       var seg = track.segments[idx];
-      typeNotepad('▶ now playing\n[' + seg.season + ']\n' + seg.title);
+      clearInterval(notepadText._typer);
+      notepadText.value = '▶ now playing\n[' + seg.season + ']\n' + seg.title;
     }
   }
 
