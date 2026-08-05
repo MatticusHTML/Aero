@@ -38,6 +38,16 @@ segments: [
 
 `t` accepts `M:SS` or `H:MM:SS`, and entries must stay in ascending order. The track's `note` still shows as the opening message until playback crosses the first timestamp.
 
+### Desktop wallpaper per track
+
+Add a `background` field to switch the desktop wallpaper while that track plays:
+
+```js
+background: "water"   // or "bubbles" (the default if you leave this out)
+```
+
+The two wallpapers crossfade when you change tracks. To add a third, add a new `.wallpaper[data-wallpaper="..."]` layer + CSS in `index.html` (see `CLAUDE.md`) and reference its name here.
+
 Where to find actual royalty-free tracks that fit the vibe: Free Music Archive, Pixabay Music, and the YouTube Audio Library all have decent chillwave/downtempo/ambient stuff.
 
 ## Deploying to GitHub Pages

@@ -25,7 +25,9 @@ Static site, no build step, deploys straight to GitHub Pages.
   automatically.
 - Optional `segments` field on a track — for long mixes/megamixes made of
   multiple songs. Array of `{ t: "H:MM:SS" or "M:SS", season, title }`, sorted
-  ascending. `checkSegments()` compares elapsed playback time (real or
+  ascending. `season` is optional decoration (shown as a `[Bracketed]` line
+  above the title) — omit it for mixes with no natural grouping.
+  `checkSegments()` compares elapsed playback time (real or
   simulated) against each `seg.sec` (parsed from `t` once at load) to find
   which segment's range the current position falls in, and sets the notepad
   text directly (no typewriter animation) whenever that range changes,
@@ -34,6 +36,14 @@ Static site, no build step, deploys straight to GitHub Pages.
   scrubbing/seeking, and restarting a char-by-char animation on every one of
   those made the notepad look stuck mid-type. The `note` still shows as the
   opening message (with the typewriter effect) while the track is loaded/paused.
+- Optional `background` field on a track — picks the desktop wallpaper for
+  that track: `"bubbles"` (default if omitted) or `"water"`. `loadTrack()`
+  calls `setWallpaper(track.background || 'bubbles')`, which toggles an
+  `active` class across the `.wallpaper` layers (matched by `data-wallpaper`)
+  in `#desktop`. Both layers are always in the DOM, stacked with `z-index:-1`
+  and crossfaded via opacity transition — add a new wallpaper by adding
+  another `.wallpaper[data-wallpaper="..."]` div plus its CSS, no JS changes
+  needed beyond tagging the track.
 - Player logic (`loadTrack`, `play`, `pause`, `startSimTimer`) — handles both
   real audio playback AND a simulated playback timer for tracks whose MP3
   file doesn't exist yet or fails to load. Don't remove the simulated-timer
@@ -51,10 +61,13 @@ Static site, no build step, deploys straight to GitHub Pages.
   (`#8ff2e6` / `#2aa9d6`) for the visualizer and slider thumbs.
 - Notepad body: plain white, monospace text (`Lucida Console`/`Courier New`),
   matches real old Notepad.
-- Desktop background: blue-to-mint diagonal gradient
-  (`#08356e → #0d6cb8 → #26a9db → #4fd3c4 → #a3ecc9`), soft white radial
-  "bubble" highlights layered on top — deliberately not a recreation of the
-  Windows "Bliss" wallpaper.
+- Desktop background: two wallpapers, swapped per track (see `background`
+  field above). `"bubbles"` — blue-to-mint diagonal gradient
+  (`#08356e → #0d6cb8 → #26a9db → #4fd3c4 → #a3ecc9`) with soft white radial
+  "bubble" highlights floating on top — deliberately not a recreation of the
+  Windows "Bliss" wallpaper. `"water"` — deep blue-to-aqua gradient with
+  slowly animated diagonal current bands (`waterFlow` keyframes) and drifting
+  `.shimmer` highlights, for tracks with water/ambient vibes.
 - Font: Tahoma/Verdana stack throughout (period-accurate for the XP era).
 
 ## Conventions
