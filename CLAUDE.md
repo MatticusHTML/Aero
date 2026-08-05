@@ -16,6 +16,24 @@ Static site, no build step, deploys straight to GitHub Pages.
 - `music/` — drop MP3 files here.
 - `README.md` — human-facing setup/deploy instructions.
 
+## Splash screen
+
+`#splash-screen` — a full-viewport overlay (`z-index:2000`, above everything
+else including the taskbar/start menu) shown on every load: an XP-logon-style
+"Welcome Dianna" over a dark blue radial gradient, with `.splash-bubble`
+divs rising and fading via the `splashRise` keyframe (reuses the same
+radial-gradient "soft bubble" look as the desktop wallpaper's `.bubble`, just
+bigger/slower). Auto-dismisses via `setTimeout(dismissSplash, 2600)` near the
+end of the script — fades out (`.fade-out`, `opacity` transition, and
+`pointer-events:none` so clicks pass through immediately even mid-fade), then
+`display:none` (`.hidden`) once the transition's done. Also dismissible early
+by clicking anywhere on it. Respects `prefers-reduced-motion`: bubbles/text/
+loader-dots skip their entrance animations and the fade transition is
+instant, and the whole thing is shorter (900ms) rather than skipped outright,
+so reduced-motion users still get the "Welcome" moment without the motion.
+The name is a plain hardcoded string in `.splash-name` (same pattern as the
+Start Menu's `.start-menu-header` "Matticus") — change it there if needed.
+
 ## Where things live in index.html
 
 - `tracks` array (top of the `<script>` block) — one object per song:

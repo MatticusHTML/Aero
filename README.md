@@ -59,6 +59,7 @@ Where to find actual royalty-free tracks that fit the vibe: Free Music Archive, 
 
 ## Notes
 
+- A short "Welcome Dianna" splash screen plays on every load (XP-logon-style, with rising Aero bubbles), then fades into the desktop after ~2.6s — click anywhere on it to skip ahead. Change the name in `.splash-name` in `index.html`.
 - Windows are draggable (click + drag the title bar) on desktop; they stack normally on mobile.
 - Every window can minimize (taskbar keeps a button for it — click to restore) and maximize (fills the desktop). The player and Notepad's close (✕) button is decorative — it just shakes the window, it won't actually close; that's intentional, they're the permanent UI. The minigames' ✕ really closes them — reopen from the Start Menu.
 - The Start button has a tiny menu — try "Shut Down..." — and now also launches two minigames: **Sand Art**, a colorful falling-sand drawing toy, and **Falling Sand**, a multi-element physics sandbox (sand, water, fire, oil, lava, plant, acid, wall — watch them interact). Adding more minigames later just means copying their window/taskbar/Start-Menu pattern; see `CLAUDE.md`.
