@@ -16,6 +16,7 @@
 
   .desktop {
     position: relative;
+    z-index: 0; /* forms a stacking context so .wallpaper's z-index:-1 stays scoped here instead of escaping to the document root */
     min-height: 100vh;
     padding-bottom: 56px; /* room for taskbar */
     background: #0a3d6e; /* fallback if a .wallpaper layer somehow fails to paint */
