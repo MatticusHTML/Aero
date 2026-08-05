@@ -23,6 +23,13 @@ Static site, no build step, deploys straight to GitHub Pages.
   only matters as a fallback timer (see below). Add/remove/reorder tracks
   here; playlist rendering, notepad text, and the taskbar label all update
   automatically.
+- Optional `segments` field on a track — for long mixes/megamixes made of
+  multiple songs. Array of `{ t: "H:MM:SS" or "M:SS", season, title }`, sorted
+  ascending. `checkSegments()` compares elapsed playback time (real or
+  simulated) against each `seg.sec` (parsed from `t` once at load) and
+  retypes the notepad with the current segment once its timestamp is
+  crossed, replacing the track's static `note`. The `note` still shows as
+  the opening message while the track is loaded/paused.
 - Player logic (`loadTrack`, `play`, `pause`, `startSimTimer`) — handles both
   real audio playback AND a simulated playback timer for tracks whose MP3
   file doesn't exist yet or fails to load. Don't remove the simulated-timer

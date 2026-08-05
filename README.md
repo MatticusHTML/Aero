@@ -24,6 +24,20 @@ There's also a `CLAUDE.md` with project structure and design-system notes, if yo
 
 If a file is missing or fails to load, the player still "plays" using a simulated timer so the whole thing stays functional — swap in real files whenever you're ready and it'll pick up real playback automatically.
 
+### Long mixes / megamixes
+
+For a track that's actually a stitched-together mix of many songs, add a `segments` array with a timestamp list and the notepad will auto-update to show whatever's currently playing, instead of a single static note:
+
+```js
+segments: [
+  { t: "0:00", season: "Spring", title: "Song Name" },
+  { t: "1:44", season: "Spring", title: "Next Song" },
+  { t: "1:02:08", season: "Autumn", title: "Some Other Song" }
+]
+```
+
+`t` accepts `M:SS` or `H:MM:SS`, and entries must stay in ascending order. The track's `note` still shows as the opening message until playback crosses the first timestamp.
+
 Where to find actual royalty-free tracks that fit the vibe: Free Music Archive, Pixabay Music, and the YouTube Audio Library all have decent chillwave/downtempo/ambient stuff.
 
 ## Deploying to GitHub Pages

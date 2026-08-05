@@ -261,7 +261,7 @@
     cursor: pointer;
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 3px rgba(0,0,0,0.3);
   }
-  .start-btn .flag { font-style: normal; font-size: 15px; }
+  .start-btn .win-flag { width: 17px; height: 17px; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.4)); }
 
   .taskbar-items { display: flex; gap: 6px; margin-left: 10px; flex: 1; overflow: hidden; }
   .task-item {
@@ -399,7 +399,35 @@
 </div>
 
 <div class="taskbar">
-  <button class="start-btn" id="start-btn"><span class="flag" aria-hidden="true">⊞</span>start</button>
+  <button class="start-btn" id="start-btn">
+    <svg class="win-flag" viewBox="0 0 100 100" aria-hidden="true">
+      <defs>
+        <linearGradient id="flagOrange" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#f9974a"/>
+          <stop offset="100%" stop-color="#d9350f"/>
+        </linearGradient>
+        <linearGradient id="flagGreen" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#a8de3f"/>
+          <stop offset="100%" stop-color="#4f9a15"/>
+        </linearGradient>
+        <linearGradient id="flagBlue" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#3f66d6"/>
+          <stop offset="100%" stop-color="#0b1f6e"/>
+        </linearGradient>
+        <linearGradient id="flagYellow" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ffdd55"/>
+          <stop offset="100%" stop-color="#d99a05"/>
+        </linearGradient>
+      </defs>
+      <g transform="rotate(-20 50 50)">
+        <path d="M46,46 L46,6 Q30,2 6,10 L6,46 Z" fill="url(#flagOrange)"/>
+        <path d="M54,46 L54,6 Q70,2 94,10 L94,46 Z" fill="url(#flagGreen)"/>
+        <path d="M46,54 L46,94 Q30,98 6,90 L6,54 Z" fill="url(#flagBlue)"/>
+        <path d="M54,54 L54,94 Q70,98 94,90 L94,54 Z" fill="url(#flagYellow)"/>
+      </g>
+    </svg>
+    start
+  </button>
   <div class="taskbar-items">
     <button class="task-item active" id="taskbar-track">🎵 -</button>
     <button class="task-item" id="taskbar-notepad">📝 notes.txt - Notepad</button>
@@ -458,8 +486,68 @@
       file: "music/windows-dreaming.mp3",
       duration: 240,
       note: "this is the one where you just stare at the default wallpaper and forget you were supposed to be doing homework. no notes today, just vibes."
+    },
+    {
+      title: "the future I was promised",
+      artist: "EchidnaMX",
+      file: "music/the-future-i-was-promised.mp3",
+      duration: 7202,
+      note: "two hours of half-remembered menu jingles, unused eshop themes, and old game soundtracks stitched together into one long afternoon by EchidnaMX. starts in spring, ends deep in winter. once you hit play I'll start calling out whatever's actually playing down here so you're never lost in the mix.",
+      segments: [
+        { t: "0:00", season: "Spring", title: "LEASE" },
+        { t: "1:44", season: "Spring", title: "Webinar™ - 01 フィジーSunburst" },
+        { t: "6:43", season: "Spring", title: "Nintendo Wii U - Mii Maker Menu (Gamepad)" },
+        { t: "9:41", season: "Spring", title: "Legend of Zelda: Ocarina of Time - Zora's Domain" },
+        { t: "11:14", season: "Spring", title: "Nintendo Wii U - Mii Maker Editing Mii (TV + Gamepad)" },
+        { t: "13:47", season: "Spring", title: "Onigiri Online - Kumaso Village" },
+        { t: "16:30", season: "Spring", title: "C418 - Subwoofer Lullaby" },
+        { t: "19:59", season: "Spring", title: "C418 - Sweden" },
+        { t: "23:35", season: "Spring", title: "Home Menu - Nintendo 3DS" },
+        { t: "25:44", season: "Spring", title: "Main Menu - Photo Channel (Wii)" },
+        { t: "26:43", season: "Spring", title: "蝉衣" },
+        { t: "28:27", season: "Spring", title: "Minecraft" },
+        { t: "32:41", season: "Summer", title: "Zora's Domain - Night (The Legend of Zelda: Breath of the Wild)" },
+        { t: "36:27", season: "Summer", title: "Aquatic Ambiance - Nostalgia Piano Cover" },
+        { t: "39:24", season: "Summer", title: "Super Mario 64 - Dire, Dire Docks" },
+        { t: "42:34", season: "Summer", title: "Nintendo eShop - Theme 3" },
+        { t: "45:16", season: "Summer", title: "Izumi" },
+        { t: "47:50", season: "Summer", title: "Like Real in Mist" },
+        { t: "49:32", season: "Summer", title: "Friend List (Wii U)" },
+        { t: "51:59", season: "Summer", title: "Dragon Fish" },
+        { t: "58:12", season: "Summer", title: "Rainy Day - Animal Crossing (GameCube)" },
+        { t: "1:00:00", season: "Summer", title: "C418 - Moog City" },
+        { t: "1:02:08", season: "Autumn", title: "Introduction - Mirror's Edge" },
+        { t: "1:07:43", season: "Autumn", title: "June 2011 (3DS eShop)" },
+        { t: "1:09:45", season: "Autumn", title: "Nintendo 3DS Internet Settings" },
+        { t: "1:11:09", season: "Autumn", title: "Miiverse - Loading" },
+        { t: "1:12:58", season: "Autumn", title: "PS Vita - Home Menu" },
+        { t: "1:15:13", season: "Autumn", title: "Nintendo eShop - Theme 2" },
+        { t: "1:17:44", season: "Autumn", title: "Forecast Channel - Regional Forecast (Nighttime)" },
+        { t: "1:21:20", season: "Autumn", title: "Wii Weather Channel (Night)" },
+        { t: "1:24:41", season: "Autumn", title: "Wet Hands" },
+        { t: "1:26:11", season: "Winter", title: "Snowman (Super Smash Bros. Brawl)" },
+        { t: "1:30:35", season: "Winter", title: "8 PM Snow - Animal Crossing: Wild World" },
+        { t: "1:33:18", season: "Winter", title: "C418 - Mice on Venus" },
+        { t: "1:38:00", season: "Winter", title: "Downloading the Latest News (Wii) [SiIvaGunner Rip]" },
+        { t: "1:39:03", season: "Winter", title: "Legends of Equestria Soundtrack - Good Night" },
+        { t: "1:40:48", season: "Winter", title: "Little Alchemy 2 OST - Indirect Detection (Orka Veer)" },
+        { t: "1:43:14", season: "Winter", title: "SABBATH" },
+        { t: "1:45:34", season: "Winter", title: "Yume 2kki - Lotus Waters" },
+        { t: "1:47:20", season: "Winter", title: "未使用曲6" },
+        { t: "1:49:44", season: "Winter", title: "此処" },
+        { t: "1:52:16", season: "Winter", title: "pure snows - Kanon Arrange Best Album \"recollections\"" },
+        { t: "1:56:42", season: "Winter", title: "Monochrome" },
+        { t: "1:58:50", season: "Winter", title: "The Past and Now - LEASE" }
+      ]
     }
   ];
+
+  tracks.forEach(function(t) {
+    if (!t.segments) return;
+    t.segments.forEach(function(seg) {
+      seg.sec = seg.t.split(':').reduce(function(acc, part) { return acc * 60 + Number(part); }, 0);
+    });
+  });
 
   var currentIndex = 0;
   var isPlaying = false;
@@ -468,6 +556,7 @@
   var simTimer = null;
   var visTimer = null;
   var zCounter = 10;
+  var currentSegmentIndex = -1;
 
   var audioEl = document.getElementById('audio-el');
   var playBtn = document.getElementById('play-btn');
@@ -494,8 +583,10 @@
 
   function formatTime(s) {
     s = Math.max(0, Math.floor(s));
-    var m = Math.floor(s / 60);
+    var h = Math.floor(s / 3600);
+    var m = Math.floor((s % 3600) / 60);
     var sec = String(s % 60).padStart(2, '0');
+    if (h > 0) return h + ':' + String(m).padStart(2, '0') + ':' + sec;
     return m + ':' + sec;
   }
 
@@ -528,6 +619,20 @@
     }, 16);
   }
 
+  function checkSegments(elapsed) {
+    var track = tracks[currentIndex];
+    if (!track.segments) return;
+    var idx = -1;
+    for (var i = 0; i < track.segments.length; i++) {
+      if (track.segments[i].sec <= elapsed) idx = i; else break;
+    }
+    if (idx >= 0 && idx !== currentSegmentIndex) {
+      currentSegmentIndex = idx;
+      var seg = track.segments[idx];
+      typeNotepad('▶ now playing\n[' + seg.season + ']\n' + seg.title);
+    }
+  }
+
   function updatePlaylist() {
     playlistEl.innerHTML = '';
     tracks.forEach(function(t, i) {
@@ -552,6 +657,7 @@
     simTimer = null;
     simElapsed = 0;
     usingRealAudio = false;
+    currentSegmentIndex = -1;
     audioEl.pause();
     audioEl.src = track.file;
     audioEl.load();
@@ -614,6 +720,7 @@
       simElapsed++;
       seekBar.value = (simElapsed / track.duration) * 100;
       timeCurrent.textContent = formatTime(simElapsed);
+      checkSegments(simElapsed);
       if (simElapsed >= track.duration) nextTrack();
     }, 1000);
   }
@@ -625,6 +732,7 @@
     if (usingRealAudio && isPlaying && audioEl.duration) {
       seekBar.value = (audioEl.currentTime / audioEl.duration) * 100;
       timeCurrent.textContent = formatTime(audioEl.currentTime);
+      checkSegments(audioEl.currentTime);
     }
   });
   audioEl.addEventListener('ended', function() { nextTrack(); });
@@ -642,9 +750,11 @@
     var pct = seekBar.value / 100;
     if (usingRealAudio && audioEl.duration) {
       audioEl.currentTime = pct * audioEl.duration;
+      checkSegments(audioEl.currentTime);
     } else {
       simElapsed = pct * track.duration;
       timeCurrent.textContent = formatTime(simElapsed);
+      checkSegments(simElapsed);
     }
   });
 
