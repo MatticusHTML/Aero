@@ -138,6 +138,50 @@ site aren't reproduced, only its Color/Gradient paint-type concept and its
   `pointerdown`/Reset — capped at `SA_UNDO_LIMIT` (20) — rather than diffing,
   since the grid is small enough that full snapshots are cheap.
 
+### Falling Sand specifics
+
+A from-scratch multi-element falling-sand toy (`#fallingsand-window`,
+`fs`-prefixed functions/vars) — same window/canvas architecture as Sand Art,
+but a `Uint8Array` of element-type IDs instead of packed colors, since each
+cell needs *behavior* as well as color. Inspired by the general, decades-old
+"falling sand game" genre (sand/water/fire/lava/oil are standard tropes
+across many implementations of it, not exclusive to any one site) — the
+ruleset, probabilities, colors, and all code here are original, not ported
+from any reference.
+
+- `FS_COLS`/`FS_ROWS` (176×118), `fsGrid` (`Uint8Array`, element ID per
+  cell, `FS_EMPTY`=0) + `fsLife` (`Uint8Array`, spare per-cell counter used
+  by Fire's remaining lifespan — otherwise unused).
+- `fsStep()` shares Sand Art's bottom-to-top / alternating-scan-direction
+  pass, but movement is now density-driven instead of single-material:
+  `fsDensity()` ranks Sand(4) > Lava(3) > Water/Acid(2) > Oil(1), and any
+  cell falls into a lower-density liquid directly below it (they swap — this
+  is what makes sand sink through water, and oil float up through it).
+  Fluids (water/oil/lava/acid) that can't fall or slide diagonally also try
+  to spread sideways into an empty neighbor — sand doesn't, so it piles
+  instead of puddling. Wall and Plant are immovable; Fire is handled
+  entirely separately (see below).
+- Element-specific reactions, checked after normal movement:
+  `fsStepLava` turns itself + an adjacent Water into Wall (solidifies), and
+  has a chance to ignite adjacent Oil/Plant into Fire. `fsStepAcid` has a
+  chance to dissolve an adjacent Sand/Wall/Plant into Empty — and is
+  consumed itself when it does, so it doesn't dissolve forever.
+  `fsStepFire` (called instead of the generic movement block) decrements
+  `fsLife` each frame until it burns out to Empty, occasionally hops one
+  cell up into empty space for a flicker effect, and has a chance to ignite
+  adjacent Oil/Plant. `fsStepPlant` (also called instead of generic
+  movement, since Plant is static) has a small chance to grow into an empty
+  neighbor if touching Water, and catches Fire from a burning neighbor.
+- The element toolbar (`FS_ELEMENTS`) is rendered into `#fs-toolbar` by JS,
+  not hand-written per button, so adding a new element is just one more
+  entry in that array (`{ id, name, color }`) plus its case in
+  `fsColorFor()` and any reaction logic it needs.
+- Same `requestAnimationFrame` + `isWindowHidden()` gating pattern as Sand
+  Art (`fsLoop`/`fsStartLoopIfNeeded`, wired into `updateTaskbarActiveStates()`).
+- No undo/redo here (unlike Sand Art) — a continuously-evolving multi-material
+  simulation doesn't have a clean single "stroke" boundary to snapshot
+  around, so it's just Clear.
+
 ## Design system
 
 - XP title bar blue: gradient from `#5aa6ff` → `#0c4bc0`.

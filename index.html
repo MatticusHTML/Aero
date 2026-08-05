@@ -140,6 +140,7 @@
   .window.maximized .playlist { flex: 1; max-height: none; }
   .window.maximized .notepad-text { flex: 1; height: auto; }
   .window.maximized .sandart-canvas-wrap { flex: 1; }
+  .window.maximized .fs-canvas-wrap { flex: 1; }
 
   .titlebar {
     background: linear-gradient(180deg, #5aa6ff 0%, #2f7cf0 10%, #0e57d6 45%, #1763e0 55%, #0c4bc0 100%);
@@ -369,6 +370,40 @@
     text-shadow: 0 1px 2px rgba(0,0,0,0.8);
   }
 
+  #fallingsand-window { width: 460px; }
+  .fs-toolbar {
+    background: #ece9d8;
+    border-bottom: 1px solid #b8b5a5;
+    padding: 6px 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .fs-el-btn.active { background: linear-gradient(180deg, #8ff2e6, #2aa9d6); color: #0b2733; font-weight: bold; }
+  .fs-swatch {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 2px;
+    border: 1px solid rgba(0,0,0,0.35);
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+  .fs-canvas-wrap {
+    position: relative;
+    min-height: 260px;
+    background: #0b1420;
+    border-radius: 0 0 4px 4px;
+    overflow: hidden;
+  }
+  .fs-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    image-rendering: pixelated;
+    cursor: crosshair;
+    touch-action: none;
+  }
+
   .taskbar {
     position: fixed;
     bottom: 0; left: 0; right: 0;
@@ -568,6 +603,23 @@
       <div class="sandart-status" id="sa-status">Draw and let it settle.</div>
     </div>
   </div>
+
+  <div class="window closed" id="fallingsand-window" data-closable="true" style="left: 260px; top: 260px;">
+    <div class="titlebar">
+      <span>⏳ Falling Sand</span>
+      <div class="buttons">
+        <button class="min" aria-label="Minimize">_</button>
+        <button class="max" aria-label="Maximize">□</button>
+        <button class="close" aria-label="Close">✕</button>
+      </div>
+    </div>
+    <div class="fs-toolbar" id="fs-toolbar">
+      <button class="sa-btn" id="fs-reset" title="Clear the board">🗑 Clear</button>
+    </div>
+    <div class="fs-canvas-wrap">
+      <canvas class="fs-canvas" id="fs-canvas" aria-label="Falling sand simulation surface"></canvas>
+    </div>
+  </div>
 </div>
 
 <div class="taskbar">
@@ -604,6 +656,7 @@
     <button class="task-item active" id="taskbar-track">🎵 -</button>
     <button class="task-item" id="taskbar-notepad">📝 notes.txt - Notepad</button>
     <button class="task-item" id="taskbar-sandart" style="display:none;">🏖️ Sand Art</button>
+    <button class="task-item" id="taskbar-fallingsand" style="display:none;">⏳ Falling Sand</button>
   </div>
   <div class="tray"><span id="clock">--:--</span></div>
 </div>
@@ -614,6 +667,7 @@
   <div class="start-menu-item" id="menu-notepad" tabindex="0">📝 Notepad</div>
   <div class="start-menu-divider"></div>
   <div class="start-menu-item" id="menu-sandart" tabindex="0">🏖️ Sand Art</div>
+  <div class="start-menu-item" id="menu-fallingsand" tabindex="0">⏳ Falling Sand</div>
   <div class="start-menu-divider"></div>
   <div class="start-menu-item" id="menu-shutdown" tabindex="0">⏻ Shut Down... <span class="hint">(nice try)</span></div>
 </div>
@@ -964,7 +1018,8 @@
   var windowTaskbarPairs = [
     { win: document.getElementById('player-window'), btn: taskbarTrack },
     { win: document.getElementById('notepad-window'), btn: document.getElementById('taskbar-notepad') },
-    { win: document.getElementById('sandart-window'), btn: document.getElementById('taskbar-sandart') }
+    { win: document.getElementById('sandart-window'), btn: document.getElementById('taskbar-sandart') },
+    { win: document.getElementById('fallingsand-window'), btn: document.getElementById('taskbar-fallingsand') }
   ];
 
   function isWindowHidden(win) {
@@ -977,6 +1032,8 @@
     });
     var sandartWin = document.getElementById('sandart-window');
     if (!isWindowHidden(sandartWin)) saStartLoopIfNeeded();
+    var fallingSandWin = document.getElementById('fallingsand-window');
+    if (!isWindowHidden(fallingSandWin)) fsStartLoopIfNeeded();
   }
 
   function bringToFront(el) {
@@ -1107,6 +1164,10 @@
   });
   document.getElementById('menu-sandart').addEventListener('click', function() {
     openWindow(document.getElementById('sandart-window'), document.getElementById('taskbar-sandart'));
+    startMenu.classList.remove('open');
+  });
+  document.getElementById('menu-fallingsand').addEventListener('click', function() {
+    openWindow(document.getElementById('fallingsand-window'), document.getElementById('taskbar-fallingsand'));
     startMenu.classList.remove('open');
   });
   document.getElementById('menu-shutdown').addEventListener('click', function() {
@@ -1362,6 +1423,272 @@
   }
   function saStartLoopIfNeeded() {
     if (!saLoopRunning) { saLoopRunning = true; requestAnimationFrame(saLoop); }
+  }
+
+  // ---- Falling Sand ----
+  var FS_COLS = 176, FS_ROWS = 118;
+  var FS_EMPTY_RGB = [11, 20, 32];
+  var FS_EMPTY = 0, FS_SAND = 1, FS_WATER = 2, FS_WALL = 3, FS_FIRE = 4, FS_OIL = 5, FS_LAVA = 6, FS_PLANT = 7, FS_ACID = 8;
+  var FS_ELEMENTS = [
+    { id: FS_SAND, name: 'Sand', color: '#e3c16f' },
+    { id: FS_WATER, name: 'Water', color: '#2f7bd9' },
+    { id: FS_WALL, name: 'Wall', color: '#6b6b6b' },
+    { id: FS_FIRE, name: 'Fire', color: '#ff7a1a' },
+    { id: FS_OIL, name: 'Oil', color: '#2d2114' },
+    { id: FS_LAVA, name: 'Lava', color: '#ff6a00' },
+    { id: FS_PLANT, name: 'Plant', color: '#3fae4a' },
+    { id: FS_ACID, name: 'Acid', color: '#c6ff2f' },
+    { id: FS_EMPTY, name: 'Erase', color: '#0b1420' }
+  ];
+
+  function fsDensity(t) {
+    if (t === FS_SAND) return 4;
+    if (t === FS_LAVA) return 3;
+    if (t === FS_WATER || t === FS_ACID) return 2;
+    if (t === FS_OIL) return 1;
+    return 0;
+  }
+  function fsIsFluid(t) { return t === FS_WATER || t === FS_OIL || t === FS_LAVA || t === FS_ACID; }
+  function fsNeighbors(idx) {
+    var x = idx % FS_COLS, y = (idx / FS_COLS) | 0;
+    var arr = [];
+    if (y > 0) arr.push(idx - FS_COLS);
+    if (y < FS_ROWS - 1) arr.push(idx + FS_COLS);
+    if (x > 0) arr.push(idx - 1);
+    if (x < FS_COLS - 1) arr.push(idx + 1);
+    return arr;
+  }
+
+  var fsCanvas = document.getElementById('fs-canvas');
+  var fsCtx = fsCanvas.getContext('2d');
+  fsCanvas.width = FS_COLS;
+  fsCanvas.height = FS_ROWS;
+  var fsImageData = fsCtx.createImageData(FS_COLS, FS_ROWS);
+  var fsGrid = new Uint8Array(FS_COLS * FS_ROWS);
+  var fsLife = new Uint8Array(FS_COLS * FS_ROWS);
+  var fsLoopRunning = false;
+  var fsSelected = FS_SAND;
+
+  function fsIgniteNeighbors(idx) {
+    var neighbors = fsNeighbors(idx);
+    for (var i = 0; i < neighbors.length; i++) {
+      var n = neighbors[i], nt = fsGrid[n];
+      if ((nt === FS_OIL || nt === FS_PLANT) && Math.random() < 0.18) {
+        fsGrid[n] = FS_FIRE;
+        fsLife[n] = 45 + ((Math.random() * 20) | 0);
+      }
+    }
+  }
+
+  function fsStepFire(idx) {
+    fsLife[idx]--;
+    if (fsLife[idx] <= 0) { fsGrid[idx] = FS_EMPTY; return; }
+    var x = idx % FS_COLS, y = (idx / FS_COLS) | 0;
+    if (y > 0 && Math.random() < 0.25) {
+      var upIdx = idx - FS_COLS;
+      if (fsGrid[upIdx] === FS_EMPTY) {
+        fsGrid[upIdx] = FS_FIRE; fsLife[upIdx] = fsLife[idx];
+        fsGrid[idx] = FS_EMPTY;
+        idx = upIdx;
+      }
+    }
+    fsIgniteNeighbors(idx);
+  }
+
+  function fsStepPlant(idx) {
+    var neighbors = fsNeighbors(idx);
+    var touchingWater = false, emptyNeighbors = [];
+    for (var i = 0; i < neighbors.length; i++) {
+      var n = neighbors[i], nt = fsGrid[n];
+      if (nt === FS_WATER) touchingWater = true;
+      if (nt === FS_EMPTY) emptyNeighbors.push(n);
+      if (nt === FS_FIRE && Math.random() < 0.05) { fsGrid[idx] = FS_FIRE; fsLife[idx] = 45; return; }
+    }
+    if (touchingWater && emptyNeighbors.length && Math.random() < 0.02) {
+      fsGrid[emptyNeighbors[(Math.random() * emptyNeighbors.length) | 0]] = FS_PLANT;
+    }
+  }
+
+  function fsStepLava(idx) {
+    var neighbors = fsNeighbors(idx);
+    for (var i = 0; i < neighbors.length; i++) {
+      if (fsGrid[neighbors[i]] === FS_WATER) {
+        fsGrid[idx] = FS_WALL; fsGrid[neighbors[i]] = FS_WALL;
+        return;
+      }
+    }
+    for (var j = 0; j < neighbors.length; j++) {
+      var n2 = neighbors[j], nt2 = fsGrid[n2];
+      if ((nt2 === FS_OIL || nt2 === FS_PLANT) && Math.random() < 0.3) {
+        fsGrid[n2] = FS_FIRE; fsLife[n2] = 45;
+      }
+    }
+  }
+
+  function fsStepAcid(idx) {
+    var neighbors = fsNeighbors(idx);
+    for (var i = 0; i < neighbors.length; i++) {
+      var n = neighbors[i], nt = fsGrid[n];
+      if ((nt === FS_SAND || nt === FS_WALL || nt === FS_PLANT) && Math.random() < 0.06) {
+        fsGrid[n] = FS_EMPTY;
+        fsGrid[idx] = FS_EMPTY;
+        return;
+      }
+    }
+  }
+
+  var fsFrame = 0;
+  function fsStep() {
+    var flip = (fsFrame++ & 1) === 0;
+    for (var y = FS_ROWS - 1; y >= 0; y--) {
+      var xStart = flip ? 0 : FS_COLS - 1;
+      var xEnd = flip ? FS_COLS : -1;
+      var xStep = flip ? 1 : -1;
+      for (var x = xStart; x !== xEnd; x += xStep) {
+        var idx = y * FS_COLS + x;
+        var t = fsGrid[idx];
+        if (t === FS_EMPTY || t === FS_WALL) continue;
+        if (t === FS_FIRE) { fsStepFire(idx); continue; }
+        if (t === FS_PLANT) { fsStepPlant(idx); continue; }
+
+        var moved = false;
+        if (y < FS_ROWS - 1) {
+          var belowIdx = idx + FS_COLS;
+          var belowT = fsGrid[belowIdx];
+          if (belowT === FS_EMPTY) {
+            fsGrid[belowIdx] = t; fsGrid[idx] = FS_EMPTY; idx = belowIdx; moved = true;
+          } else if (fsIsFluid(belowT) && fsDensity(t) > fsDensity(belowT)) {
+            fsGrid[belowIdx] = t; fsGrid[idx] = belowT; idx = belowIdx; moved = true;
+          } else {
+            var canDL = x > 0 && fsGrid[belowIdx - 1] === FS_EMPTY;
+            var canDR = x < FS_COLS - 1 && fsGrid[belowIdx + 1] === FS_EMPTY;
+            if (canDL || canDR) {
+              var toIdx = (canDL && canDR) ? (Math.random() < 0.5 ? belowIdx - 1 : belowIdx + 1) : (canDL ? belowIdx - 1 : belowIdx + 1);
+              fsGrid[toIdx] = t; fsGrid[idx] = FS_EMPTY; idx = toIdx; moved = true;
+            }
+          }
+        }
+        if (!moved && t !== FS_SAND) {
+          var canLeft = x > 0 && fsGrid[idx - 1] === FS_EMPTY;
+          var canRight = x < FS_COLS - 1 && fsGrid[idx + 1] === FS_EMPTY;
+          if (canLeft || canRight) {
+            var dir = (canLeft && canRight) ? (Math.random() < 0.5 ? -1 : 1) : (canLeft ? -1 : 1);
+            fsGrid[idx + dir] = t; fsGrid[idx] = FS_EMPTY; idx = idx + dir;
+          }
+        }
+
+        if (t === FS_LAVA) fsStepLava(idx);
+        else if (t === FS_ACID) fsStepAcid(idx);
+      }
+    }
+  }
+
+  function fsColorFor(t, life) {
+    switch (t) {
+      case FS_SAND: return [227, 193, 111];
+      case FS_WATER: return [47, 123, 217];
+      case FS_WALL: return [107, 107, 107];
+      case FS_FIRE:
+        var frac = Math.max(0, Math.min(1, life / 60));
+        return [Math.round(183 + 72 * frac), Math.round(28 + 213 * frac), Math.round(28 + 90 * frac)];
+      case FS_OIL: return [45, 33, 20];
+      case FS_LAVA: return [255, 106, 0];
+      case FS_PLANT: return [63, 174, 74];
+      case FS_ACID: return [198, 255, 47];
+      default: return FS_EMPTY_RGB;
+    }
+  }
+
+  function fsRender() {
+    var data = fsImageData.data;
+    for (var i = 0; i < fsGrid.length; i++) {
+      var t = fsGrid[i];
+      var rgb = t === FS_EMPTY ? FS_EMPTY_RGB : fsColorFor(t, fsLife[i]);
+      var o = i * 4;
+      data[o] = rgb[0]; data[o + 1] = rgb[1]; data[o + 2] = rgb[2]; data[o + 3] = 255;
+    }
+    fsCtx.putImageData(fsImageData, 0, 0);
+  }
+
+  function fsGridCoordsFromEvent(e) {
+    var rect = fsCanvas.getBoundingClientRect();
+    var t = e.touches && e.touches[0];
+    var clientX = t ? t.clientX : e.clientX;
+    var clientY = t ? t.clientY : e.clientY;
+    return {
+      x: Math.floor((clientX - rect.left) / rect.width * FS_COLS),
+      y: Math.floor((clientY - rect.top) / rect.height * FS_ROWS)
+    };
+  }
+
+  function fsSpawnAt(gx, gy) {
+    var radius = 3;
+    var solid = (fsSelected === FS_WALL || fsSelected === FS_EMPTY);
+    for (var dy = -radius; dy <= radius; dy++) {
+      for (var dx = -radius; dx <= radius; dx++) {
+        if (dx * dx + dy * dy > radius * radius) continue;
+        if (!solid && Math.random() > 0.55) continue;
+        var x = gx + dx, y = gy + dy;
+        if (x < 0 || x >= FS_COLS || y < 0 || y >= FS_ROWS) continue;
+        var idx = y * FS_COLS + x;
+        if (!solid && fsGrid[idx] !== FS_EMPTY) continue;
+        fsGrid[idx] = fsSelected;
+        fsLife[idx] = fsSelected === FS_FIRE ? 45 + ((Math.random() * 20) | 0) : 0;
+      }
+    }
+  }
+
+  var fsPointerDown = false;
+  var fsLastGX = 0, fsLastGY = 0;
+  function fsPointerDownHandler(e) {
+    fsPointerDown = true;
+    var p = fsGridCoordsFromEvent(e);
+    fsLastGX = p.x; fsLastGY = p.y;
+    fsSpawnAt(p.x, p.y);
+    e.preventDefault();
+  }
+  function fsPointerMoveHandler(e) {
+    if (!fsPointerDown) return;
+    var p = fsGridCoordsFromEvent(e);
+    fsLastGX = p.x; fsLastGY = p.y;
+    fsSpawnAt(p.x, p.y);
+  }
+  function fsPointerUpHandler() { fsPointerDown = false; }
+
+  fsCanvas.addEventListener('mousedown', fsPointerDownHandler);
+  document.addEventListener('mousemove', fsPointerMoveHandler);
+  document.addEventListener('mouseup', fsPointerUpHandler);
+  fsCanvas.addEventListener('touchstart', fsPointerDownHandler, { passive: false });
+  fsCanvas.addEventListener('touchmove', function(e) { fsPointerMoveHandler(e); e.preventDefault(); }, { passive: false });
+  document.addEventListener('touchend', fsPointerUpHandler);
+
+  var fsToolbar = document.getElementById('fs-toolbar');
+  FS_ELEMENTS.forEach(function(el, i) {
+    var b = document.createElement('button');
+    b.className = 'sa-btn fs-el-btn' + (el.id === fsSelected ? ' active' : '');
+    b.innerHTML = '<span class="fs-swatch" style="background:' + el.color + '"></span>' + el.name;
+    b.addEventListener('click', function() {
+      fsSelected = el.id;
+      fsToolbar.querySelectorAll('.fs-el-btn').forEach(function(btn) { btn.classList.remove('active'); });
+      b.classList.add('active');
+    });
+    fsToolbar.insertBefore(b, document.getElementById('fs-reset'));
+  });
+  document.getElementById('fs-reset').addEventListener('click', function() {
+    fsGrid.fill(FS_EMPTY);
+    fsLife.fill(0);
+  });
+
+  function fsLoop() {
+    var win = document.getElementById('fallingsand-window');
+    if (isWindowHidden(win)) { fsLoopRunning = false; return; }
+    if (fsPointerDown) fsSpawnAt(fsLastGX, fsLastGY);
+    fsStep();
+    fsRender();
+    requestAnimationFrame(fsLoop);
+  }
+  function fsStartLoopIfNeeded() {
+    if (!fsLoopRunning) { fsLoopRunning = true; requestAnimationFrame(fsLoop); }
   }
 
   function updateClock() {
