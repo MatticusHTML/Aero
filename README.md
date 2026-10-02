@@ -2,7 +2,25 @@
 
 A tiny nostalgic music player skinned like Windows XP, for jamming out to Frutiger Aero–style music. Draggable, minimizable, maximizable windows — a Windows Media Player–style player, a Notepad that scribbles a little note about whatever's currently playing, and four minigames (Sand Art, Falling Sand, Minesweeper, Memory Match) tucked in the Start Menu.
 
-No build step, no dependencies. It's one file: `index.html`.
+No build step. The desktop and original minigames live in `index.html`;
+Oriental Flirting Game runs from `games/` with a bundled Ruffle Flash player.
+
+## Oriental Flirting Game
+
+Open **Start → Oriental Flirting Game** to play inside an XP-style window.
+The game file and Ruffle 0.6.0 are hosted alongside Aero, with no external
+game embed or CDN. Click the play button to start, then use the mouse to
+move and hold the mouse button to flirt. Click repeatedly to compete with
+a rival. The game itself retains its original Japanese interface.
+
+Minimize pauses the game; restore resumes it. Close unloads it, so reopening
+starts fresh. **Restart** also resets the game. Maximize enlarges the player.
+The old online high-score service is unavailable; normal local play works.
+
+This addition needs an HTTP(S) server, such as GitHub Pages, rather than
+opening the file directly. Publish the entire `games/` folder with the site.
+See [game provenance and player details](games/oriental-flirting/README.md)
+for the source of the unchanged SWF and the emulator's license information.
 
 There's also a `CLAUDE.md` with project structure and design-system notes, if you're using Claude Code (or another AI tool) to make edits.
 

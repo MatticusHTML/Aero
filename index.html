@@ -526,6 +526,15 @@
   .mm-card.matched .mm-card-back { background: #dff5e6; }
   .mm-status { font-size: 12px; color: #333; }
 
+  #oriental-window { width: 640px; height: 440px; }
+  .oriental-toolbar {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    padding: 7px 10px; font-size: 11px; color: #333;
+    border-bottom: 1px solid #b8b5a5;
+  }
+  .oriental-frame { display: block; width: 100%; flex: 1; min-height: 0; border: 0; background: #000; }
+  .window.maximized .oriental-frame { flex: 1; }
+
   .taskbar {
     position: fixed;
     bottom: 0; left: 0; right: 0;
@@ -876,6 +885,22 @@
       <div class="mm-status" id="mm-status">Find all the pairs.</div>
     </div>
   </div>
+
+  <div class="window closed" id="oriental-window" data-closable="true" style="left: 180px; top: 120px;">
+    <div class="titlebar">
+      <span>💘 Oriental Flirting Game</span>
+      <div class="buttons">
+        <button class="min" aria-label="Minimize">_</button>
+        <button class="max" aria-label="Maximize">□</button>
+        <button class="close" aria-label="Close">✕</button>
+      </div>
+    </div>
+    <div class="oriental-toolbar">
+      <span>Hold the mouse button to flirt. Click repeatedly when a rival joins in.</span>
+      <button class="sa-btn" id="oriental-restart">↻ Restart</button>
+    </div>
+    <iframe class="oriental-frame" id="oriental-frame" title="Oriental Flirting Game" allow="autoplay; fullscreen" allowfullscreen></iframe>
+  </div>
 </div>
 
 <div class="taskbar">
@@ -915,6 +940,7 @@
     <button class="task-item" id="taskbar-fallingsand" style="display:none;">⏳ Falling Sand</button>
     <button class="task-item" id="taskbar-minesweeper" style="display:none;">💣 Minesweeper</button>
     <button class="task-item" id="taskbar-memorymatch" style="display:none;">🧠 Memory Match</button>
+    <button class="task-item" id="taskbar-oriental" style="display:none;">💘 Oriental Flirting</button>
   </div>
   <div class="tray"><span id="clock">--:--</span></div>
 </div>
@@ -928,6 +954,7 @@
   <div class="start-menu-item" id="menu-fallingsand" tabindex="0">⏳ Falling Sand</div>
   <div class="start-menu-item" id="menu-minesweeper" tabindex="0">💣 Minesweeper</div>
   <div class="start-menu-item" id="menu-memorymatch" tabindex="0">🧠 Memory Match</div>
+  <div class="start-menu-item" id="menu-oriental" role="button" tabindex="0">💘 Oriental Flirting Game</div>
   <div class="start-menu-divider"></div>
   <div class="start-menu-item" id="menu-shutdown" tabindex="0">⏻ Shut Down... <span class="hint">(nice try)</span></div>
 </div>
@@ -1281,14 +1308,34 @@
     { win: document.getElementById('sandart-window'), btn: document.getElementById('taskbar-sandart') },
     { win: document.getElementById('fallingsand-window'), btn: document.getElementById('taskbar-fallingsand') },
     { win: document.getElementById('minesweeper-window'), btn: document.getElementById('taskbar-minesweeper') },
-    { win: document.getElementById('memorymatch-window'), btn: document.getElementById('taskbar-memorymatch') }
+    { win: document.getElementById('memorymatch-window'), btn: document.getElementById('taskbar-memorymatch') },
+    { win: document.getElementById('oriental-window'), btn: document.getElementById('taskbar-oriental') }
   ];
+
+  var orientalWindow = document.getElementById('oriental-window');
+  var orientalFrame = document.getElementById('oriental-frame');
+  var orientalPage = 'games/oriental-flirting/index.html?v=20261002';
+  function syncOrientalGame() {
+    if (orientalWindow.classList.contains('closed')) {
+      if (orientalFrame.hasAttribute('src')) orientalFrame.removeAttribute('src');
+      return;
+    }
+    if (!orientalFrame.hasAttribute('src')) orientalFrame.src = orientalPage;
+    if (orientalFrame.contentWindow) {
+      orientalFrame.contentWindow.postMessage({ type: 'aero-game-visibility', hidden: isWindowHidden(orientalWindow) }, window.location.origin);
+    }
+  }
+  orientalFrame.addEventListener('load', syncOrientalGame);
+  document.getElementById('oriental-restart').addEventListener('click', function() {
+    orientalFrame.src = orientalPage;
+  });
 
   function isWindowHidden(win) {
     return win.classList.contains('minimized') || win.classList.contains('closed');
   }
 
   function updateTaskbarActiveStates() {
+    syncOrientalGame();
     windowTaskbarPairs.forEach(function(p) {
       p.btn.classList.toggle('active', p.win === focusedWindow && !isWindowHidden(p.win));
     });
@@ -1439,6 +1486,15 @@
   document.getElementById('menu-memorymatch').addEventListener('click', function() {
     openWindow(document.getElementById('memorymatch-window'), document.getElementById('taskbar-memorymatch'));
     startMenu.classList.remove('open');
+  });
+  function launchOrientalGame() {
+    openWindow(orientalWindow, document.getElementById('taskbar-oriental'));
+    startMenu.classList.remove('open');
+  }
+  var orientalMenu = document.getElementById('menu-oriental');
+  orientalMenu.addEventListener('click', launchOrientalGame);
+  orientalMenu.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); launchOrientalGame(); }
   });
   document.getElementById('menu-shutdown').addEventListener('click', function() {
     startMenu.classList.remove('open');
