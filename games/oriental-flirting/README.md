@@ -24,3 +24,7 @@ as a `file://` URL cannot load the WebAssembly player reliably.
 
 The game loads when opened from Start, keeps running when minimized, and
 returns to the same session from its taskbar button. Close and Restart reset it.
+
+The header Mute/Unmute button controls this game independently of the jukebox.
+The shared ../audio-control.js bridge applies the saved preference after loading
+and restarting the player.

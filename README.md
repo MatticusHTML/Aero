@@ -4,7 +4,17 @@ A tiny nostalgic music player skinned like Windows XP, for jamming out to Frutig
 
 No build step. The desktop and original minigames live in `index.html`;
 Oriental Flirting Game and Office Kissing run from `games/` with a shared,
-bundled Ruffle Flash player.
+bundled Ruffle Flash player. Penguin Diner 2 uses its locally bundled HTML5 runtime.
+
+## Penguin Diner 2
+
+Open **Start → Penguin Diner 2**. Seat customers, take orders, serve food and
+collect tips. The HTML5 game and all its assets are hosted directly on Aero.
+Progress is saved in your browser. See [source and asset details](games/penguin-diner-2/README.md).
+
+All three games with audio have **Mute/Unmute** buttons beside their controls.
+Each setting is remembered independently and leaves the jukebox music untouched.
+Minimize keeps games running; their taskbar buttons restore the same session.
 
 ## Office Kissing
 

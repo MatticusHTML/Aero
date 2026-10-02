@@ -1,0 +1,1463 @@
+<Workbook xmlns:c="urn:schemas-microsoft-com:office:component:spreadsheet" xmlns:html="http://www.w3.org/TR/REC-html40" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:x2="http://schemas.microsoft.com/office/excel/2003/xml" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns:x="urn:schemas-microsoft-com:office:excel">
+    <OfficeDocumentSettings xmlns="urn:schemas-microsoft-com:office:office">
+        <Colors>
+            <Color>
+                <Index>3</Index>
+                <RGB>#000000</RGB>
+            </Color>
+            <Color>
+                <Index>4</Index>
+                <RGB>#c0c0c0</RGB>
+            </Color>
+            <Color>
+                <Index>5</Index>
+                <RGB>#ff0000</RGB>
+            </Color>
+            <Color>
+                <Index>6</Index>
+                <RGB>#ffcc99</RGB>
+            </Color>
+            <Color>
+                <Index>7</Index>
+                <RGB>#ffff99</RGB>
+            </Color>
+        </Colors>
+    </OfficeDocumentSettings>
+    <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+        <WindowHeight>9000</WindowHeight>
+        <WindowWidth>13860</WindowWidth>
+        <WindowTopX>240</WindowTopX>
+        <WindowTopY>75</WindowTopY>
+        <ProtectStructure>False</ProtectStructure>
+        <ProtectWindows>False</ProtectWindows>
+    </ExcelWorkbook>
+    <Styles>
+        <Style ss:ID="Default" ss:Name="Default"/>
+        <Style ss:ID="Result" ss:Name="Result">
+            <Font ss:Bold="1" ss:Italic="1" ss:Underline="Single"/>
+        </Style>
+        <Style ss:ID="Result2" ss:Name="Result2">
+            <Font ss:Bold="1" ss:Italic="1" ss:Underline="Single"/>
+            <NumberFormat ss:Format="Currency"/>
+        </Style>
+        <Style ss:ID="Heading" ss:Name="Heading">
+            <Alignment ss:Horizontal="Center"/>
+            <Font ss:Bold="1" ss:Italic="1" ss:Size="16"/>
+        </Style>
+        <Style ss:ID="Heading1" ss:Name="Heading1">
+            <Alignment ss:Horizontal="Center" ss:Rotate="90"/>
+            <Font ss:Bold="1" ss:Italic="1" ss:Size="16"/>
+        </Style>
+        <Style ss:ID="co1"/>
+        <Style ss:ID="ta1"/>
+        <Style ss:ID="ce1">
+            <NumberFormat ss:Format="General"/>
+        </Style>
+        <Style ss:ID="ce2">
+            <Borders/>
+        </Style>
+        <Style ss:ID="ce3">
+            <Alignment ss:Horizontal="Right" ss:WrapText="1"/>
+            <Font ss:FontName="Times New Roman" ss:Size="10"/>
+            <Interior ss:Color="#ffcc99" ss:Pattern="Solid"/>
+        </Style>
+        <Style ss:ID="ce4">
+            <Alignment ss:Horizontal="Right" ss:WrapText="1"/>
+            <Font ss:FontName="Times New Roman" ss:Size="10"/>
+            <Interior ss:Color="#ffff99" ss:Pattern="Solid"/>
+        </Style>
+        <Style ss:ID="ce5">
+            <Borders>
+                <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="0" ss:Color="#000000"/>
+                <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="0" ss:Color="#000000"/>
+            </Borders>
+            <Interior ss:Color="#ffcc99" ss:Pattern="Solid"/>
+        </Style>
+        <Style ss:ID="ce6">
+            <Borders>
+                <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="0" ss:Color="#000000"/>
+                <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="0" ss:Color="#000000"/>
+            </Borders>
+            <Interior ss:Color="#ffff99" ss:Pattern="Solid"/>
+        </Style>
+        <Style ss:ID="ce7">
+            <Borders>
+                <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="0" ss:Color="#000000"/>
+                <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="0" ss:Color="#000000"/>
+            </Borders>
+            <Font ss:Color="#000000"/>
+            <Interior ss:Color="#ffff99" ss:Pattern="Solid"/>
+        </Style>
+        <Style ss:ID="ce8">
+            <Borders>
+                <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="0" ss:Color="#000000"/>
+                <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="0" ss:Color="#000000"/>
+                <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="0" ss:Color="#000000"/>
+            </Borders>
+            <Interior ss:Color="#ffff99" ss:Pattern="Solid"/>
+        </Style>
+        <Style ss:ID="ce9">
+            <Borders>
+                <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="0" ss:Color="#000000"/>
+                <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="0" ss:Color="#000000"/>
+                <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="0" ss:Color="#000000"/>
+            </Borders>
+            <Interior ss:Color="#ffcc99" ss:Pattern="Solid"/>
+        </Style>
+        <Style ss:ID="ce10">
+            <Interior ss:Color="#ffcc99" ss:Pattern="Solid"/>
+        </Style>
+        <Style ss:ID="ce11">
+            <Interior ss:Color="#ffff99" ss:Pattern="Solid"/>
+        </Style>
+        <Style ss:ID="ce12">
+            <Font ss:Color="#000000"/>
+            <Interior ss:Color="#ffff99" ss:Pattern="Solid"/>
+        </Style>
+        <Style ss:ID="ta_extref"/>
+    </Styles>
+    <ss:Worksheet ss:Name="Sheet1">
+        <Table ss:StyleID="ta1">
+            <Column ss:Span="1" ss:Width="64.2614"/>
+            <Column ss:Index="3" ss:Width="64.2614"/>
+            <Column ss:Span="1" ss:Width="64.2614"/>
+            <Column ss:Index="6" ss:Width="64.2614"/>
+            <Column ss:Span="3" ss:Width="64.2614"/>
+            <Row ss:Height="11.9055">
+                <Cell ss:Index="3" ss:StyleID="Default"/>
+                <Cell ss:StyleID="Default"/>
+                <Cell ss:StyleID="Default"/>
+                <Cell ss:StyleID="Default"/>
+                <Cell ss:StyleID="Default"/>
+                <Cell ss:StyleID="Default"/>
+                <Cell ss:StyleID="Default"/>
+                <Cell ss:StyleID="Default"/>
+            </Row>
+            <Row ss:Height="11.9055">
+                <Cell ss:Index="3" ss:StyleID="Default">
+                    <Data ss:Type="String">Goals</Data>
+                </Cell>
+                <Cell ss:StyleID="ce2">
+                    <Data ss:Type="String">Max groups</Data>
+                </Cell>
+                <Cell ss:StyleID="ce2">
+                    <Data ss:Type="String">Appear delay</Data>
+                </Cell>
+                <Cell ss:StyleID="ce2">
+                    <Data ss:Type="String">Mood change speed</Data>
+                </Cell>
+                <Cell ss:StyleID="ce2">
+                    <Data ss:Type="String">Double</Data>
+                </Cell>
+                <Cell ss:StyleID="ce2">
+                    <Data ss:Type="String">Couple</Data>
+                </Cell>
+                <Cell ss:StyleID="ce2">
+                    <Data ss:Type="String">Mood</Data>
+                </Cell>
+                <Cell ss:StyleID="ce2">
+                    <Data ss:Type="String">worse mood chance</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="12.189">
+                <Cell>
+                    <Data ss:Type="String">day 1</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">no upgrades</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">70</Data>
+                </Cell>
+                <Cell ss:StyleID="ce3">
+                    <Data ss:Type="Number">4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce9">
+                    <Data ss:Type="Number">250</Data>
+                </Cell>
+                <Cell ss:StyleID="ce10">
+                    <Data ss:Type="Number">450</Data>
+                </Cell>
+                <Cell ss:StyleID="ce9">
+                    <Data ss:Type="Number">0</Data>
+                </Cell>
+                <Cell ss:StyleID="ce9">
+                    <Data ss:Type="Number">0</Data>
+                </Cell>
+                <Cell ss:StyleID="ce9">
+                    <Data ss:Type="Number">3</Data>
+                </Cell>
+                <Cell ss:StyleID="ce9">
+                    <Data ss:Type="Number">0</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="12.189">
+                <Cell>
+                    <Data ss:Type="String">day 2</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">no upgrades</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">75</Data>
+                </Cell>
+                <Cell ss:StyleID="ce4">
+                    <Data ss:Type="Number">5</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">150</Data>
+                </Cell>
+                <Cell ss:StyleID="ce11">
+                    <Data ss:Type="Number">350</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="Number">0</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="Number">0</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">3</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="12.189">
+                <Cell>
+                    <Data ss:Type="String">day 3</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 1</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">80</Data>
+                </Cell>
+                <Cell ss:StyleID="ce4">
+                    <Data ss:Type="Number">5</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">150</Data>
+                </Cell>
+                <Cell ss:StyleID="ce11">
+                    <Data ss:Type="Number">350</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="Number">0</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="Number">0</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">3</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="12.189">
+                <Cell>
+                    <Data ss:Type="String">day 4</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 1</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">85</Data>
+                </Cell>
+                <Cell ss:StyleID="ce3">
+                    <Data ss:Type="Number">5</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">150</Data>
+                </Cell>
+                <Cell ss:StyleID="ce10">
+                    <Data ss:Type="Number">340</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">3</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="12.189">
+                <Cell>
+                    <Data ss:Type="String">day 5</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 1, entertainment 1</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">90</Data>
+                </Cell>
+                <Cell ss:StyleID="ce3">
+                    <Data ss:Type="Number">5</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">150</Data>
+                </Cell>
+                <Cell ss:StyleID="ce10">
+                    <Data ss:Type="Number">340</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">3</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="12.189">
+                <Cell>
+                    <Data ss:Type="String">day 6</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 1, entertainment 1</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">100</Data>
+                </Cell>
+                <Cell ss:StyleID="ce4">
+                    <Data ss:Type="Number">5</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">150</Data>
+                </Cell>
+                <Cell ss:StyleID="ce11">
+                    <Data ss:Type="Number">340</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">3</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="12.189">
+                <Cell>
+                    <Data ss:Type="String">day 7</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 1, entertainment 1, table 1</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">120</Data>
+                </Cell>
+                <Cell ss:StyleID="ce4">
+                    <Data ss:Type="Number">5</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">150</Data>
+                </Cell>
+                <Cell ss:StyleID="ce11">
+                    <Data ss:Type="Number">340</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">3</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="12.189">
+                <Cell>
+                    <Data ss:Type="String">day 8</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 1, entertainment 1, table 1</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">125</Data>
+                </Cell>
+                <Cell ss:StyleID="ce3">
+                    <Data ss:Type="Number">5</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">130</Data>
+                </Cell>
+                <Cell ss:StyleID="ce10">
+                    <Data ss:Type="Number">330</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.2</Data>
+                </Cell>
+            </Row>
+            <Row ss:Index="11" ss:Height="12.189">
+                <Cell>
+                    <Data ss:Type="String">day 9</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 1, entertainment 1, table 1, chef 1</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">135</Data>
+                </Cell>
+                <Cell ss:StyleID="ce3">
+                    <Data ss:Type="Number">5</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">130</Data>
+                </Cell>
+                <Cell ss:StyleID="ce10">
+                    <Data ss:Type="Number">330</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.2</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="12.189">
+                <Cell>
+                    <Data ss:Type="String">day 10</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 1, entertainment 1, table 1, chef 1, decorations 1</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">145</Data>
+                </Cell>
+                <Cell ss:StyleID="ce4">
+                    <Data ss:Type="Number">6</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">130</Data>
+                </Cell>
+                <Cell ss:StyleID="ce11">
+                    <Data ss:Type="Number">330</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="12.189">
+                <Cell>
+                    <Data ss:Type="String">day 11</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 1, entertainment 1, table 1, chef 1, decorations 1</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">145</Data>
+                </Cell>
+                <Cell ss:StyleID="ce4">
+                    <Data ss:Type="Number">6</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">130</Data>
+                </Cell>
+                <Cell ss:StyleID="ce11">
+                    <Data ss:Type="Number">330</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="12.189">
+                <Cell>
+                    <Data ss:Type="String">day 12</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 1, entertainment 1, table 1, chef 1, decorations 1, seats 1</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">150</Data>
+                </Cell>
+                <Cell ss:StyleID="ce3">
+                    <Data ss:Type="Number">6</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">130</Data>
+                </Cell>
+                <Cell ss:StyleID="ce10">
+                    <Data ss:Type="Number">320</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="12.189">
+                <Cell>
+                    <Data ss:Type="String">day 13</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 1, entertainment 1, table 1, chef 1, decorations 1, seats 1</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">150</Data>
+                </Cell>
+                <Cell ss:StyleID="ce3">
+                    <Data ss:Type="Number">6</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">130</Data>
+                </Cell>
+                <Cell ss:StyleID="ce10">
+                    <Data ss:Type="Number">320</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="12.189">
+                <Cell>
+                    <Data ss:Type="String">day 14</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 2, entertainment 1, table 1, chef 1, decorations 1, seats 1</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">155</Data>
+                </Cell>
+                <Cell ss:StyleID="ce3">
+                    <Data ss:Type="Number">6</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">130</Data>
+                </Cell>
+                <Cell ss:StyleID="ce10">
+                    <Data ss:Type="Number">320</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="12.189">
+                <Cell>
+                    <Data ss:Type="String">day 15</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 2, entertainment 1, table 1, chef 1, decorations 1, seats 1</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">155</Data>
+                </Cell>
+                <Cell ss:StyleID="ce3">
+                    <Data ss:Type="Number">6</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">130</Data>
+                </Cell>
+                <Cell ss:StyleID="ce10">
+                    <Data ss:Type="Number">320</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="12.189">
+                <Cell>
+                    <Data ss:Type="String">day 16</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 2, entertainment 2, table 1, chef 1, decorations 1, seats 1</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">160</Data>
+                </Cell>
+                <Cell ss:StyleID="ce4">
+                    <Data ss:Type="Number">6</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">130</Data>
+                </Cell>
+                <Cell ss:StyleID="ce11">
+                    <Data ss:Type="Number">310</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="12.189">
+                <Cell>
+                    <Data ss:Type="String">day 17</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 2, entertainment 2, table 1, chef 1, decorations 1, seats 1</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">160</Data>
+                </Cell>
+                <Cell ss:StyleID="ce4">
+                    <Data ss:Type="Number">6</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">130</Data>
+                </Cell>
+                <Cell ss:StyleID="ce11">
+                    <Data ss:Type="Number">310</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="11.9055">
+                <Cell>
+                    <Data ss:Type="String">day 18</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 2, entertainment 2, table 2, chef 1, decorations 1, seats 1</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">170</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">6</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">130</Data>
+                </Cell>
+                <Cell ss:StyleID="ce10">
+                    <Data ss:Type="Number">310</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="11.9055">
+                <Cell>
+                    <Data ss:Type="String">day 19</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 2, entertainment 2, table 2, chef 1, decorations 1, seats 1</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">180</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">6</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">120</Data>
+                </Cell>
+                <Cell ss:StyleID="ce11">
+                    <Data ss:Type="Number">300</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.5</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+            </Row>
+            <Row ss:Index="22" ss:Height="11.9055">
+                <Cell>
+                    <Data ss:Type="String">day 20</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 2, entertainment 2, table 2, chef 2, decorations 1, seats 1</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">220</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">7</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">120</Data>
+                </Cell>
+                <Cell ss:StyleID="ce10">
+                    <Data ss:Type="Number">300</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.5</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="11.9055">
+                <Cell>
+                    <Data ss:Type="String">day 21</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 2, entertainment 2, table 2, chef 2, decorations 1+2+3, seats 1</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">240</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">7</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">120</Data>
+                </Cell>
+                <Cell ss:StyleID="ce10">
+                    <Data ss:Type="Number">300</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.5</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="11.9055">
+                <Cell>
+                    <Data ss:Type="String">day 22</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 2, entertainment 2, table 2, chef 2, decorations 1+2+3, seats 1</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">240</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">7</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">120</Data>
+                </Cell>
+                <Cell ss:StyleID="ce10">
+                    <Data ss:Type="Number">300</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.5</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="11.9055">
+                <Cell>
+                    <Data ss:Type="String">day 23</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 2, entertainment 2, table 2, chef 2, decorations 1+2+3, seats 2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">250</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">7</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">120</Data>
+                </Cell>
+                <Cell ss:StyleID="ce11">
+                    <Data ss:Type="Number">290</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.5</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="11.9055">
+                <Cell>
+                    <Data ss:Type="String">day 24</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 2, entertainment 2, table 2, chef 2, decorations 1+2+3, seats 2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">250</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">7</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">120</Data>
+                </Cell>
+                <Cell ss:StyleID="ce11">
+                    <Data ss:Type="Number">290</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.5</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="11.9055">
+                <Cell>
+                    <Data ss:Type="String">day 25</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 3, entertainment 2, table 2, chef 2, decorations 1+2+3, seats 2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">260</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">7</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">120</Data>
+                </Cell>
+                <Cell ss:StyleID="ce11">
+                    <Data ss:Type="Number">290</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.5</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="11.9055">
+                <Cell>
+                    <Data ss:Type="String">day 26</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 3, entertainment 2, table 2, chef 2, decorations 1+2+3, seats 2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">260</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">7</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">120</Data>
+                </Cell>
+                <Cell ss:StyleID="ce11">
+                    <Data ss:Type="Number">290</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.5</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="11.9055">
+                <Cell>
+                    <Data ss:Type="String">day 27</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 3, entertainment 3, table 2, chef 2, decorations 1+2+3, seats 2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">270</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">7</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">120</Data>
+                </Cell>
+                <Cell ss:StyleID="ce11">
+                    <Data ss:Type="Number">290</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.5</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="11.9055">
+                <Cell>
+                    <Data ss:Type="String">day 28</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 3, entertainment 3, table 2, chef 2, decorations 1+2+3, seats 2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">270</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">7</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">120</Data>
+                </Cell>
+                <Cell ss:StyleID="ce11">
+                    <Data ss:Type="Number">290</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.5</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="11.9055">
+                <Cell>
+                    <Data ss:Type="String">day 29</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 3, entertainment 3, table 2, chef 2, decorations 1+2+3, seats 2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">280</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">7</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">120</Data>
+                </Cell>
+                <Cell ss:StyleID="ce11">
+                    <Data ss:Type="Number">290</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.5</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+            </Row>
+            <Row ss:Index="32" ss:Height="11.9055">
+                <Cell>
+                    <Data ss:Type="String">day 30</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 3, entertainment 3, table 3, chef 2, decorations 1+2+3, seats 2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">280</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">7</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">120</Data>
+                </Cell>
+                <Cell ss:StyleID="ce10">
+                    <Data ss:Type="Number">280</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.5</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="11.9055">
+                <Cell>
+                    <Data ss:Type="String">day 31</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 3, entertainment 3, table 3, chef 2, decorations 1+2+3, seats 2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">290</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">8</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">120</Data>
+                </Cell>
+                <Cell ss:StyleID="ce11">
+                    <Data ss:Type="Number">280</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.5</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="11.9055">
+                <Cell>
+                    <Data ss:Type="String">day 32</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 3, entertainment 3, table 3, chef 3, decorations 1+2+3, seats 2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">290</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">8</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">120</Data>
+                </Cell>
+                <Cell ss:StyleID="ce10">
+                    <Data ss:Type="Number">270</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.5</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="11.9055">
+                <Cell>
+                    <Data ss:Type="String">day 33</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 3, entertainment 3, table 3, chef 3, decorations 1+2+3, seats 2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">300</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">8</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">120</Data>
+                </Cell>
+                <Cell ss:StyleID="ce10">
+                    <Data ss:Type="Number">270</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.5</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="11.9055">
+                <Cell>
+                    <Data ss:Type="String">day 34</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 3, entertainment 3, table 3, chef 3, decorations 1+2+3+4+5+6, seats 2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">300</Data>
+                </Cell>
+                <Cell ss:StyleID="ce7">
+                    <Data ss:Type="Number">8</Data>
+                </Cell>
+                <Cell ss:StyleID="ce7">
+                    <Data ss:Type="Number">120</Data>
+                </Cell>
+                <Cell ss:StyleID="ce12">
+                    <Data ss:Type="Number">260</Data>
+                </Cell>
+                <Cell ss:StyleID="ce7">
+                    <Data ss:Type="Number">0.5</Data>
+                </Cell>
+                <Cell ss:StyleID="ce7">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce7">
+                    <Data ss:Type="Number">2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce7">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="11.9055">
+                <Cell>
+                    <Data ss:Type="String">day 35</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 3, entertainment 3, table 3, chef 3, decorations 1+2+3+4+5+6, seats 2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">350</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">8</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">120</Data>
+                </Cell>
+                <Cell ss:StyleID="ce10">
+                    <Data ss:Type="Number">250</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.5</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="11.9055">
+                <Cell>
+                    <Data ss:Type="String">day 36</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 3, entertainment 3, table 3, chef 3, decorations 1+2+3+4+5+6, seats 2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">380</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">8</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">120</Data>
+                </Cell>
+                <Cell ss:StyleID="ce11">
+                    <Data ss:Type="Number">240</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.5</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="11.9055">
+                <Cell>
+                    <Data ss:Type="String">day 37</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 3, entertainment 3, table 3, chef 3, decorations 1+2+3+4+5+6, seats 3</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">400</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">8</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">100</Data>
+                </Cell>
+                <Cell ss:StyleID="ce10">
+                    <Data ss:Type="Number">230</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.5</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">2</Data>
+                </Cell>
+                <Cell ss:StyleID="ce5">
+                    <Data ss:Type="Number">0.3</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="11.9055">
+                <Cell>
+                    <Data ss:Type="String">day 38</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 3, entertainment 3, table 3, chef 3, decorations 1+2+3+4+5+6, seats 3</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">450</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">9</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">100</Data>
+                </Cell>
+                <Cell ss:StyleID="ce11">
+                    <Data ss:Type="Number">220</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.5</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">1</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.2</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="11.9055">
+                <Cell>
+                    <Data ss:Type="String">day 39</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 3, entertainment 3, table 3, chef 3, decorations 1+2+3+4+5+6, seats 3</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">500</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">9</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">100</Data>
+                </Cell>
+                <Cell ss:StyleID="ce11">
+                    <Data ss:Type="Number">220</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.5</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">1</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.2</Data>
+                </Cell>
+            </Row>
+            <Row ss:Height="11.9055">
+                <Cell>
+                    <Data ss:Type="String">day 40</Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String">skates 3, entertainment 3, table 3, chef 3, decorations 1+2+3+4+5+6, seats 3</Data>
+                </Cell>
+                <Cell ss:StyleID="ce1">
+                    <Data ss:Type="Number">550</Data>
+                </Cell>
+                <Cell ss:StyleID="ce8">
+                    <Data ss:Type="Number">9</Data>
+                </Cell>
+                <Cell ss:StyleID="ce8">
+                    <Data ss:Type="Number">100</Data>
+                </Cell>
+                <Cell ss:StyleID="ce11">
+                    <Data ss:Type="Number">220</Data>
+                </Cell>
+                <Cell ss:StyleID="ce8">
+                    <Data ss:Type="Number">0.5</Data>
+                </Cell>
+                <Cell ss:StyleID="ce8">
+                    <Data ss:Type="Number">0.4</Data>
+                </Cell>
+                <Cell ss:StyleID="ce8">
+                    <Data ss:Type="Number">1</Data>
+                </Cell>
+                <Cell ss:StyleID="ce6">
+                    <Data ss:Type="Number">0.2</Data>
+                </Cell>
+            </Row>
+        </Table>
+        <x:WorksheetOptions/>
+    </ss:Worksheet>
+    <ss:Worksheet ss:Name="Sheet2">
+        <Table ss:StyleID="ta1">
+            <Column ss:Width="64.2614"/>
+            <Row ss:Height="11.9055">
+                <Cell ss:Index="1"/>
+            </Row>
+        </Table>
+        <x:WorksheetOptions/>
+    </ss:Worksheet>
+    <ss:Worksheet ss:Name="Sheet3">
+        <Table ss:StyleID="ta1">
+            <Column ss:Width="64.2614"/>
+            <Row ss:Height="11.9055">
+                <Cell ss:Index="1"/>
+            </Row>
+        </Table>
+        <x:WorksheetOptions/>
+    </ss:Worksheet>
+</Workbook>

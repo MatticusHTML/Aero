@@ -20,6 +20,12 @@
       player = window.RufflePlayer.newest().createPlayer();
       document.getElementById('game').appendChild(player);
       await player.ruffle().load({ url: 'game.swf' });
+      var audibleVolume = player.ruffle().volume;
+      window.AeroGameAudio.bind(function (muted) {
+        var api = player.ruffle();
+        if (muted && api.volume > 0) audibleVolume = api.volume;
+        api.volume = muted ? 0 : audibleVolume;
+      });
       status.hidden = true;
     } catch (error) {
       document.getElementById('status-text').textContent = 'The game could not load. Please try again.';

@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<catalog>
+    <info><![CDATA[Dear "Antarctic Accessories" clients!\n\nAntarctic winter is coming, and South Pole citizens are waiting for the wonders this chilly season will bring. And it sure will – with our new collections of diner furniture, decorations, haute-couture uniforms, special party sets and more brought to you exclusively by "Antarctic Accessories"!\n\nLook through the pages of the catalog, choose your upgrade, then click BUY button. Your balance is shown at the bottom of the screen.\n\nPurchased upgrade will be immediately installed by our top class team of professionals.\n\nUse stars to purchase exclusive items like uniforms and party themes.\n\nHappy shopping and best wishes from all of us at "Antarctic Accessories"!\n\nSincerely yours,\nFrederick Flipper\n"Antarctic Accessories" chief editor]]></info>
+    <page num="0">
+        <standardItemSlot itemType="skates" level="1" x="326" y="192">
+            <description>A pair of simple, good skates: comfy and durable.</description>
+        </standardItemSlot>
+        <standardItemSlot itemType="skates" level="2" x="326" y="282">
+            <description>Sharp-bladed and stylish: a figure skater's favorite.</description>
+        </standardItemSlot>
+        <standardItemSlot itemType="skates" level="3" x="326" y="372">
+            <description>Speedskating model! The fastest thing on ice!</description>
+        </standardItemSlot>
+    </page>
+    <page num="1">
+        <standardItemSlot itemType="tables" level="1" x="56" y="192">
+            <description>Top of the line - made of finest glacier plates!</description>
+        </standardItemSlot>
+        <standardItemSlot itemType="tables" level="2" x="56" y="282">
+            <description> + 1 extra table = more customers!</description>
+        </standardItemSlot>
+        <standardItemSlot itemType="tables" level="3" x="56" y="372">
+            <description> + 2 extra tables = even more profit! Yay!</description>
+        </standardItemSlot>
+        <standardItemSlot itemType="seats" level="1" x="326" y="192">
+            <description>A real posterior pleaser!</description>
+        </standardItemSlot>
+        <standardItemSlot itemType="seats" level="2" x="326" y="282">
+            <description>Style and comfort combine.</description>
+        </standardItemSlot>
+        <standardItemSlot itemType="seats" level="3" x="326" y="372">
+            <description>The uber chair! The comfiest of them all!</description>
+        </standardItemSlot>
+    </page>
+    <page num="2">
+        <standardItemSlot itemType="chefs" level="1" x="56" y="192">
+            <description>Hire local Chef Pete to help you in the kitchen.</description>
+        </standardItemSlot>
+        <standardItemSlot itemType="chefs" level="2" x="56" y="282">
+            <description>Recruit Chef Alby for fast, high quality dishes!</description>
+        </standardItemSlot>
+        <standardItemSlot itemType="chefs" level="3" x="56" y="372">
+            <description>Sushi-guru Chef Sully is the best of the best.</description>
+        </standardItemSlot>
+        <standardItemSlot itemType="entertainments" level="1" x="326" y="192">
+            <description>Tune in to Antarctic radio entertainment.</description>
+        </standardItemSlot>
+        <standardItemSlot itemType="entertainments" level="2" x="326" y="282">
+            <description>Breaking news &amp; talkshows will keep customers happy.</description>
+        </standardItemSlot>
+        <standardItemSlot itemType="entertainments" level="3" x="326" y="372">
+            <description>Get ready for a full-house with Antarctica's best juggler!</description>
+        </standardItemSlot>
+    </page>
+    <page num="3">
+        <standardItemSlot itemType="tableClothDecoration" level="1" x="56" y="192">
+            <description>Table cloths: a must-have for any restaurant.</description>
+        </standardItemSlot>
+        <standardItemSlot itemType="pictureDecoration" level="1" x="56" y="282">
+            <description>Fish oil paintings by the famous Leonardo Pengiunci!</description>
+        </standardItemSlot>
+        <standardItemSlot itemType="curtainsDecoration" level="1" x="56" y="372">
+            <description>Curtains protect diners from chilly winds, with style.</description>
+        </standardItemSlot>
+        <standardItemSlot itemType="lightsDecoration" level="1" x="326" y="192">
+            <description>Pure ice lights look better than bohemian crystal!</description>
+        </standardItemSlot>
+        <standardItemSlot itemType="clocksDecoration" level="1" x="326" y="282">
+            <description>The most stylish timepiece in Antarctica!</description>
+        </standardItemSlot>
+        <standardItemSlot itemType="carpetDecoration" level="1" x="326" y="372">
+            <description>This beautiful, ice-drawn carpet will add warmth.</description>
+        </standardItemSlot>
+    </page>
+    <page num="4">
+        <starItemSlot price="0" itemType="uniform_standard" x="56" y="192">
+            <description>Back to basics! It's your standard uniform.</description>
+        </starItemSlot>
+        <starItemSlot price="2" itemType="uniform_bakerStreet" x="56" y="282">
+            <description>Just in from Baker street.</description>
+        </starItemSlot>
+        <starItemSlot price="2" itemType="uniform_sushiQueen" x="56" y="372">
+            <description>Sushi queen.</description>
+        </starItemSlot>
+        <starItemSlot price="2" itemType="uniform_paris" x="326" y="102">
+            <description>A la Paris!</description>
+        </starItemSlot>
+        <starItemSlot price="2" itemType="uniform_hats" x="326" y="192">
+            <description>Hats off to Penny!</description>
+        </starItemSlot>
+        <starItemSlot price="2" itemType="uniform_carribean" x="326" y="282">
+            <description>Caribbean beauty.</description>
+        </starItemSlot>
+        <starItemSlot price="2" itemType="uniform_blackTie" x="326" y="372">
+            <description>Miss Black Tie.</description>
+        </starItemSlot>
+    </page>
+    <page num="5">
+        <starItemSlot price="0" itemType="theme_standard" x="56" y="192">
+            <description>Back to basics! It's your standard theme.</description>
+        </starItemSlot>
+        <starItemSlot price="5" itemType="theme_eco" x="56" y="282">
+            <description>Have a green party to save our planet!</description>
+        </starItemSlot>
+        <starItemSlot price="5" itemType="theme_hats" x="56" y="372">
+            <description>Welcome to the craziest hat party in Antarctica!</description>
+        </starItemSlot>
+        <starItemSlot price="5" itemType="theme_beach" x="326" y="192">
+            <description>Aloha South Pole! Everybody show your suntan!</description>
+        </starItemSlot>
+        <starItemSlot price="5" itemType="theme_pirates" x="326" y="282">
+            <description>Yo Ho Ho! Time to raise the Jolly Roger!</description>
+        </starItemSlot>
+        <starItemSlot price="5" itemType="theme_ball" x="326" y="372">
+            <description>For the chosen few, by invite only!</description>
+        </starItemSlot>
+    </page>
+</catalog>

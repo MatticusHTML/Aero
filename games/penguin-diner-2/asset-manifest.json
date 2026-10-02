@@ -1,0 +1,582 @@
+{
+  "retrieved": "2026-10-02",
+  "source": "https://html5.gamedistribution.com/rvvASMiM/715bfa195dd64b179c9a9f6d36c99534/",
+  "runtimeVersion": 96,
+  "files": [
+    {
+      "path": "assets/animations/guest-animation_ske.json",
+      "bytes": 12318,
+      "sha256": "2b70f4996f19f4266ac522118b2602b1264763875b4583b29758b4d6fd1f88eb"
+    },
+    {
+      "path": "assets/animations/guest-animation_tex.json",
+      "bytes": 1368,
+      "sha256": "2f8b03dbddea0e546d70e71fccaf0ea0aff21b8960c19e52689bcb7b2030ca76"
+    },
+    {
+      "path": "assets/animations/guest-animation_tex.png",
+      "bytes": 45135,
+      "sha256": "d2679c423cb3197d2e7bf0691ef874ae0e6fd8e4bcb948aca39e1f63ad563648"
+    },
+    {
+      "path": "assets/app.min.js",
+      "bytes": 502115,
+      "sha256": "33d6b67025aa3578f2ed2e910b857652716ce708a19d0945fe39e08ed36d008f"
+    },
+    {
+      "path": "assets/css/fonts.css",
+      "bytes": 530,
+      "sha256": "e73adfb2fb6076b4c7b630ff116a6d08fb893dd796c1f97756ee6c119d9c8ea7"
+    },
+    {
+      "path": "assets/css/style.css",
+      "bytes": 1261,
+      "sha256": "6df255a6d984686b788f979be8e366395b167ab4caad89922534d6c63e000da9"
+    },
+    {
+      "path": "assets/data/catalog_config_xml_class.xml",
+      "bytes": 7320,
+      "sha256": "4ac3f02ec5897058167c524f36569843380bba9946faaea0b920bcfa651cf1fa"
+    },
+    {
+      "path": "assets/data/comic_xml_class.xml",
+      "bytes": 3889,
+      "sha256": "542b1ab391557214df4ae29c9b2b41c89e8aa9c4b6b7e6a7e7a09a4d1beb2589"
+    },
+    {
+      "path": "assets/data/config_xml_class.xml",
+      "bytes": 12785,
+      "sha256": "b43c8751ca629975c8ef500b3db5fac073c8941e2b845c716bf60f049603bc5a"
+    },
+    {
+      "path": "assets/data/levels_config_xml_class.xml",
+      "bytes": 59466,
+      "sha256": "6d5b13a49df0692b5a1bc15c1ad2b0f58ebcf9dc6933ae0f0c8e6be6e2016ead"
+    },
+    {
+      "path": "assets/fonts/arial.ttf",
+      "bytes": 25496,
+      "sha256": "c40484eab0a7113ebd393d3e0fcb9eca258c5fe437f9ecdbe5efc608991ba2a7"
+    },
+    {
+      "path": "assets/fonts/arialbold.ttf",
+      "bytes": 8908,
+      "sha256": "2eb853bc6f07567d646833b2b4a4e0d1929a3f6196a2dd2ca0eaf23cb6adc152"
+    },
+    {
+      "path": "assets/fonts/cheesebu.ttf",
+      "bytes": 42020,
+      "sha256": "44512e5bd418259b148219f3a577f8a99e75f11efe6b89ff63adba5b73141973"
+    },
+    {
+      "path": "assets/fonts/letteromatic.ttf",
+      "bytes": 47904,
+      "sha256": "4111c93f3c1eda6d177f8cd117c115e5ae310e137a1eb995817ca9b7645efcdf"
+    },
+    {
+      "path": "assets/fonts/tahoma.ttf",
+      "bytes": 25868,
+      "sha256": "0ed319eeba8537739233e856080bf78ed5eab34535902d4f341e54c9f110895c"
+    },
+    {
+      "path": "assets/images/apple-app-store-badge.png",
+      "bytes": 11103,
+      "sha256": "3081e1b19ea13d17a5084bee2380233732c2d62e3f389520297f616defe79572"
+    },
+    {
+      "path": "assets/images/background_map@2x.png",
+      "bytes": 32843,
+      "sha256": "c5d8ea2727996a839925ebb2d9b159b0c87ceebcc76cb0f8d39423ec2af2e837"
+    },
+    {
+      "path": "assets/images/cloths@2x.json",
+      "bytes": 39703,
+      "sha256": "e4ee50a4ca0e8f142219b30ce16a9ec96f7e6266cc518b4d0197032b05e626a7"
+    },
+    {
+      "path": "assets/images/cloths@2x.png",
+      "bytes": 174952,
+      "sha256": "71deaa6579a091523bc26518081e6e76a0467e446722389e501f86997b402a32"
+    },
+    {
+      "path": "assets/images/commics/comic_page_0.png",
+      "bytes": 28807,
+      "sha256": "4076344780840fd54c314eabfd1dc39683cd72280f42f8e46d6bf1514e997998"
+    },
+    {
+      "path": "assets/images/commics/comic_page_1.png",
+      "bytes": 69576,
+      "sha256": "8843d6fb12f38e8677db95c602825c8890d56aaf9ffecb85e1815f03e674c3d2"
+    },
+    {
+      "path": "assets/images/commics/comic_page_10.png",
+      "bytes": 77528,
+      "sha256": "272d1ee0e1599322fc679ba68a369f910ee7193f0887fe9492046d3510484388"
+    },
+    {
+      "path": "assets/images/commics/comic_page_11.png",
+      "bytes": 71905,
+      "sha256": "75d9a66078228bec0c5fc7c0328e526b0acfdfdbbab405480f9f3c9a4094c6a2"
+    },
+    {
+      "path": "assets/images/commics/comic_page_12.png",
+      "bytes": 59778,
+      "sha256": "e5dd84a1724e3bbd0cc2dcad406a306fe67126a6d306fcc2f6c961b27a550b30"
+    },
+    {
+      "path": "assets/images/commics/comic_page_13.png",
+      "bytes": 76530,
+      "sha256": "4ad06d51131294205e3147b92e9bc1b8a9d176f239bbb996bdbbe8aa3872cfa2"
+    },
+    {
+      "path": "assets/images/commics/comic_page_14.png",
+      "bytes": 80313,
+      "sha256": "56ae7970a050a2d8f92186b33280c2dc585980ff8a1c81ff3877c68a222366d0"
+    },
+    {
+      "path": "assets/images/commics/comic_page_15.png",
+      "bytes": 64501,
+      "sha256": "dac5f643fa1bf7a2fbdac710d56a1c42cb6574e1cbca6ca47ea5b7282da9c290"
+    },
+    {
+      "path": "assets/images/commics/comic_page_2.png",
+      "bytes": 43538,
+      "sha256": "6bf6e8b267d6ccee2eb80c5cf2374da91243099660fd06e799e73f6d7a1bc564"
+    },
+    {
+      "path": "assets/images/commics/comic_page_3.png",
+      "bytes": 65229,
+      "sha256": "48240fe09d656ffee20aaff90f10d12d9f2dc9e215a70fb4200f4cf093a70cb4"
+    },
+    {
+      "path": "assets/images/commics/comic_page_4.png",
+      "bytes": 79529,
+      "sha256": "ea18ffbee2299c10470018bc41af86a263397a675a07ba042f0f2162c394789f"
+    },
+    {
+      "path": "assets/images/commics/comic_page_5.png",
+      "bytes": 58108,
+      "sha256": "783c9f3161a4926b6c37cedffb3c142f55c07d19f000ff69c99441ed3d98cd6c"
+    },
+    {
+      "path": "assets/images/commics/comic_page_6.png",
+      "bytes": 73531,
+      "sha256": "52a49ee9cc55a82603c2fe61906a2120dbee482fc79ba427e98a4661cd2c979c"
+    },
+    {
+      "path": "assets/images/commics/comic_page_7.png",
+      "bytes": 79066,
+      "sha256": "7956148a9c9c221b9d31cb8ffeadea463e4b89d5a2891cc34f6e9588848f60c5"
+    },
+    {
+      "path": "assets/images/commics/comic_page_8.png",
+      "bytes": 52325,
+      "sha256": "55279dfb037b3b270b33f98cc12af69a31a8a8c205fa7e3609c9c079f59f76b4"
+    },
+    {
+      "path": "assets/images/commics/comic_page_9.png",
+      "bytes": 59067,
+      "sha256": "0be5d2736737f61ac61e3c3934549b67b795eafb79860d827bdedeb2c3996efe"
+    },
+    {
+      "path": "assets/images/google-play-badge.png",
+      "bytes": 13453,
+      "sha256": "affd88005a7244ff322b753a83a9511ce18deaa8a794446973d30fde57c71bcb"
+    },
+    {
+      "path": "assets/images/images0@2x.json",
+      "bytes": 19167,
+      "sha256": "b5e397d4a4dbf69c5a59dc7143980f62fedefda0bce9e4286c02c660762f31e6"
+    },
+    {
+      "path": "assets/images/images0@2x.png",
+      "bytes": 291662,
+      "sha256": "d8d616cee3807d9952d9ba4bd7e80a7c08ad082c630218df2a59268d36dbfa1c"
+    },
+    {
+      "path": "assets/images/images1@2x.json",
+      "bytes": 17485,
+      "sha256": "994d426c97786c1ed6f22e5d7064633fe7a35b91c4283a7f1ed2f0eb905563f4"
+    },
+    {
+      "path": "assets/images/images1@2x.png",
+      "bytes": 338194,
+      "sha256": "096faa07e4cbc48426e05e4bfbe6be8412c66f4c8f58ed05a5c884b76001a0be"
+    },
+    {
+      "path": "assets/images/images2@2x.json",
+      "bytes": 29857,
+      "sha256": "b021393e34d8cd994f81a6dd7e1cd259462dfb0d72dd79d9eeb61addb4f9d7e4"
+    },
+    {
+      "path": "assets/images/images2@2x.png",
+      "bytes": 390653,
+      "sha256": "bffbf41dcde81d6fac0169514894a37ddc2f8910777406075ac4cf0076adaa0d"
+    },
+    {
+      "path": "assets/images/images3@2x.json",
+      "bytes": 955,
+      "sha256": "e09ccb8823ad89f8bb9a9b4f18f58c2debac3419f4bd8cf8d554c90520df11ac"
+    },
+    {
+      "path": "assets/images/images3@2x.png",
+      "bytes": 96976,
+      "sha256": "fe64cf903659ef186ad90515256a829da42bd70d03e121f84aa116f4f582fdf6"
+    },
+    {
+      "path": "assets/images/instructions/instructions_1.jpg",
+      "bytes": 47409,
+      "sha256": "6a7a0a406bd55890de893954b230f773f21ae31c77fcc82055bb2c862b153788"
+    },
+    {
+      "path": "assets/images/instructions/instructions_2.jpg",
+      "bytes": 50480,
+      "sha256": "dffa5c8c207d701274bc72f6b9dfcb7860ea8e92692f90359a329799dc9fc38c"
+    },
+    {
+      "path": "assets/images/instructions/instructions_3.jpg",
+      "bytes": 57811,
+      "sha256": "d78a9efdd3fcb901ec5eb869c2d422748e0ed11a431205e312c142db9701467c"
+    },
+    {
+      "path": "assets/images/instructions/instructions_4.jpg",
+      "bytes": 55449,
+      "sha256": "e68cf64662752ee72cd0cdf084c9b09163375598cd69225902a31e7f891015d4"
+    },
+    {
+      "path": "assets/images/instructions/instructions_5.jpg",
+      "bytes": 98383,
+      "sha256": "65a61182ca68b4c83a232f8be0facef1c2f934ac369d5d51772964c66af93587"
+    },
+    {
+      "path": "assets/images/logo.png",
+      "bytes": 21722,
+      "sha256": "e640fd3a475d43d3369d217795284100a2a34dc9ea3f29d627f66d0af10751e7"
+    },
+    {
+      "path": "assets/images/main_menu@2x.jpg",
+      "bytes": 148319,
+      "sha256": "fdf3cf650383dc63922f1ef4b53a206e1a6bcc4445cbf09daed1e92164cc21b3"
+    },
+    {
+      "path": "assets/images/rotate_device_to_landscape.png",
+      "bytes": 3631,
+      "sha256": "264f22643973e5b7d340784698651bc5cdb7505f3d854280748a99d3fd2a895b"
+    },
+    {
+      "path": "assets/images/seal0@2x.json",
+      "bytes": 4173,
+      "sha256": "7d5b98d7798ae4f5bbc72545c7d97a7c1acde3493e30ed79ccb1059097dab54f"
+    },
+    {
+      "path": "assets/images/seal0@2x.png",
+      "bytes": 97997,
+      "sha256": "41e6afbcfbcfac3504c299bad1aa201f631f1840081ecdad903fecbac7b2a430"
+    },
+    {
+      "path": "assets/pixi.min.js",
+      "bytes": 428283,
+      "sha256": "88478195d791695ed82fc839c2bf0f861738e1091c159378f9c664e367f7c636"
+    },
+    {
+      "path": "assets/sounds/bg_wind3_wav.mp3",
+      "bytes": 60936,
+      "sha256": "1f3994f1526dc430d77beda760165b4e3f64cc3ff1df15087fefd9174e44722d"
+    },
+    {
+      "path": "assets/sounds/bg_wind3_wav.webm",
+      "bytes": 58211,
+      "sha256": "fe80fea4c714764ae04adbc66ce0e57f16f4251b7bea3bebc01d053be61ad2ac"
+    },
+    {
+      "path": "assets/sounds/button_click_sfx.mp3",
+      "bytes": 1480,
+      "sha256": "ec239d83e3d188cdd296cb3205e781cb371118319c8187ee5237cd23cb515c08"
+    },
+    {
+      "path": "assets/sounds/button_click_sfx.webm",
+      "bytes": 4944,
+      "sha256": "d7c7ac47ab44aef61c8dc0e89d5575cffe66c7ccd9bfc97bf2130f652ede0c86"
+    },
+    {
+      "path": "assets/sounds/button_rollover_sfx.mp3",
+      "bytes": 1794,
+      "sha256": "8f2129621210435951f1a634741c46e033478511aa5b47e052cdb64df1c9ca55"
+    },
+    {
+      "path": "assets/sounds/button_rollover_sfx.webm",
+      "bytes": 5617,
+      "sha256": "edeeb2181f500bf03509519394ed9f3a75c18480d0cf01373cf7aca12a57c49f"
+    },
+    {
+      "path": "assets/sounds/cancel_sfx.mp3",
+      "bytes": 1794,
+      "sha256": "eba86bd342a4610fc11978fa21b702bc5ab58b93d027777979712fae2855aab3"
+    },
+    {
+      "path": "assets/sounds/cancel_sfx.webm",
+      "bytes": 5312,
+      "sha256": "037dd1694ec3eacfbf2d2f2b5f4397f843db24eb5ae37b0e22c91837fd80ea64"
+    },
+    {
+      "path": "assets/sounds/click_game_object_sfx.mp3",
+      "bytes": 1167,
+      "sha256": "910056b632061f768f78c0e73f33a9b1f77df9953d2f9d45852e9be07a22919d"
+    },
+    {
+      "path": "assets/sounds/click_game_object_sfx.webm",
+      "bytes": 5090,
+      "sha256": "54b63160dc1d98151a59a951fff862a4192f6da1675e18f529c4e16f709bcb09"
+    },
+    {
+      "path": "assets/sounds/click_penguin_sfx.mp3",
+      "bytes": 1481,
+      "sha256": "2a6801613daa3863fc2ae57e2233763361657fd469e4f79b56caba5a8c963d9d"
+    },
+    {
+      "path": "assets/sounds/click_penguin_sfx.webm",
+      "bytes": 5028,
+      "sha256": "a0aa437be70225474500535bce2f4e06817a32e3e1270c3edbba38c0cba86b77"
+    },
+    {
+      "path": "assets/sounds/close_sign_fall_sfx.mp3",
+      "bytes": 3571,
+      "sha256": "b46b789e73e6d0be215c8d4a7d2e300dafea67aaa4512d3f65c6b99fda00df78"
+    },
+    {
+      "path": "assets/sounds/close_sign_fall_sfx.webm",
+      "bytes": 8116,
+      "sha256": "c54d0f33c1ea4d48aae2bd40a993b6b9adfc5fffc573519e77e199e07cbee1fa"
+    },
+    {
+      "path": "assets/sounds/cooksfx_01_wav.mp3",
+      "bytes": 66708,
+      "sha256": "180e7f4277f448a9c0614d367b3306c7696bfa72ec912f1df0c256da10c0f808"
+    },
+    {
+      "path": "assets/sounds/cooksfx_01_wav.webm",
+      "bytes": 54081,
+      "sha256": "6d6dd2415fa52dc369a70028ad49416480ced7e641d55e204d87d6004ef9ba48"
+    },
+    {
+      "path": "assets/sounds/cooksfx_02_wav.mp3",
+      "bytes": 33663,
+      "sha256": "be8119524accc0a7084eb5b7dfe9b50b8c00a1fca0d3ab8a04cf75f1a44ca4b2"
+    },
+    {
+      "path": "assets/sounds/cooksfx_02_wav.webm",
+      "bytes": 42724,
+      "sha256": "4e7b0c9b75a1215f7aeeb123637ecfeea0028768d8b91a23a9a5179de66bf268"
+    },
+    {
+      "path": "assets/sounds/cooksfx_03_wav.mp3",
+      "bytes": 64200,
+      "sha256": "5c8d18418c6c9174b260c4f47ab45734682f50c948df0dbd12796e9e5ca32b2b"
+    },
+    {
+      "path": "assets/sounds/cooksfx_03_wav.webm",
+      "bytes": 49942,
+      "sha256": "c430f9752480d59b4e44fd2dc4e2b40056bf6c82b3859b410852b9a03f6d1394"
+    },
+    {
+      "path": "assets/sounds/crowd_clap_sfx.mp3",
+      "bytes": 81520,
+      "sha256": "c113fcf56f19aa200e1ee505a1f88d1818c16886b4dfecc2da031faf3e03f329"
+    },
+    {
+      "path": "assets/sounds/crowd_clap_sfx.webm",
+      "bytes": 82783,
+      "sha256": "f46ba6eff6d722df970cddcf5f7b4ad452bd074bad0d5305f9e2ae9220eb1f74"
+    },
+    {
+      "path": "assets/sounds/curtain_down_sfx.mp3",
+      "bytes": 6914,
+      "sha256": "b167b743507b7d2592116f200eedc4f01226e4a387b8f1a399e99bb675a48852"
+    },
+    {
+      "path": "assets/sounds/curtain_down_sfx.webm",
+      "bytes": 11666,
+      "sha256": "6f2cac69a1a6c392e121e0249d142b49bc482476a3966c5c7412d6d683b0cd77"
+    },
+    {
+      "path": "assets/sounds/curtain_up_sfx.mp3",
+      "bytes": 7959,
+      "sha256": "1e65337a0c17350ab3a5b5bae6fc3f8f9ba7eb825e9716ce7aa59a5d5def17fe"
+    },
+    {
+      "path": "assets/sounds/curtain_up_sfx.webm",
+      "bytes": 13881,
+      "sha256": "3d0d7adf19fc4c3a52be5eaf4a73a421ae801028776e472cc56a299bbd243656"
+    },
+    {
+      "path": "assets/sounds/ent_jugglingseal2_sfx.mp3",
+      "bytes": 94999,
+      "sha256": "45fa4ed220a083e355debdc688e8472eefa8d6c0927de42c93784a8e19f86ec1"
+    },
+    {
+      "path": "assets/sounds/ent_jugglingseal2_sfx.webm",
+      "bytes": 93790,
+      "sha256": "eb61708d9f779f99dae67ed5ba4109c96061ac1672a238a9b8d1a15fee674ba9"
+    },
+    {
+      "path": "assets/sounds/ent_radio3_sfx.mp3",
+      "bytes": 140766,
+      "sha256": "c58ab6f0c51b0209877702eca0a8bed9b911cba7535b626db5235aaabec7211a"
+    },
+    {
+      "path": "assets/sounds/ent_radio3_sfx.webm",
+      "bytes": 120152,
+      "sha256": "fdb9c4ce8cf8d25492fe1def23de9d5756a90673c2fe8e63f5eda3d776de85da"
+    },
+    {
+      "path": "assets/sounds/ent_tv3_sfx.mp3",
+      "bytes": 120077,
+      "sha256": "b0aaacf65a3950d4eb268edf98b3cc4e00530c069494914cda44562f05a8a518"
+    },
+    {
+      "path": "assets/sounds/ent_tv3_sfx.webm",
+      "bytes": 113339,
+      "sha256": "68a54e6de2ea0bf201c31aabdfdc28701f0c0aa5799adb17402d6889dfc43f9f"
+    },
+    {
+      "path": "assets/sounds/food_give_sfx.mp3",
+      "bytes": 9213,
+      "sha256": "c44757ed40a8bc52c1698dc0ca6f64e34b9a291103e7d76f5134b7675fa4e035"
+    },
+    {
+      "path": "assets/sounds/food_give_sfx.webm",
+      "bytes": 13258,
+      "sha256": "4322009b68cb7ab0fbf3caf392c08b4095b397314b1e26ec097119b947952d75"
+    },
+    {
+      "path": "assets/sounds/food_pickup_sfx.mp3",
+      "bytes": 2003,
+      "sha256": "ea8fe27315962379f0378b0fe8332cba19bfa4daf6a6c17d1b5bb89487e8bc67"
+    },
+    {
+      "path": "assets/sounds/food_pickup_sfx.webm",
+      "bytes": 5789,
+      "sha256": "1b07898a5f5efb7dd95679536f082ea9ede0400685da2539b461e4386f03a4a0"
+    },
+    {
+      "path": "assets/sounds/food_ready_sfx.mp3",
+      "bytes": 4407,
+      "sha256": "4ecc6170569cbd7bf3c2adc1f1e39e54f2a638e17525b4045924f1622a7080b4"
+    },
+    {
+      "path": "assets/sounds/food_ready_sfx.webm",
+      "bytes": 7982,
+      "sha256": "9a3a453a098b107929b73dfe23a83853ceeb8207d9a35595075a2fc4ce667f24"
+    },
+    {
+      "path": "assets/sounds/hello_f2_sfx.mp3",
+      "bytes": 14045,
+      "sha256": "ae27f75a44aea65493be88f35530569a133682d058e7573466c481eb1c303d51"
+    },
+    {
+      "path": "assets/sounds/hello_f2_sfx.webm",
+      "bytes": 10682,
+      "sha256": "6b546a20fbc613cfa99deec632e3b5c17a49f4ca3496c88daba8024f7ec9912c"
+    },
+    {
+      "path": "assets/sounds/hello_sfx.mp3",
+      "bytes": 8795,
+      "sha256": "54c6f9a44f28d499a9094291dbd1f028cbb18edbf54900d210fa4122825e6e10"
+    },
+    {
+      "path": "assets/sounds/hello_sfx.webm",
+      "bytes": 13477,
+      "sha256": "5a83fa8c53a644aaa03c5c21005241c176a74ca865740492cff2a47d90b86bea"
+    },
+    {
+      "path": "assets/sounds/message_popup_sfx.mp3",
+      "bytes": 4720,
+      "sha256": "61b3c30ce215ce7cf24892ce9380410f17c51091396d28d15b000635a5a77d9b"
+    },
+    {
+      "path": "assets/sounds/message_popup_sfx.webm",
+      "bytes": 8027,
+      "sha256": "7aa1acbd74b50bf8e591fa250919d451bdfb0371bf21f06c3b64d8d1b94db27b"
+    },
+    {
+      "path": "assets/sounds/money_pickup_sfx.mp3",
+      "bytes": 5243,
+      "sha256": "dc902a213630603f7f9348efc42d4aa8a2fe9412516c1896c539b1da5f062155"
+    },
+    {
+      "path": "assets/sounds/money_pickup_sfx.webm",
+      "bytes": 9970,
+      "sha256": "aa5b516a4cdc0eb25742722aa2249d77e76ccbb2553d62a435f68a912d2498d1"
+    },
+    {
+      "path": "assets/sounds/peng_love2_wav.mp3",
+      "bytes": 10049,
+      "sha256": "41f7ba5e892e6580f30ad6927538b662effda4dacce6ab0cf40b936678165125"
+    },
+    {
+      "path": "assets/sounds/peng_love2_wav.webm",
+      "bytes": 13350,
+      "sha256": "596feacb36f701d079a64a3c004dc78828d995f46558626f26b50af4d8360b85"
+    },
+    {
+      "path": "assets/sounds/penguin_read_menu_sfx.mp3",
+      "bytes": 2761,
+      "sha256": "3e277ed438fdcd4196057028a678a0c14c27bb0b0bce5fe648f32d7162b0071e"
+    },
+    {
+      "path": "assets/sounds/penguin_read_menu_sfx.webm",
+      "bytes": 7600,
+      "sha256": "1aba39694d9c653f34a086eff9933ee1cda41146bfbd56e733305d4791e43c39"
+    },
+    {
+      "path": "assets/sounds/pop_sfx.mp3",
+      "bytes": 1272,
+      "sha256": "872c162a9e304560bc6dbdf692633c83a767d2dc2bee36f3afa5618e574d24ce"
+    },
+    {
+      "path": "assets/sounds/pop_sfx.webm",
+      "bytes": 4814,
+      "sha256": "bf9ebed4de767539c31b9221a5cc9478e0af8920d9df24f35f984282893cbac1"
+    },
+    {
+      "path": "assets/sounds/trashcan_sfx.mp3",
+      "bytes": 4616,
+      "sha256": "581f4c38a661a85b690589d79d3c975e984951dde2da5875952bbea270d59ddb"
+    },
+    {
+      "path": "assets/sounds/trashcan_sfx.webm",
+      "bytes": 9323,
+      "sha256": "48c30d5c244e843ff680349da7c13ecadc733ba156f06037d97996039e22982d"
+    },
+    {
+      "path": "assets/sounds/upgrade_buy_sfx.mp3",
+      "bytes": 11302,
+      "sha256": "ab7a54ce1ad8d6a0cbd6be654bed0222020ccf886a89276706cbe9d533accbd5"
+    },
+    {
+      "path": "assets/sounds/upgrade_buy_sfx.webm",
+      "bytes": 14450,
+      "sha256": "1f2c995ff63de7586f732955348ce3de5c649fe5e8902668adea8625fd432477"
+    },
+    {
+      "path": "assets/sounds/walk_ice_02_sfx.mp3",
+      "bytes": 2108,
+      "sha256": "cdde25bab760c96cd0951239ce8b1a62a582d5d4bd9df913e49296fab451a999"
+    },
+    {
+      "path": "assets/sounds/walk_ice_02_sfx.webm",
+      "bytes": 5981,
+      "sha256": "6ddd5a781f21283b1be5c369934bdf54263c16096e39620c778f82414155633e"
+    },
+    {
+      "path": "assets/sounds/walk_ice_03_sfx.mp3",
+      "bytes": 2108,
+      "sha256": "ff8575557ec1615c2df1a6f1792b247fb71800a59170cda7f1034a090ae6c176"
+    },
+    {
+      "path": "assets/sounds/walk_ice_03_sfx.webm",
+      "bytes": 6505,
+      "sha256": "83cc37cd9d17a3b2ff8767791f67ac2e50fdc4a2487054322481aa2878bd4e1d"
+    }
+  ]
+}

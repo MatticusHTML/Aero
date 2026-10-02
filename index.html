@@ -535,11 +535,14 @@
 
   .flash-game-window { width: 640px; height: 440px; }
   #office-window { height: 550px; }
+  #penguin-window { width: 700px; height: 590px; }
   .flash-game-toolbar {
-    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;
     padding: 7px 10px; font-size: 11px; color: #333;
     border-bottom: 1px solid #b8b5a5;
   }
+  .flash-game-toolbar > span { flex: 1; min-width: 180px; }
+  .game-actions { display: flex; gap: 6px; flex-shrink: 0; }
   .flash-game-frame { display: block; width: 100%; flex: 1; min-height: 0; border: 0; background: #000; }
   .window.maximized .flash-game-frame { flex: 1; }
 
@@ -722,6 +725,7 @@
     .window.maximized { height: auto !important; }
     .flash-game-window.maximized { width: 92% !important; height: 440px !important; }
     #office-window.maximized { height: 550px !important; }
+    #penguin-window.maximized { width: 92% !important; height: 590px !important; }
     .desktop-icons { flex-direction: row; flex-wrap: wrap; gap: 14px; }
   }
 </style>
@@ -911,7 +915,10 @@
     </div>
     <div class="flash-game-toolbar">
       <span>Hold the mouse button to flirt. Click repeatedly when a rival joins in.</span>
-      <button class="sa-btn" id="oriental-restart">↻ Restart</button>
+      <div class="game-actions">
+        <button class="sa-btn" id="oriental-mute" aria-label="Mute Oriental Flirting Game" aria-pressed="false">🔊 Mute</button>
+        <button class="sa-btn" id="oriental-restart">↻ Restart</button>
+      </div>
     </div>
     <iframe class="flash-game-frame" id="oriental-frame" title="Oriental Flirting Game" allow="autoplay; fullscreen" allowfullscreen></iframe>
   </div>
@@ -927,9 +934,30 @@
     </div>
     <div class="flash-game-toolbar">
       <span>Hold the mouse button to kiss. Release before the boss notices!</span>
-      <button class="sa-btn" id="office-restart">↻ Restart</button>
+      <div class="game-actions">
+        <button class="sa-btn" id="office-mute" aria-label="Mute Office Kissing" aria-pressed="false">🔊 Mute</button>
+        <button class="sa-btn" id="office-restart">↻ Restart</button>
+      </div>
     </div>
     <iframe class="flash-game-frame" id="office-frame" title="Office Kissing" allow="autoplay; fullscreen" allowfullscreen></iframe>
+  </div>
+  <div class="window closed flash-game-window" id="penguin-window" data-closable="true" style="left: 260px; top: 50px;">
+    <div class="titlebar">
+      <span>🐧 Penguin Diner 2</span>
+      <div class="buttons">
+        <button class="min" aria-label="Minimize">_</button>
+        <button class="max" aria-label="Maximize">□</button>
+        <button class="close" aria-label="Close">✕</button>
+      </div>
+    </div>
+    <div class="flash-game-toolbar">
+      <span>Click to seat customers, take orders, serve food and collect tips.</span>
+      <div class="game-actions">
+        <button class="sa-btn" id="penguin-mute" aria-label="Mute Penguin Diner 2" aria-pressed="false">🔊 Mute</button>
+        <button class="sa-btn" id="penguin-restart">↻ Restart</button>
+      </div>
+    </div>
+    <iframe class="flash-game-frame" id="penguin-frame" title="Penguin Diner 2" allow="autoplay; fullscreen" allowfullscreen></iframe>
   </div>
 </div>
 
@@ -972,6 +1000,7 @@
     <button class="task-item" id="taskbar-memorymatch" style="display:none;">🧠 Memory Match</button>
     <button class="task-item" id="taskbar-oriental" style="display:none;">💘 Oriental Flirting</button>
     <button class="task-item" id="taskbar-office" style="display:none;">💋 Office Kissing</button>
+    <button class="task-item" id="taskbar-penguin" style="display:none;">🐧 Penguin Diner 2</button>
   </div>
   <div class="tray"><span id="clock">--:--</span></div>
 </div>
@@ -987,6 +1016,7 @@
   <div class="start-menu-item" id="menu-memorymatch" tabindex="0">🧠 Memory Match</div>
   <div class="start-menu-item" id="menu-oriental" role="button" tabindex="0">💘 Oriental Flirting Game</div>
   <div class="start-menu-item" id="menu-office" role="button" tabindex="0">💋 Office Kissing</div>
+  <div class="start-menu-item" id="menu-penguin" role="button" tabindex="0">🐧 Penguin Diner 2</div>
   <div class="start-menu-divider"></div>
   <div class="start-menu-item" id="menu-shutdown" tabindex="0">⏻ Shut Down... <span class="hint">(nice try)</span></div>
 </div>
@@ -1342,19 +1372,49 @@
     { win: document.getElementById('minesweeper-window'), btn: document.getElementById('taskbar-minesweeper') },
     { win: document.getElementById('memorymatch-window'), btn: document.getElementById('taskbar-memorymatch') },
     { win: document.getElementById('oriental-window'), btn: document.getElementById('taskbar-oriental') },
-    { win: document.getElementById('office-window'), btn: document.getElementById('taskbar-office') }
+    { win: document.getElementById('office-window'), btn: document.getElementById('taskbar-office') },
+    { win: document.getElementById('penguin-window'), btn: document.getElementById('taskbar-penguin') }
   ];
 
   var hostedGames = [
-    { id: 'oriental', page: 'games/oriental-flirting/index.html?v=20261002-minimize' },
-    { id: 'office', page: 'games/office-kissing/index.html?v=20261002-minimize' }
+    { id: 'oriental', page: 'games/oriental-flirting/index.html?v=20261002-penguin' },
+    { id: 'office', page: 'games/office-kissing/index.html?v=20261002-penguin' },
+    { id: 'penguin', page: 'games/penguin-diner-2/index.html?v=20261002-penguin' }
   ];
   hostedGames.forEach(function(game) {
     game.win = document.getElementById(game.id + '-window');
     game.frame = document.getElementById(game.id + '-frame');
     game.btn = document.getElementById('taskbar-' + game.id);
+    game.muteBtn = document.getElementById(game.id + '-mute');
+    game.name = game.frame.title;
+    game.muted = false;
+    try { game.muted = localStorage.getItem('aero-muted-' + game.id) === 'true'; } catch (error) {}
+    updateGameMuteButton(game);
+    game.frame.addEventListener('load', function() { syncGameAudio(game); });
+    game.muteBtn.addEventListener('click', function() {
+      game.muted = !game.muted;
+      try { localStorage.setItem('aero-muted-' + game.id, String(game.muted)); } catch (error) {}
+      updateGameMuteButton(game);
+      syncGameAudio(game);
+    });
     document.getElementById(game.id + '-restart').addEventListener('click', function() {
       game.frame.src = game.page;
+    });
+  });
+  function updateGameMuteButton(game) {
+    game.muteBtn.textContent = game.muted ? '🔇 Unmute' : '🔊 Mute';
+    game.muteBtn.setAttribute('aria-pressed', String(game.muted));
+    game.muteBtn.setAttribute('aria-label', (game.muted ? 'Unmute ' : 'Mute ') + game.name);
+  }
+  function syncGameAudio(game) {
+    if (!game.win.classList.contains('closed') && game.frame.contentWindow) {
+      game.frame.contentWindow.postMessage({ type: 'aero-game-audio', muted: game.muted }, window.location.origin);
+    }
+  }
+  window.addEventListener('message', function(event) {
+    if (event.origin !== window.location.origin || !event.data || event.data.type !== 'aero-game-audio-ready') return;
+    hostedGames.forEach(function(game) {
+      if (event.source === game.frame.contentWindow) syncGameAudio(game);
     });
   });
   function syncHostedGame(game) {

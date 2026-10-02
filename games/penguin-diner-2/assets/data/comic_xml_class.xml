@@ -1,0 +1,72 @@
+<config>
+    <popup type="NEW_GAME" fadeIn="false" fadeOut="true">
+        <ppage pageSprite="ComicPage_0" continueButton="Continue">
+            <text>The last time we saw Penny she'd earned enough money for her trip back home. Now, after a long sea voyage, she's finally back!</text>
+        </ppage>
+        <ppage pageSprite="ComicPage_1" continueButton="Continue">
+            <text>While she was away the standard of food got really bad... but ever-industrious Penny sees this as an opportunity!</text>
+        </ppage>
+        <ppage pageSprite="ComicPage_2" continueButton="Continue">
+            <text>She decides to start her own restaurant chain. But she could sure use a little help... you up for it?</text>
+        </ppage>
+    </popup>
+    <popup type="NEW_TERRITORY_1" fadeIn="false" fadeOut="true">
+        <ppage pageSprite="ComicPage_14" continueButton="Continue">
+            <text>OK good work! But there are more challenges ahead. So lets move on and take the next territory!</text>
+        </ppage>
+        <ppage pageSprite="ComicPage_4" continueButton="Continue">
+            <text>Come on!! Let's help Penny take her restaurant chain across Antarctica!</text>
+        </ppage>
+        <ppage pageSprite="ComicPage_10" continueButton="Continue">
+            <text>Here we go... it's the first stop on our tour of Antarctica!</text>
+        </ppage>
+    </popup>
+    <popup type="NEW_TERRITORY_2" fadeIn="false" fadeOut="true">
+        <ppage pageSprite="ComicPage_9" continueButton="Continue">
+            <text>Next stop on the map and everyone seems friendly enough. Hope they like Penny's cooking!</text>
+        </ppage>
+    </popup>
+    <popup type="NEW_TERRITORY_3" fadeIn="false" fadeOut="true">
+        <ppage pageSprite="ComicPage_8" continueButton="Continue">
+            <text>The last stop on our Antarctic journey! Penny's so excited!!!</text>
+        </ppage>
+    </popup>
+    <popup type="GAME_WIN" fadeIn="false" fadeOut="false">
+        <ppage pageSprite="ComicPage_11" continueButton="Continue">
+            <text>And the award for the most popular restaurant in Antarctica goes to..... Penny!! (We couldn't have done it without you!)</text>
+        </ppage>
+        <ppage pageSprite="ComicPage_12">
+            <text></text>
+        </ppage>
+    </popup>
+    <popup type="FIRST_STAR" fadeIn="false" fadeOut="false">
+        <ppage pageSprite="ComicPage_3" continueButton="Close">
+            <text>Great news! The restaurant is a hit!!!</text>
+        </ppage>
+    </popup>
+    <popup type="BUY_CHEF_1" fadeIn="false" fadeOut="false">
+        <ppage pageSprite="ComicPage_5" continueButton="Close">
+            <text>Nice!! Hiring Chef Pete will add more yummy dishes to the menu!</text>
+        </ppage>
+    </popup>
+    <popup type="BUY_CHEF_2" fadeIn="false" fadeOut="false">
+        <ppage pageSprite="ComicPage_6" continueButton="Close">
+            <text>Good call! Chef Alby is famous for his seafood specials and his quick cooking!</text>
+        </ppage>
+    </popup>
+    <popup type="BUY_CHEF_3" fadeIn="false" fadeOut="false">
+        <ppage pageSprite="ComicPage_7" continueButton="Close">
+            <text>Awesome! Chef Sully's speed in the kitchen is legendary! And so is his delicious menu!</text>
+        </ppage>
+    </popup>
+    <popup type="HIRE_CHEF_HINT" fadeIn="false" fadeOut="false">
+        <ppage pageSprite="ComicPage_13" continueButton="Close">
+            <text>We need new dishes to excite our customers! Maybe we should hire a new chef!</text>
+        </ppage>
+    </popup>
+    <popup type="USE_CATALOG_HINT" fadeIn="false" fadeOut="false">
+        <ppage pageSprite="ComicPage_15" continueButton="Close">
+            <text>Excellent, now we can afford an upgrade! Must check out that catalog...</text>
+        </ppage>
+    </popup>
+</config>

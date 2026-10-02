@@ -275,5 +275,12 @@ shuffled (`mmShuffle`, Fisher–Yates) into 16 `.mm-card` buttons.
   `hostedGames` in `index.html` connects their windows, taskbar entries, Start Menu
   items and lifecycle. Iframes only load when opened; minimize keeps them running
   and close unloads them. Keep paths relative for GitHub Pages.
+- `games/penguin-diner-2/` contains the original HTML5 runtime and all its assets,
+  plus a local player page and asset hashes. Do not add remote SDK/CDN dependencies.
+- `games/audio-control.js` validates parent origin/source and queues audio state
+  until the player binds it. Flash uses Ruffle volume; Penguin Diner uses Pixi
+  sound volumeAll. Each hosted window has a Mute/Unmute button, with an independent
+  localStorage preference. Resend audio state on iframe load and player-ready so
+  muted games remain muted after restart. Never change the jukebox volume here.
 - Respects `prefers-reduced-motion` (visualizer, notepad typewriter effect,
   window shake) — preserve that when adding new animation.

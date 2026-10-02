@@ -21,3 +21,7 @@ Hold the left mouse button to kiss; release before the boss notices.
 The original interface is in Japanese. Close and Restart reset the game;
 minimize keeps it running in the background, and its taskbar button restores
 the same session. This player requires an HTTP(S) server, such as GitHub Pages.
+
+The header Mute/Unmute button controls this game independently of the jukebox.
+The shared ../audio-control.js bridge applies the saved preference after loading
+and restarting the player.

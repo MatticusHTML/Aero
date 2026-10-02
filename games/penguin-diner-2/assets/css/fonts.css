@@ -1,0 +1,25 @@
+@font-face { 
+	font-family: 'arial'; 
+	src:  url('../fonts/arial.ttf') format('truetype'); 
+}
+
+@font-face { 
+	font-family: 'arialbold'; 
+	src:  url('../fonts/arialbold.ttf') format('truetype'); 
+}
+
+@font-face { 
+	font-family: 'cheesebu'; 
+	src:  url('../fonts/cheesebu.ttf') format('truetype'); 
+}
+
+@font-face { 
+	font-family: 'letteromatic'; 
+	src:  url('../fonts/letteromatic.ttf') format('truetype'); 
+}
+
+@font-face { 
+	font-family: 'tahoma'; 
+	src:  url('../fonts/tahoma.ttf') format('truetype'); 
+}
+
