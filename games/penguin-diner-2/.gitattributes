@@ -1,0 +1,2 @@
+# Preserve downloaded asset bytes and their documented SHA-256 hashes.
+assets/** -text
