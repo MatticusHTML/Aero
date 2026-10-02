@@ -47,7 +47,7 @@
     } catch (error) {
       document.getElementById('status-text').textContent = 'The game could not load. Please try again.';
       retry.hidden = false;
-      console.error('Unable to load Oriental Flirting Game:', error);
+      console.error('Unable to load Flash game:', error);
     }
   });
 }());

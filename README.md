@@ -3,7 +3,19 @@
 A tiny nostalgic music player skinned like Windows XP, for jamming out to Frutiger Aero–style music. Draggable, minimizable, maximizable windows — a Windows Media Player–style player, a Notepad that scribbles a little note about whatever's currently playing, and four minigames (Sand Art, Falling Sand, Minesweeper, Memory Match) tucked in the Start Menu.
 
 No build step. The desktop and original minigames live in `index.html`;
-Oriental Flirting Game runs from `games/` with a bundled Ruffle Flash player.
+Oriental Flirting Game and Office Kissing run from `games/` with a shared,
+bundled Ruffle Flash player.
+
+## Office Kissing
+
+Open **Start → Office Kissing**, click Play, then start the game. Hold the
+left mouse button to kiss, and release before the boss notices. The original
+Japanese Flash game is downloaded from the file used by CrazyGames and
+hosted directly on Aero. It shares the local Ruffle 0.6.0 player with Oriental
+Flirting Game, so it needs no external game embed or CDN.
+
+Minimize pauses it; restore resumes it. Close and **Restart** start a fresh
+game. Maximize enlarges the player. See the [game's source details](games/office-kissing/README.md).
 
 ## Oriental Flirting Game
 

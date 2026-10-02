@@ -269,9 +269,11 @@ shuffled (`mmShuffle`, Fisher–Yates) into 16 `.mm-card` buttons.
 - Keep it a single HTML file unless there's a real reason to split it out —
   it's meant to stay simple enough to paste into one prompt for edits.
 - No build step or CDN dependencies. The original desktop remains self-contained;
-  the third-party Flash game uses a pinned local Ruffle 0.6.0 bundle in `games/ruffle/`.
-- `games/oriental-flirting/` contains the unchanged SWF, standalone player page,
-  lifecycle handling and provenance. Its iframe only loads when opened; minimize
-  pauses playback and close unloads it. Keep paths relative for GitHub Pages.
+  the third-party Flash games use a pinned local Ruffle 0.6.0 bundle in `games/ruffle/`.
+- `games/oriental-flirting/` and `games/office-kissing/` each contain an unchanged
+  SWF, standalone player page and provenance. Both use `games/flash-player.js`.
+  `hostedGames` in `index.html` connects their windows, taskbar entries, Start Menu
+  items and lifecycle. Iframes only load when opened; minimize pauses playback
+  and close unloads it. Keep paths relative for GitHub Pages.
 - Respects `prefers-reduced-motion` (visualizer, notepad typewriter effect,
   window shake) — preserve that when adding new animation.

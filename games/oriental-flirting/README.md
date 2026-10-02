@@ -15,6 +15,7 @@ The player uses the official Ruffle 0.6.0 self-hosted release, stored in
 https://github.com/ruffle-rs/ruffle/releases/tag/v0.6.0
 
 All runtime files are served locally. No CDN or Gamenora embed is required.
+The player lifecycle is shared with Office Kissing in `../flash-player.js`.
 External requests, navigation and Flash JavaScript access are disabled.
 The obsolete Shockwave online high-score service is consequently unavailable.
 

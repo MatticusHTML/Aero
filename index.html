@@ -526,14 +526,15 @@
   .mm-card.matched .mm-card-back { background: #dff5e6; }
   .mm-status { font-size: 12px; color: #333; }
 
-  #oriental-window { width: 640px; height: 440px; }
-  .oriental-toolbar {
+  .flash-game-window { width: 640px; height: 440px; }
+  #office-window { height: 550px; }
+  .flash-game-toolbar {
     display: flex; align-items: center; justify-content: space-between; gap: 8px;
     padding: 7px 10px; font-size: 11px; color: #333;
     border-bottom: 1px solid #b8b5a5;
   }
-  .oriental-frame { display: block; width: 100%; flex: 1; min-height: 0; border: 0; background: #000; }
-  .window.maximized .oriental-frame { flex: 1; }
+  .flash-game-frame { display: block; width: 100%; flex: 1; min-height: 0; border: 0; background: #000; }
+  .window.maximized .flash-game-frame { flex: 1; }
 
   .taskbar {
     position: fixed;
@@ -708,6 +709,8 @@
   @media (max-width: 860px) {
     .window { position: static !important; width: 92%; margin: 16px auto; }
     .window.maximized { height: auto !important; }
+    .flash-game-window.maximized { width: 92% !important; height: 440px !important; }
+    #office-window.maximized { height: 550px !important; }
     .desktop-icons { flex-direction: row; flex-wrap: wrap; gap: 14px; }
   }
 </style>
@@ -886,7 +889,7 @@
     </div>
   </div>
 
-  <div class="window closed" id="oriental-window" data-closable="true" style="left: 180px; top: 120px;">
+  <div class="window closed flash-game-window" id="oriental-window" data-closable="true" style="left: 180px; top: 120px;">
     <div class="titlebar">
       <span>💘 Oriental Flirting Game</span>
       <div class="buttons">
@@ -895,11 +898,27 @@
         <button class="close" aria-label="Close">✕</button>
       </div>
     </div>
-    <div class="oriental-toolbar">
+    <div class="flash-game-toolbar">
       <span>Hold the mouse button to flirt. Click repeatedly when a rival joins in.</span>
       <button class="sa-btn" id="oriental-restart">↻ Restart</button>
     </div>
-    <iframe class="oriental-frame" id="oriental-frame" title="Oriental Flirting Game" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    <iframe class="flash-game-frame" id="oriental-frame" title="Oriental Flirting Game" allow="autoplay; fullscreen" allowfullscreen></iframe>
+  </div>
+
+  <div class="window closed flash-game-window" id="office-window" data-closable="true" style="left: 220px; top: 80px;">
+    <div class="titlebar">
+      <span>💋 Office Kissing</span>
+      <div class="buttons">
+        <button class="min" aria-label="Minimize">_</button>
+        <button class="max" aria-label="Maximize">□</button>
+        <button class="close" aria-label="Close">✕</button>
+      </div>
+    </div>
+    <div class="flash-game-toolbar">
+      <span>Hold the mouse button to kiss. Release before the boss notices!</span>
+      <button class="sa-btn" id="office-restart">↻ Restart</button>
+    </div>
+    <iframe class="flash-game-frame" id="office-frame" title="Office Kissing" allow="autoplay; fullscreen" allowfullscreen></iframe>
   </div>
 </div>
 
@@ -941,6 +960,7 @@
     <button class="task-item" id="taskbar-minesweeper" style="display:none;">💣 Minesweeper</button>
     <button class="task-item" id="taskbar-memorymatch" style="display:none;">🧠 Memory Match</button>
     <button class="task-item" id="taskbar-oriental" style="display:none;">💘 Oriental Flirting</button>
+    <button class="task-item" id="taskbar-office" style="display:none;">💋 Office Kissing</button>
   </div>
   <div class="tray"><span id="clock">--:--</span></div>
 </div>
@@ -955,6 +975,7 @@
   <div class="start-menu-item" id="menu-minesweeper" tabindex="0">💣 Minesweeper</div>
   <div class="start-menu-item" id="menu-memorymatch" tabindex="0">🧠 Memory Match</div>
   <div class="start-menu-item" id="menu-oriental" role="button" tabindex="0">💘 Oriental Flirting Game</div>
+  <div class="start-menu-item" id="menu-office" role="button" tabindex="0">💋 Office Kissing</div>
   <div class="start-menu-divider"></div>
   <div class="start-menu-item" id="menu-shutdown" tabindex="0">⏻ Shut Down... <span class="hint">(nice try)</span></div>
 </div>
@@ -1309,33 +1330,40 @@
     { win: document.getElementById('fallingsand-window'), btn: document.getElementById('taskbar-fallingsand') },
     { win: document.getElementById('minesweeper-window'), btn: document.getElementById('taskbar-minesweeper') },
     { win: document.getElementById('memorymatch-window'), btn: document.getElementById('taskbar-memorymatch') },
-    { win: document.getElementById('oriental-window'), btn: document.getElementById('taskbar-oriental') }
+    { win: document.getElementById('oriental-window'), btn: document.getElementById('taskbar-oriental') },
+    { win: document.getElementById('office-window'), btn: document.getElementById('taskbar-office') }
   ];
 
-  var orientalWindow = document.getElementById('oriental-window');
-  var orientalFrame = document.getElementById('oriental-frame');
-  var orientalPage = 'games/oriental-flirting/index.html?v=20261002';
-  function syncOrientalGame() {
-    if (orientalWindow.classList.contains('closed')) {
-      if (orientalFrame.hasAttribute('src')) orientalFrame.removeAttribute('src');
+  var hostedGames = [
+    { id: 'oriental', page: 'games/oriental-flirting/index.html?v=20261002-office' },
+    { id: 'office', page: 'games/office-kissing/index.html?v=20261002' }
+  ];
+  hostedGames.forEach(function(game) {
+    game.win = document.getElementById(game.id + '-window');
+    game.frame = document.getElementById(game.id + '-frame');
+    game.btn = document.getElementById('taskbar-' + game.id);
+    game.frame.addEventListener('load', function() { syncHostedGame(game); });
+    document.getElementById(game.id + '-restart').addEventListener('click', function() {
+      game.frame.src = game.page;
+    });
+  });
+  function syncHostedGame(game) {
+    if (game.win.classList.contains('closed')) {
+      if (game.frame.hasAttribute('src')) game.frame.removeAttribute('src');
       return;
     }
-    if (!orientalFrame.hasAttribute('src')) orientalFrame.src = orientalPage;
-    if (orientalFrame.contentWindow) {
-      orientalFrame.contentWindow.postMessage({ type: 'aero-game-visibility', hidden: isWindowHidden(orientalWindow) }, window.location.origin);
+    if (!game.frame.hasAttribute('src')) game.frame.src = game.page;
+    if (game.frame.contentWindow) {
+      game.frame.contentWindow.postMessage({ type: 'aero-game-visibility', hidden: isWindowHidden(game.win) }, window.location.origin);
     }
   }
-  orientalFrame.addEventListener('load', syncOrientalGame);
-  document.getElementById('oriental-restart').addEventListener('click', function() {
-    orientalFrame.src = orientalPage;
-  });
 
   function isWindowHidden(win) {
     return win.classList.contains('minimized') || win.classList.contains('closed');
   }
 
   function updateTaskbarActiveStates() {
-    syncOrientalGame();
+    hostedGames.forEach(syncHostedGame);
     windowTaskbarPairs.forEach(function(p) {
       p.btn.classList.toggle('active', p.win === focusedWindow && !isWindowHidden(p.win));
     });
@@ -1487,14 +1515,16 @@
     openWindow(document.getElementById('memorymatch-window'), document.getElementById('taskbar-memorymatch'));
     startMenu.classList.remove('open');
   });
-  function launchOrientalGame() {
-    openWindow(orientalWindow, document.getElementById('taskbar-oriental'));
-    startMenu.classList.remove('open');
-  }
-  var orientalMenu = document.getElementById('menu-oriental');
-  orientalMenu.addEventListener('click', launchOrientalGame);
-  orientalMenu.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); launchOrientalGame(); }
+  hostedGames.forEach(function(game) {
+    function launch() {
+      openWindow(game.win, game.btn);
+      startMenu.classList.remove('open');
+    }
+    var menu = document.getElementById('menu-' + game.id);
+    menu.addEventListener('click', launch);
+    menu.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); launch(); }
+    });
   });
   document.getElementById('menu-shutdown').addEventListener('click', function() {
     startMenu.classList.remove('open');
