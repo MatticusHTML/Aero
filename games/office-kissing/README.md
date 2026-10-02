@@ -19,5 +19,5 @@ External requests, navigation, and Flash JavaScript access are disabled.
 Open **Start → Office Kissing** in Aero, click Play, then start the game.
 Hold the left mouse button to kiss; release before the boss notices.
 The original interface is in Japanese. Close and Restart reset the game;
-minimize pauses it, and restore resumes it. The browser tab also pauses
-the game while hidden. This player requires an HTTP(S) server, such as GitHub Pages.
+minimize keeps it running in the background, and its taskbar button restores
+the same session. This player requires an HTTP(S) server, such as GitHub Pages.

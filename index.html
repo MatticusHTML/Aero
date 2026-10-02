@@ -124,7 +124,6 @@
     60% { transform: translateX(-4px); }
     80% { transform: translateX(4px); }
   }
-  .window.minimized { display: none; }
   .window.closed { display: none; }
   .window.maximized {
     position: fixed !important;
@@ -141,6 +140,14 @@
   .window.maximized .notepad-text { flex: 1; height: auto; }
   .window.maximized .sandart-canvas-wrap { flex: 1; }
   .window.maximized .fs-canvas-wrap { flex: 1; }
+
+  /* Keep minimized iframe games rendered so their animation keeps running. */
+  .window.minimized {
+    position: fixed !important;
+    left: -10000px !important;
+    top: 0 !important;
+    pointer-events: none;
+  }
 
   .titlebar {
     background: linear-gradient(180deg, #5aa6ff 0%, #2f7cf0 10%, #0e57d6 45%, #1763e0 55%, #0c4bc0 100%);
@@ -565,8 +572,12 @@
   }
   .start-btn .win-flag { width: 17px; height: 17px; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.4)); }
 
-  .taskbar-items { display: flex; gap: 6px; margin-left: 10px; flex: 1; overflow: hidden; }
+  .taskbar-items { display: flex; gap: 6px; margin-left: 10px; flex: 1; min-width: 0; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
+  .taskbar-items::-webkit-scrollbar { display: none; }
+  .start-btn, .tray { flex-shrink: 0; }
   .task-item {
+    flex: 1 0 100px;
+    min-width: 100px;
     height: 28px;
     padding: 0 10px;
     border-radius: 3px;
@@ -1335,14 +1346,13 @@
   ];
 
   var hostedGames = [
-    { id: 'oriental', page: 'games/oriental-flirting/index.html?v=20261002-office' },
-    { id: 'office', page: 'games/office-kissing/index.html?v=20261002' }
+    { id: 'oriental', page: 'games/oriental-flirting/index.html?v=20261002-minimize' },
+    { id: 'office', page: 'games/office-kissing/index.html?v=20261002-minimize' }
   ];
   hostedGames.forEach(function(game) {
     game.win = document.getElementById(game.id + '-window');
     game.frame = document.getElementById(game.id + '-frame');
     game.btn = document.getElementById('taskbar-' + game.id);
-    game.frame.addEventListener('load', function() { syncHostedGame(game); });
     document.getElementById(game.id + '-restart').addEventListener('click', function() {
       game.frame.src = game.page;
     });
@@ -1353,9 +1363,6 @@
       return;
     }
     if (!game.frame.hasAttribute('src')) game.frame.src = game.page;
-    if (game.frame.contentWindow) {
-      game.frame.contentWindow.postMessage({ type: 'aero-game-visibility', hidden: isWindowHidden(game.win) }, window.location.origin);
-    }
   }
 
   function isWindowHidden(win) {
@@ -1365,12 +1372,17 @@
   function updateTaskbarActiveStates() {
     hostedGames.forEach(syncHostedGame);
     windowTaskbarPairs.forEach(function(p) {
-      p.btn.classList.toggle('active', p.win === focusedWindow && !isWindowHidden(p.win));
+      var hidden = isWindowHidden(p.win);
+      p.btn.style.display = p.win.classList.contains('closed') ? 'none' : '';
+      p.btn.classList.toggle('active', p.win === focusedWindow && !hidden);
+      p.btn.title = p.btn.textContent;
+      p.win.inert = hidden;
+      p.win.setAttribute('aria-hidden', String(hidden));
     });
     var sandartWin = document.getElementById('sandart-window');
-    if (!isWindowHidden(sandartWin)) saStartLoopIfNeeded();
+    if (!sandartWin.classList.contains('closed')) saStartLoopIfNeeded();
     var fallingSandWin = document.getElementById('fallingsand-window');
-    if (!isWindowHidden(fallingSandWin)) fsStartLoopIfNeeded();
+    if (!fallingSandWin.classList.contains('closed')) fsStartLoopIfNeeded();
   }
 
   function bringToFront(el) {
@@ -1384,6 +1396,15 @@
     win.classList.remove('closed', 'minimized');
     if (btn) btn.style.display = '';
     bringToFront(win);
+    if (btn) btn.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  }
+
+  function minimizeWindow(win) {
+    win.classList.add('minimized');
+    if (focusedWindow === win) focusedWindow = null;
+    updateTaskbarActiveStates();
+    var pair = windowTaskbarPairs.filter(function(p) { return p.win === win; })[0];
+    if (pair) pair.btn.focus();
   }
 
   function makeDraggable(win) {
@@ -1432,9 +1453,7 @@
   document.querySelectorAll('.min').forEach(function(btn) {
     btn.addEventListener('click', function(e) {
       var win = e.target.closest('.window');
-      win.classList.add('minimized');
-      if (focusedWindow === win) focusedWindow = null;
-      updateTaskbarActiveStates();
+      minimizeWindow(win);
     });
   });
 
@@ -1472,9 +1491,7 @@
         p.win.classList.remove('minimized');
         bringToFront(p.win);
       } else if (focusedWindow === p.win) {
-        p.win.classList.add('minimized');
-        focusedWindow = null;
-        updateTaskbarActiveStates();
+        minimizeWindow(p.win);
       } else {
         bringToFront(p.win);
       }
@@ -1771,7 +1788,7 @@
 
   function saLoop() {
     var win = document.getElementById('sandart-window');
-    if (isWindowHidden(win)) { saLoopRunning = false; return; }
+    if (win.classList.contains('closed')) { saLoopRunning = false; return; }
     if (saPointerDown) saSpawnAt(saLastGX, saLastGY);
     saStep();
     saRender();
@@ -2037,7 +2054,7 @@
 
   function fsLoop() {
     var win = document.getElementById('fallingsand-window');
-    if (isWindowHidden(win)) { fsLoopRunning = false; return; }
+    if (win.classList.contains('closed')) { fsLoopRunning = false; return; }
     if (fsPointerDown) fsSpawnAt(fsLastGX, fsLastGY);
     fsStep();
     fsRender();

@@ -79,8 +79,8 @@ Every `.window` (player, notepad, Sand Art, and any future one) shares the
 same chrome logic, driven by `windowTaskbarPairs` — an array of
 `{ win, btn }` pairing each window element to its taskbar button:
 
-- **Minimize** (`.min`): adds `.minimized` (`display:none` via CSS). The
-  taskbar button stays visible; clicking it restores the window.
+- **Minimize** (`.min`): adds `.minimized` (kept rendered offscreen via CSS, so apps
+  keep running). Its taskbar button stays visible; clicking it restores the window.
 - **Maximize** (`.max`): toggles `.maximized` (fills the desktop via
   `position:fixed`, CSS `!important`) and swaps the button glyph between
   `□` and `❐`. `.player-body`/`.sandart-body`, `.playlist`, and
@@ -142,11 +142,11 @@ site aren't reproduced, only its Color/Gradient paint-type concept and its
   `putImageData`s it in one call, rather than per-cell `fillRect`, so frame
   cost stays flat regardless of how much sand is on screen.
 - `saLoop()` is a standard `requestAnimationFrame` self-scheduling loop,
-  gated by `isWindowHidden()` at the top of each frame — it stops
+  gated by the window's `.closed` class at the top of each frame — it stops
   rescheduling (and `saLoopRunning = false`) the moment the window is
-  minimized or closed, and `saStartLoopIfNeeded()` (called from
-  `updateTaskbarActiveStates()` whenever the window is visible) restarts it.
-  This means the simulation doesn't run while you can't see it.
+  closed, and `saStartLoopIfNeeded()` (called from
+  `updateTaskbarActiveStates()` whenever the window is open) restarts it.
+  Minimized simulations continue running in the background.
 - Paint modes: `color` (flat hex from the swatch grid) or `gradient`
   (position-based interpolation across a named preset's stops, keyed by the
   grain's spawn X coordinate — creates vertical colored streaks as you draw,
@@ -194,7 +194,7 @@ from any reference.
   not hand-written per button, so adding a new element is just one more
   entry in that array (`{ id, name, color }`) plus its case in
   `fsColorFor()` and any reaction logic it needs.
-- Same `requestAnimationFrame` + `isWindowHidden()` gating pattern as Sand
+- Same `requestAnimationFrame` + `.closed` gating pattern as Sand
   Art (`fsLoop`/`fsStartLoopIfNeeded`, wired into `updateTaskbarActiveStates()`).
 - No undo/redo here (unlike Sand Art) — a continuously-evolving multi-material
   simulation doesn't have a clean single "stroke" boundary to snapshot
@@ -273,7 +273,7 @@ shuffled (`mmShuffle`, Fisher–Yates) into 16 `.mm-card` buttons.
 - `games/oriental-flirting/` and `games/office-kissing/` each contain an unchanged
   SWF, standalone player page and provenance. Both use `games/flash-player.js`.
   `hostedGames` in `index.html` connects their windows, taskbar entries, Start Menu
-  items and lifecycle. Iframes only load when opened; minimize pauses playback
-  and close unloads it. Keep paths relative for GitHub Pages.
+  items and lifecycle. Iframes only load when opened; minimize keeps them running
+  and close unloads them. Keep paths relative for GitHub Pages.
 - Respects `prefers-reduced-motion` (visualizer, notepad typewriter effect,
   window shake) — preserve that when adding new animation.

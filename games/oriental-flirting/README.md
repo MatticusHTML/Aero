@@ -22,5 +22,5 @@ The obsolete Shockwave online high-score service is consequently unavailable.
 Serve Aero over HTTP(S), such as GitHub Pages; opening `index.html` directly
 as a `file://` URL cannot load the WebAssembly player reliably.
 
-The game loads when opened from Start, pauses when minimized or when the
-browser tab is hidden, and resets when closed or restarted.
+The game loads when opened from Start, keeps running when minimized, and
+returns to the same session from its taskbar button. Close and Restart reset it.

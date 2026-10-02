@@ -14,8 +14,8 @@ Japanese Flash game is downloaded from the file used by CrazyGames and
 hosted directly on Aero. It shares the local Ruffle 0.6.0 player with Oriental
 Flirting Game, so it needs no external game embed or CDN.
 
-Minimize pauses it; restore resumes it. Close and **Restart** start a fresh
-game. Maximize enlarges the player. See the [game's source details](games/office-kissing/README.md).
+Minimize keeps it running in the background; click its taskbar button to restore.
+Close and **Restart** start a fresh game. Maximize enlarges the player. See the [game's source details](games/office-kissing/README.md).
 
 ## Oriental Flirting Game
 
@@ -25,8 +25,8 @@ game embed or CDN. Click the play button to start, then use the mouse to
 move and hold the mouse button to flirt. Click repeatedly to compete with
 a rival. The game itself retains its original Japanese interface.
 
-Minimize pauses the game; restore resumes it. Close unloads it, so reopening
-starts fresh. **Restart** also resets the game. Maximize enlarges the player.
+Minimize keeps the game running; its taskbar button restores the same session.
+Close unloads it, so reopening starts fresh. **Restart** also resets the game. Maximize enlarges the player.
 The old online high-score service is unavailable; normal local play works.
 
 This addition needs an HTTP(S) server, such as GitHub Pages, rather than
