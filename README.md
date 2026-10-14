@@ -6,6 +6,24 @@ No build step. The desktop and original minigames live in `index.html`;
 Oriental Flirting Game and Office Kissing run from `games/` with a shared,
 bundled Ruffle Flash player. Penguin Diner 2 uses its locally bundled HTML5 runtime.
 
+## wipeout!
+
+Select **wipeout!** in the music player to shuffle ten songs by The Neighbourhood
+streamed from Cloudflare R2. Each cycle plays every song once, with no immediate
+repeat between cycles. Next/Previous navigate songs within the mix; select either
+other playlist entry to switch mixes. The current song appears beneath the mix
+title and in Notepad. Seeking and duration apply to the current song.
+
+The mix uses `wallpapers/palm-sunset.png` with two subtle CSS smoke layers that
+animate only transforms and opacity. Smoke pauses when another wallpaper is
+selected or the tab is hidden, and stays still with reduced motion enabled.
+
+The song manifest is the `tracks.push` block in `index.html`. R2's public endpoint
+does not list files, so add each future upload's exact filename and display title
+there. The current `r2.dev` base URL is for development and is rate-limited;
+replace it with an R2 custom domain for production. Failed streams show an error
+in Notepad instead of simulating music playback.
+
 ## Penguin Diner 2
 
 Open **Start → Penguin Diner 2**. Seat customers, take orders, serve food and
@@ -26,6 +44,12 @@ Flirting Game, so it needs no external game embed or CDN.
 
 Minimize keeps it running in the background; click its taskbar button to restore.
 Close and **Restart** start a fresh game. Maximize enlarges the player. See the [game's source details](games/office-kissing/README.md).
+
+### Office Kissing English — WIP (paused)
+
+The [English duplicate](games/office-kissing-english/README.md) is unfinished
+and paused until further notice. Its assets are preserved, and its page shows
+a WIP notice. The original Office Kissing remains playable from the Start Menu.
 
 ## Oriental Flirting Game
 
@@ -100,6 +124,7 @@ Where to find actual royalty-free tracks that fit the vibe: Free Music Archive, 
 ## Notes
 
 - A short "Welcome Dianna" splash screen plays on every load (XP-logon-style, with rising Aero bubbles), then fades into the desktop after ~2.6s — click anywhere on it to skip ahead. Change the name in `.splash-name` in `index.html`.
+- After the splash, a little CSS stickman jogs along the top of the taskbar, stops to wave with "Have fun Dianna!", then runs off left. It plays once per page load; reduced-motion settings show a still greeting instead.
 - Windows are draggable (click + drag the title bar) on desktop; they stack normally on mobile.
 - Every window can minimize (taskbar keeps a button for it — click to restore) and maximize (fills the desktop). The player and Notepad's close (✕) button is decorative — it just shakes the window, it won't actually close; that's intentional, they're the permanent UI. The minigames' ✕ really closes them — reopen from the Start Menu.
 - The Start button has a tiny menu — try "Shut Down..." — and now also launches four minigames: **Sand Art**, a colorful falling-sand drawing toy; **Falling Sand**, a multi-element physics sandbox (sand, water, fire, oil, lava, plant, acid, wall — watch them interact); **Minesweeper**, the classic Beginner-difficulty (9×9, 10 mines) grid — right-click to flag, or use the Flag Mode button on touch; and **Memory Match**, a 4×4 flip-the-pairs card game. Adding more minigames later just means copying their window/taskbar/Start-Menu pattern; see `CLAUDE.md`.

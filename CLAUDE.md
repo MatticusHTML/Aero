@@ -34,6 +34,17 @@ so reduced-motion users still get the "Welcome" moment without the motion.
 The name is a plain hardcoded string in `.splash-name` (same pattern as the
 Start Menu's `.start-menu-header` "Matticus") — change it there if needed.
 
+## Stickman greeting
+
+After the splash is fully hidden, startStickmanScene() plays one CSS scene per
+page load. The stickman jogs in from the right along the taskbar top (40px above
+the viewport bottom), waves in the center with "Have fun Dianna!" for 3.6 seconds,
+then jogs off left. CSS draws and animates the joints; animationend advances the
+arriving/greeting/leaving phases and hides the scene after exit. The entire scene
+is pointer-events:none and sits below the taskbar/menu but above desktop windows.
+Reduced motion shows only the still central greeting, then hides it. Keep the
+start call inside splash dismissal so skipping the splash also works, once only.
+
 ## Where things live in index.html
 
 - `tracks` array (top of the `<script>` block) — one object per song:
@@ -265,6 +276,17 @@ shuffled (`mmShuffle`, Fisher–Yates) into 16 `.mm-card` buttons.
 - Font: Tahoma/Verdana stack throughout (period-accurate for the XP era).
 
 ## Conventions
+
+- `wipeout!` is a third playlist entry with a `songs` manifest and a shuffled
+  queue. Keep all ten songs per cycle and prevent adjacent repeats across cycles.
+  Next/Previous stay within the mix; selecting a playlist entry switches mixes.
+  `playbackRequest` invalidates stale audio promises when switching or pausing.
+  Preserve simulated playback for the original local mixes, but never simulate
+  R2 streams: show an actionable Notepad error instead. R2 cannot list public
+  objects, so new uploads need explicit manifest entries.
+- `wallpapers/palm-sunset.png` is the supplied wipeout wallpaper. Its two smoke
+  layers animate only transform/opacity, pause when inactive or the tab is hidden,
+  and stop under reduced motion. Keep this effect lightweight and behind windows.
 
 - Keep it a single HTML file unless there's a real reason to split it out —
   it's meant to stay simple enough to paste into one prompt for edits.

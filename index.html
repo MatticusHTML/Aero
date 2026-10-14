@@ -44,6 +44,32 @@
   }
   .wallpaper.active { opacity: 1; }
 
+  .wallpaper-wipeout {
+    background: #000 url('wallpapers/palm-sunset.png') center center / cover no-repeat;
+  }
+  .smoke {
+    position: absolute;
+    left: -15%; top: 35%; width: 130%; height: 55%;
+    background:
+      radial-gradient(ellipse at 20% 60%, rgba(220,226,234,.15), transparent 48%),
+      radial-gradient(ellipse at 55% 45%, rgba(220,226,234,.12), transparent 42%),
+      radial-gradient(ellipse at 80% 65%, rgba(220,226,234,.16), transparent 44%);
+    animation: smokeDrift 32s ease-in-out infinite alternate;
+    animation-play-state: paused;
+  }
+  .smoke + .smoke {
+    top: 12%;
+    animation-duration: 43s;
+    animation-delay: -17s;
+    animation-direction: alternate-reverse;
+  }
+  .wallpaper-wipeout.active .smoke { animation-play-state: running; }
+  .page-hidden .smoke { animation-play-state: paused !important; }
+  @keyframes smokeDrift {
+    from { transform: translate3d(-5%, 6%, 0) scale(1); opacity: .4; }
+    to { transform: translate3d(6%, -12%, 0) scale(1.08); opacity: .85; }
+  }
+
   .wallpaper-bubbles {
     background: linear-gradient(160deg, #08356e 0%, #0d6cb8 20%, #26a9db 42%, #4fd3c4 66%, #a3ecc9 100%);
   }
@@ -629,6 +655,148 @@
   }
   .shutdown-overlay.show { display: flex; }
 
+  /* A tiny visitor uses the taskbar as his stage after the splash. */
+  .stickman-scene {
+    --stickman-travel-time: 2.7s;
+    position: fixed;
+    bottom: 40px;
+    left: 0;
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 490;
+    color: #17364d;
+  }
+  .stickman-scene[hidden] { display: none; }
+  .stickman-actor {
+    position: absolute;
+    bottom: 0;
+    left: calc(50% - 32px);
+    width: 64px;
+    height: 90px;
+  }
+  .stickman-scene[data-phase="arriving"] .stickman-actor {
+    animation: stickmanArrive var(--stickman-travel-time) linear both;
+  }
+  .stickman-scene[data-phase="leaving"] .stickman-actor {
+    animation: stickmanLeave var(--stickman-travel-time) linear both;
+  }
+  @keyframes stickmanArrive {
+    from { transform: translateX(calc(50vw + 80px)); }
+    to { transform: translateX(0); }
+  }
+  @keyframes stickmanLeave {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(-50vw - 80px)); }
+  }
+  .stickman-shadow {
+    position: absolute; bottom: 0; left: 8px;
+    width: 48px; height: 3px; border-radius: 50%;
+    background: rgba(13, 45, 77, 0.25);
+  }
+  .stickman-figure { position: absolute; inset: 0; }
+  .stickman-head {
+    position: absolute; left: 22px; top: 1px;
+    width: 21px; height: 21px;
+    border: 3px solid currentColor; border-radius: 50%;
+    background: #f7fcff; transform-origin: 50% 100%;
+  }
+  .stickman-head::before {
+    content: ''; position: absolute; left: 3px; top: 5px;
+    width: 3px; height: 3px; border-radius: 50%; background: currentColor;
+  }
+  .stickman-head::after {
+    content: ''; position: absolute; left: 2px; top: 8px;
+    width: 7px; height: 5px; border-bottom: 2px solid currentColor;
+    border-radius: 0 0 8px 8px; transform: rotate(-12deg);
+  }
+  .stickman-body {
+    position: absolute; left: 30px; top: 21px;
+    width: 4px; height: 32px; background: currentColor; border-radius: 4px;
+  }
+  .stickman-arm, .stickman-leg, .stickman-forearm, .stickman-shin {
+    position: absolute; width: 4px; border-radius: 4px;
+    background: currentColor; transform-origin: 2px 2px;
+  }
+  .stickman-arm { left: 30px; top: 27px; height: 19px; }
+  .stickman-forearm { left: 0; top: 16px; height: 18px; transform: rotate(-18deg); }
+  .stickman-arm-back { transform: rotate(-20deg); }
+  .stickman-arm-wave { transform: rotate(18deg); }
+  .stickman-hand {
+    position: absolute; left: -1px; bottom: -1px;
+    width: 6px; height: 6px; border-radius: 50%; background: currentColor;
+  }
+  .stickman-leg { left: 30px; top: 50px; height: 20px; }
+  .stickman-shin { left: 0; top: 18px; height: 20px; }
+  .stickman-leg-front { transform: rotate(9deg); }
+  .stickman-leg-front .stickman-shin { transform: rotate(-9deg); }
+  .stickman-leg-back { transform: rotate(-9deg); }
+  .stickman-leg-back .stickman-shin { transform: rotate(9deg); }
+  .stickman-foot {
+    position: absolute; right: 0; bottom: -1px;
+    width: 12px; height: 4px; border-radius: 4px; background: currentColor;
+  }
+  .stickman-scene:is([data-phase="arriving"], [data-phase="leaving"]) .stickman-figure {
+    animation: stickmanJog 0.26s ease-in-out infinite alternate;
+  }
+  .stickman-scene:is([data-phase="arriving"], [data-phase="leaving"]) .stickman-leg {
+    animation: stickmanStride 0.52s ease-in-out infinite;
+  }
+  .stickman-scene:is([data-phase="arriving"], [data-phase="leaving"]) .stickman-shin {
+    animation: stickmanKnee 0.52s ease-in-out infinite;
+  }
+  .stickman-scene:is([data-phase="arriving"], [data-phase="leaving"]) .stickman-arm {
+    animation: stickmanArmSwing 0.52s ease-in-out infinite;
+  }
+  .stickman-scene:is([data-phase="arriving"], [data-phase="leaving"]) .stickman-leg-back,
+  .stickman-scene:is([data-phase="arriving"], [data-phase="leaving"]) .stickman-leg-back .stickman-shin,
+  .stickman-scene:is([data-phase="arriving"], [data-phase="leaving"]) .stickman-arm-wave {
+    animation-delay: -0.26s;
+  }
+  @keyframes stickmanJog { from { transform: translateY(0); } to { transform: translateY(-3px); } }
+  @keyframes stickmanStride { 0%, 100% { transform: rotate(34deg); } 50% { transform: rotate(-30deg); } }
+  @keyframes stickmanKnee { 0%, 100% { transform: rotate(-12deg); } 50% { transform: rotate(65deg); } }
+  @keyframes stickmanArmSwing { 0%, 100% { transform: rotate(-35deg); } 50% { transform: rotate(35deg); } }
+  .stickman-bubble {
+    position: absolute; left: 50%; bottom: 106px;
+    width: max-content; max-width: calc(100vw - 32px);
+    padding: 9px 13px; border: 1px solid #86abc3;
+    border-radius: 13px 13px 13px 5px;
+    background: linear-gradient(#fff, #eef8ff);
+    box-shadow: 0 3px 9px rgba(9, 45, 78, 0.18);
+    color: #244c6a; font: bold 13px Tahoma, Verdana, sans-serif;
+    white-space: nowrap; opacity: 0; visibility: hidden;
+    transform: translateX(-50%);
+  }
+  .stickman-bubble::after {
+    content: ''; position: absolute; left: calc(50% - 5px); bottom: -6px;
+    width: 10px; height: 10px; transform: rotate(45deg);
+    border-right: 1px solid #86abc3; border-bottom: 1px solid #86abc3;
+    background: #eef8ff;
+  }
+  .stickman-scene[data-phase="greeting"] .stickman-bubble {
+    opacity: 1; visibility: visible;
+    animation: stickmanBubbleIn 0.22s ease-out both;
+  }
+  .stickman-scene[data-phase="greeting"] .stickman-head { transform: rotate(-8deg); }
+  .stickman-scene[data-phase="greeting"] .stickman-arm-wave { transform: rotate(120deg); }
+  .stickman-scene[data-phase="greeting"] .stickman-arm-wave .stickman-forearm {
+    animation: stickmanWave 0.45s ease-in-out infinite alternate;
+  }
+  @keyframes stickmanWave { from { transform: rotate(20deg); } to { transform: rotate(65deg); } }
+  @keyframes stickmanBubbleIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(6px) scale(0.9); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+  }
+  @media (max-width: 600px) {
+    .stickman-scene { --stickman-travel-time: 1.8s; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .stickman-scene :is(.stickman-figure, .stickman-leg, .stickman-shin, .stickman-arm, .stickman-forearm, .stickman-bubble) { animation: none !important; }
+    .stickman-scene:is([data-phase="arriving"], [data-phase="leaving"]) .stickman-actor { animation-duration: 0.01ms !important; }
+  }
+
   .splash-screen {
     position: fixed;
     inset: 0;
@@ -718,6 +886,7 @@
     .wallpaper-water { animation: none; }
     .shimmer { animation: none; }
     .wallpaper { transition: none; }
+    .smoke { animation: none; opacity: .4; }
   }
 
   @media (max-width: 860px) {
@@ -757,6 +926,10 @@
   <div class="wallpaper wallpaper-water" data-wallpaper="water">
     <div class="shimmer" style="width:150px; height:150px; top:18%; left:62%;"></div>
     <div class="shimmer" style="width:100px; height:100px; top:64%; left:18%; animation-delay:5s;"></div>
+  </div>
+
+  <div class="wallpaper wallpaper-wipeout" data-wallpaper="wipeout" aria-hidden="true">
+    <div class="smoke"></div><div class="smoke"></div>
   </div>
 
   <div class="desktop-icons">
@@ -961,6 +1134,21 @@
   </div>
 </div>
 
+<div class="stickman-scene" id="stickman-scene" hidden>
+  <div class="stickman-actor" id="stickman-actor">
+    <div class="stickman-bubble" id="stickman-bubble" role="status" aria-live="polite" aria-atomic="true"></div>
+    <div class="stickman-shadow" aria-hidden="true"></div>
+    <div class="stickman-figure" aria-hidden="true">
+      <span class="stickman-arm stickman-arm-back"><span class="stickman-forearm"><span class="stickman-hand"></span></span></span>
+      <span class="stickman-leg stickman-leg-back"><span class="stickman-shin"><span class="stickman-foot"></span></span></span>
+      <span class="stickman-body"></span>
+      <span class="stickman-head"></span>
+      <span class="stickman-leg stickman-leg-front"><span class="stickman-shin"><span class="stickman-foot"></span></span></span>
+      <span class="stickman-arm stickman-arm-wave"><span class="stickman-forearm"><span class="stickman-hand"></span></span></span>
+    </div>
+  </div>
+</div>
+
 <div class="taskbar">
   <button class="start-btn" id="start-btn">
     <svg class="win-flag" viewBox="0 0 100 100" aria-hidden="true">
@@ -1134,6 +1322,28 @@
     }
   ];
 
+  // R2 public buckets do not list objects. Add future songs to this manifest.
+  tracks.push({
+    title: 'wipeout!',
+    artist: 'The Neighbourhood · shuffled mix',
+    background: 'wipeout',
+    songs: [
+      { title: 'Ferrari', file: 'Ferrari-Nbi7CXHzbrQ.mp3' },
+      { title: 'Greetings from Califournia', file: 'Greetings_from_Califournia-IH0Jb2yWpDA.mp3' },
+      { title: 'Prey', file: 'Prey-2IE3T9mcqyM.mp3' },
+      { title: 'Baby Came Home 2 / Valentines', file: 'The_Neighbourhood_-_Baby_Came_Home_2_Valentines-WkNE5WGyz0k.mp3' },
+      { title: 'Cry Baby', file: 'The_Neighbourhood_-_Cry_Baby_Lyrics-wW6MsPkAJUs.mp3' },
+      { title: 'Daddy Issues', file: 'The_Neighbourhood_-_Daddy_Issues-vnLAa6_hB9A.mp3' },
+      { title: 'R.I.P. 2 My Youth', file: 'The_Neighbourhood_-_R.I.P._2_My_Youth_Official_Video-vKH-rcO6PA8.mp3' },
+      { title: 'Single', file: 'The_Neighbourhood_-_Single_Audio-RmTOAaYFymk.mp3' },
+      { title: 'The Beach', file: 'The_Neighbourhood_-_The_Beach_Audio-DujKJ1OaLQE.mp3' },
+      { title: 'Wiped Out!', file: 'The_Neighbourhood_-_Wiped_Out_Audio-Z3UCVQIjAJ8.mp3' }
+    ].map(function(song) {
+      song.file = 'https://pub-9f1d8041c6ac4cafbf75d8f193eaa062.r2.dev/' + encodeURIComponent(song.file);
+      return song;
+    })
+  });
+
   tracks.forEach(function(t) {
     if (!t.segments) return;
     t.segments.forEach(function(seg) {
@@ -1149,6 +1359,39 @@
   var visTimer = null;
   var zCounter = 10;
   var currentSegmentIndex = -1;
+  var shuffleQueue = [];
+  var songHistory = [];
+  var songHistoryIndex = -1;
+  var currentSong = null;
+  var playbackRequest = 0;
+
+  function selectMixSong(track, step) {
+    if (step < 0) {
+      songHistoryIndex = Math.max(0, songHistoryIndex - 1);
+    } else if (songHistoryIndex < songHistory.length - 1) {
+      songHistoryIndex++;
+    } else {
+      if (!shuffleQueue.length) {
+        shuffleQueue = track.songs.map(function(song, i) { return i; });
+        for (var i = shuffleQueue.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var temp = shuffleQueue[i];
+          shuffleQueue[i] = shuffleQueue[j];
+          shuffleQueue[j] = temp;
+        }
+        // Avoid playing the same song twice at the boundary between cycles.
+        if (shuffleQueue.length > 1 && shuffleQueue[0] === songHistory[songHistory.length - 1]) {
+          var first = shuffleQueue[0];
+          shuffleQueue[0] = shuffleQueue[1];
+          shuffleQueue[1] = first;
+        }
+      }
+      songHistory.push(shuffleQueue.shift());
+      if (songHistory.length > 100) songHistory.shift();
+      songHistoryIndex = songHistory.length - 1;
+    }
+    return track.songs[songHistory[songHistoryIndex]];
+  }
 
   var audioEl = document.getElementById('audio-el');
   var playBtn = document.getElementById('play-btn');
@@ -1243,15 +1486,35 @@
   }
 
   var wallpaperEls = document.querySelectorAll('.wallpaper');
+  function updatePageVisibility() {
+    document.documentElement.classList.toggle('page-hidden', document.hidden);
+  }
+  document.addEventListener('visibilitychange', updatePageVisibility);
+  updatePageVisibility();
   function setWallpaper(name) {
     wallpaperEls.forEach(function(el) {
       el.classList.toggle('active', el.dataset.wallpaper === name);
     });
   }
 
-  function loadTrack(index, autoplay) {
+  function mixNote() {
+    return '▶ now playing\n' + currentSong.title + '\nThe Neighbourhood\n\nwipeout! · shuffle\nAll '
+      + tracks[currentIndex].songs.length + ' songs play before the next shuffle.\nUse Next / Previous to change songs.';
+  }
+
+  function loadTrack(index, autoplay, songStep) {
+    playbackRequest++;
     currentIndex = (index + tracks.length) % tracks.length;
     var track = tracks[currentIndex];
+    currentSong = null;
+    if (track.songs) {
+      if (songStep === undefined) {
+        shuffleQueue = [];
+        songHistory = [];
+        songHistoryIndex = -1;
+      }
+      currentSong = selectMixSong(track, songStep || 1);
+    }
 
     clearInterval(simTimer);
     simTimer = null;
@@ -1259,18 +1522,18 @@
     usingRealAudio = false;
     currentSegmentIndex = -1;
     audioEl.pause();
-    audioEl.src = track.file;
+    audioEl.src = currentSong ? currentSong.file : track.file;
     audioEl.load();
 
     trackTitleEl.textContent = track.title;
-    trackArtistEl.textContent = track.artist;
-    timeTotal.textContent = formatTime(track.duration);
+    trackArtistEl.textContent = currentSong ? 'The Neighbourhood — ' + currentSong.title : track.artist;
+    timeTotal.textContent = currentSong ? '--:--' : formatTime(track.duration);
     timeCurrent.textContent = '0:00';
     seekBar.value = 0;
     taskbarTrack.textContent = '🎵 ' + track.title;
     setWallpaper(track.background || 'bubbles');
 
-    typeNotepad(track.note);
+    typeNotepad(currentSong ? mixNote() : track.note);
 
     if (autoplay) {
       play();
@@ -1283,6 +1546,11 @@
   }
 
   function play() {
+    var request = ++playbackRequest;
+    if (currentSong) {
+      if (audioEl.error) audioEl.load();
+      typeNotepad(mixNote());
+    }
     isPlaying = true;
     setPlayIcon(true);
     startVisualizer();
@@ -1291,18 +1559,29 @@
     var p = audioEl.play();
     if (p && typeof p.then === 'function') {
       p.then(function() {
+        if (request !== playbackRequest) return;
         usingRealAudio = true;
-      }).catch(function() {
+        clearInterval(simTimer);
+        simTimer = null;
+      }).catch(function(error) {
+        if (request !== playbackRequest || error.name === 'AbortError') return;
         usingRealAudio = false;
-        startSimTimer();
+        if (tracks[currentIndex].songs) {
+          showMixError(error.name === 'NotAllowedError'
+            ? 'Press Play to start the music.'
+            : 'This song could not load. Press Play to retry, or Next then Play to try another song.');
+        } else {
+          startSimTimer();
+        }
       });
     }
     setTimeout(function() {
-      if (isPlaying && !usingRealAudio && !simTimer) startSimTimer();
+      if (request === playbackRequest && isPlaying && !usingRealAudio && !simTimer && !tracks[currentIndex].songs) startSimTimer();
     }, 350);
   }
 
   function pause() {
+    playbackRequest++;
     isPlaying = false;
     setPlayIcon(false);
     audioEl.pause();
@@ -1317,6 +1596,7 @@
   function startSimTimer() {
     clearInterval(simTimer);
     var track = tracks[currentIndex];
+    if (track.songs) return;
     simTimer = setInterval(function() {
       simElapsed++;
       seekBar.value = (simElapsed / track.duration) * 100;
@@ -1326,8 +1606,24 @@
     }, 1000);
   }
 
-  function nextTrack() { loadTrack(currentIndex + 1, isPlaying); }
-  function prevTrack() { loadTrack(currentIndex - 1, isPlaying); }
+  function nextTrack() {
+    if (tracks[currentIndex].songs) loadTrack(currentIndex, isPlaying, 1);
+    else loadTrack(currentIndex + 1, isPlaying);
+  }
+  function prevTrack() {
+    if (tracks[currentIndex].songs) loadTrack(currentIndex, isPlaying, -1);
+    else loadTrack(currentIndex - 1, isPlaying);
+  }
+
+  function showMixError(message) {
+    pause();
+    clearInterval(notepadText._typer);
+    notepadText.value = 'wipeout!\n' + currentSong.title + '\n\n' + message;
+  }
+
+  audioEl.addEventListener('loadedmetadata', function() {
+    if (Number.isFinite(audioEl.duration)) timeTotal.textContent = formatTime(audioEl.duration);
+  });
 
   audioEl.addEventListener('timeupdate', function() {
     if (usingRealAudio && isPlaying && audioEl.duration) {
@@ -1339,6 +1635,10 @@
   audioEl.addEventListener('ended', function() { nextTrack(); });
   audioEl.addEventListener('error', function() {
     usingRealAudio = false;
+    if (tracks[currentIndex].songs) {
+      showMixError('This song could not load. Press Play to retry, or Next then Play to try another song.');
+      return;
+    }
     if (isPlaying && !simTimer) startSimTimer();
   });
 
@@ -1352,7 +1652,7 @@
     if (usingRealAudio && audioEl.duration) {
       audioEl.currentTime = pct * audioEl.duration;
       checkSegments(audioEl.currentTime);
-    } else {
+    } else if (!track.songs) {
       simElapsed = pct * track.duration;
       timeCurrent.textContent = formatTime(simElapsed);
       checkSegments(simElapsed);
@@ -2373,6 +2673,38 @@
   updateClock();
   setInterval(updateClock, 1000);
 
+  var stickmanScene = document.getElementById('stickman-scene');
+  var stickmanActor = document.getElementById('stickman-actor');
+  var stickmanBubble = document.getElementById('stickman-bubble');
+  var stickmanStarted = false;
+  function finishStickmanScene() {
+    stickmanScene.hidden = true;
+    stickmanScene.removeAttribute('data-phase');
+    stickmanBubble.textContent = '';
+  }
+  function greetStickman() {
+    stickmanScene.dataset.phase = 'greeting';
+    stickmanBubble.textContent = 'Have fun Dianna!';
+    setTimeout(function() {
+      if (reduceMotion) finishStickmanScene();
+      else stickmanScene.dataset.phase = 'leaving';
+    }, 3600);
+  }
+  function startStickmanScene() {
+    if (!stickmanScene || stickmanStarted) return;
+    stickmanStarted = true;
+    stickmanScene.hidden = false;
+    if (reduceMotion) greetStickman();
+    else stickmanScene.dataset.phase = 'arriving';
+  }
+  if (stickmanScene && stickmanActor) {
+    stickmanActor.addEventListener('animationend', function(event) {
+      if (event.target !== stickmanActor) return;
+      if (event.animationName === 'stickmanArrive') greetStickman();
+      else if (event.animationName === 'stickmanLeave') finishStickmanScene();
+    });
+  }
+
   var splashEl = document.getElementById('splash-screen');
   if (splashEl) {
     var splashDismissed = false;
@@ -2380,10 +2712,15 @@
       if (splashDismissed) return;
       splashDismissed = true;
       splashEl.classList.add('fade-out');
-      setTimeout(function() { splashEl.classList.add('hidden'); }, reduceMotion ? 0 : 700);
+      setTimeout(function() {
+        splashEl.classList.add('hidden');
+        startStickmanScene();
+      }, reduceMotion ? 0 : 700);
     };
     splashEl.addEventListener('click', dismissSplash);
     setTimeout(dismissSplash, reduceMotion ? 900 : 2600);
+  } else {
+    startStickmanScene();
   }
 
   loadTrack(0, false);
