@@ -277,6 +277,10 @@ shuffled (`mmShuffle`, Fisher–Yates) into 16 `.mm-card` buttons.
   and close unloads them. Keep paths relative for GitHub Pages.
 - `games/penguin-diner-2/` contains the original HTML5 runtime and all its assets,
   plus a local player page and asset hashes. Do not add remote SDK/CDN dependencies.
+  Its compat/unsafe-eval-5.3.3.js must load after Pixi and before the game starts: it
+  replaces dynamic shader uniform code with static functions so WebGL filters work
+  under the existing CSP. Without it Pixi silently falls back to Canvas, losing
+  hover glow and shop grayscale effects. Preserve the original assets and hashes.
 - `games/audio-control.js` validates parent origin/source and queues audio state
   until the player binds it. Flash uses Ruffle volume; Penguin Diner uses Pixi
   sound volumeAll. Each hosted window has a Mute/Unmute button, with an independent
