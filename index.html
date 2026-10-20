@@ -628,22 +628,37 @@
     display: flex; align-items: center; border-radius: 3px;
   }
 
-  /* A permanent little guide, separate from the welcome animation. */
+  /* The cutout's planted foot rests on the taskbar; its raised foot meets the right edge. */
   .stickbox-launch {
-    position: relative; flex: 0 0 54px; align-self: flex-end;
-    height: 68px; margin: 0 4px 2px 8px; padding: 0;
-    border: 0; background: transparent; color: #fff;
-    cursor: pointer; filter: drop-shadow(0 2px 1px rgba(0,0,0,.65));
+    --stickbox-height: 152px;
+    position: fixed; right: 0; bottom: 40px;
+    width: calc(var(--stickbox-height) * .311069); height: var(--stickbox-height); margin: 0; padding: 0;
+    border: 0; background: transparent;
+    cursor: pointer; -webkit-tap-highlight-color: transparent;
   }
-  .stickbox-launch svg { width: 54px; height: 68px; display: block; }
+  .stickbox-character { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+  /* Visible bounds: x=250..739, y=24..1596 in the 970x1621 PNG. Ignore faint stray alpha. */
+  .stickbox-character img {
+    display: block; position: absolute; width: 198.364%; max-width: none;
+    height: auto; left: -51.1247%; top: -1.52672%;
+    filter: drop-shadow(0 0 1px rgba(255,255,255,.5));
+  }
+  body:has(.wallpaper-wipeout.active) .stickbox-character img {
+    filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 1px rgba(255,255,255,.5));
+  }
   .stickbox-launch::before {
-    content: 'Psst… Stick Box'; position: absolute; right: 0; bottom: 70px;
+    content: 'Psst… Stick Box'; position: absolute; right: 76px; bottom: 112px;
     padding: 7px 10px; border: 1px solid #333; border-radius: 6px;
     background: #fffde7; color: #222; font: 12px Tahoma, sans-serif;
     white-space: nowrap; opacity: 0; pointer-events: none;
   }
   .stickbox-launch:hover::before, .stickbox-launch:focus-visible::before { opacity: 1; }
-  .stickbox-launch:hover, .stickbox-launch:focus-visible { color: #d9f69d; }
+  .stickbox-launch:hover .stickbox-character { filter: drop-shadow(0 0 3px rgba(217,246,157,.7)); }
+  .stickbox-launch:focus-visible { outline: 2px solid #d9f69d; outline-offset: -2px; border-radius: 8px; }
+  @media (max-width: 600px) {
+    .stickbox-launch { --stickbox-height: 128px; }
+    .stickbox-launch::before { right: 66px; bottom: 90px; }
+  }
   .stickbox-invite {
     position: fixed; inset: auto 18px 84px auto;
     width: min(360px, calc(100vw - 32px)); margin: 0; padding: 24px;
@@ -1233,12 +1248,7 @@
     <button class="task-item" id="taskbar-penguin" style="display:none;">🐧 Penguin Diner 2</button>
   </div>
   <button class="stickbox-launch" id="stickbox-launch" type="button" aria-label="Visit Stick Box" aria-haspopup="dialog" aria-controls="stickbox-invite" aria-expanded="false">
-    <svg viewBox="0 0 54 68" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <circle cx="25" cy="12" r="7" />
-      <path d="M25 20l-5 20 17 2 7 13M20 40l-9 9 12 7M24 25l13 8 8-4M23 26L11 34 6 32" />
-      <path d="M8 41h37" stroke-width="2" opacity=".65" />
-      <path d="M43 55h6M23 56h6" />
-    </svg>
+    <span class="stickbox-character" aria-hidden="true"><img src="stick-box/assets/corner-stickman.png" alt="" width="970" height="1621" draggable="false"></span>
   </button>
   <div class="tray"><span id="clock">--:--</span></div>
 </div>

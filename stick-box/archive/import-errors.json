@@ -1,1 +1,26 @@
-[]
+[
+  {
+    "id": "theforgottenlegion2",
+    "title": "The Forgotten Legion 2",
+    "source": "https://www.stickpage.com/theforgottenlegion2.shtml",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "id": "semontage3",
+    "title": "SE Montage 3",
+    "source": "https://www.stickpage.com/semontage3.shtml",
+    "error": "No downloadable animation found on https://www.stickpage.com/semontage3play.shtml"
+  },
+  {
+    "id": "nero",
+    "title": "Nero 1: Infiltration",
+    "source": "https://www.stickpage.com/nero.shtml",
+    "error": "No downloadable animation found on https://www.stickpage.com/nero.shtml"
+  },
+  {
+    "id": "assailant",
+    "title": "ASSAILANT",
+    "source": "https://www.stickpage.com/assailant.shtml",
+    "error": "HTTP Error 403: Forbidden"
+  }
+]

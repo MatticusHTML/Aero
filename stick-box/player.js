@@ -151,10 +151,11 @@
     return response.json();
   }).then(function (catalog) {
     var id = new URLSearchParams(location.search).get('episode');
+    var groupId = new URLSearchParams(location.search).get('series');
     var series = catalog.series.find(function (group) {
-      return group.episodes.some(function (item) { return item.id === id; });
+      return (!groupId || group.id === groupId) && group.episodes.some(function (item) { return item.id === id; });
     });
-    if (!id) series = catalog.series[0];
+    if (!id) series = catalog.series.find(function (group) { return group.episodes.length && (!groupId || group.id === groupId); });
     if (!series) {
       document.title = 'Episode not found — Stick Box';
       document.getElementById('watch-title').textContent = 'Episode not found';
@@ -175,7 +176,7 @@
     series.episodes.forEach(function (item, index) {
       var li = document.createElement('li');
       var link = document.createElement('a');
-      link.href = 'watch.html?episode=' + encodeURIComponent(item.id);
+      link.href = 'watch.html?series=' + encodeURIComponent(series.id) + '&episode=' + encodeURIComponent(item.id);
       var number = document.createElement('span');
       number.textContent = String(index + 1).padStart(2, '0');
       var title = document.createElement('span');
@@ -190,11 +191,26 @@
       var target = series.episodes[entry[1]];
       if (!target) return;
       var link = document.getElementById(entry[0]);
-      link.href = 'watch.html?episode=' + encodeURIComponent(target.id);
+      link.href = 'watch.html?series=' + encodeURIComponent(series.id) + '&episode=' + encodeURIComponent(target.id);
       link.textContent = entry[2] + target.title + (entry[0] === 'next-episode' ? ' →' : '');
       link.hidden = false;
     });
-    loadEpisode();
+    if (episode.playbackStatus === 'external-video') {
+      showError(episode.playbackNote);
+      retry.hidden = true;
+      hint.textContent = 'The original launcher is preserved. Its video is hosted externally.';
+      if (episode.externalSource) {
+        var external = document.createElement('a');
+        external.href = episode.externalSource;
+        external.target = '_blank';
+        external.rel = 'noopener noreferrer';
+        external.className = 'external-source';
+        external.textContent = 'Open the original video on YouTube ↗';
+        messageText.after(external);
+      }
+    } else {
+      loadEpisode();
+    }
   }).catch(function (error) {
     document.getElementById('watch-title').textContent = 'The box couldn’t open';
     showError('The collection could not load. Refresh the page to try again.');

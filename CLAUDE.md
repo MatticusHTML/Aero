@@ -14,11 +14,14 @@ Static site, no build step, deploys straight to GitHub Pages.
 - `index.html` — the Aero desktop. CSS in `<style>`, JS in `<script>` (one IIFE
   at the bottom of the file).
 - `stick-box/` — a separate dark Stickpage tribute and animation library.
-  `catalog.json` holds preserved metadata for seven Killing Spree and five Shock
-  entries. `library.js` renders series links; `watch.html?episode=<id>` and
+  `catalog.json` holds preserved metadata for the 19 Stick Fights collections.
+  `library.js` renders searchable, collapsible collection lists;
+  `watch.html?series=<group>&episode=<id>` and
   `player.js` load one local SWF through the existing `games/ruffle/` runtime.
   Keep paths relative for GitHub Pages. Source snapshots, SWFs, thumbnails, and
-  hashes live under `archive/`; the importer is `tools/import_series.py`.
+  hashes live under `archive/`. `tools/expand_fights.py` imports the full index;
+  `tools/import_series.py` retains the original two-series importer and shared
+  SWF parsing. Run `tools/audit_dependencies.py --write` after expanding.
 - `music/` — drop MP3 files here.
 - `README.md` — human-facing setup/deploy instructions.
 
@@ -42,12 +45,14 @@ Start Menu's `.start-menu-header` "Matticus") — change it there if needed.
 
 ## Stickman greeting
 
-The permanent seated `#stickbox-launch` button beside the taskbar clock is
+The permanent leaning `#stickbox-launch` button above the taskbar clock is
 separate from the greeting scene. It opens the native `#stickbox-invite` modal
 with Stay in Aero and Enter Stick Box actions. Escape, Stay, and clicking the
 backdrop dismiss it and restore focus to the launcher. Only the Enter link
 navigates to `stick-box/` in the same tab. Keep the launcher keyboard accessible
-and visible alongside the clock on narrow screens.
+and visible above the clock on narrow screens. Its transparent character image
+is `stick-box/assets/corner-stickman.png`; CSS crops the transparent padding.
+Keep its planted foot at the 40px taskbar top and raised foot at the right edge.
 
 After the splash is fully hidden, startStickmanScene() plays one CSS scene per
 page load. The stickman jogs in from the right along the taskbar top (40px above
@@ -303,6 +308,12 @@ shuffled (`mmShuffle`, Fisher–Yates) into 16 `.mm-card` buttons.
   `stickbox.volume` is independent of all Aero audio preferences. Page hiding
   pauses the runtime; Restart destroys the old player before creating a new one.
   Keep the generation guard so stale loads cannot re-enable controls.
+  Titles may appear in multiple collections: reuse the same file/hash, count
+  unique IDs, and include the collection ID in watch links so Previous/Next stay
+  in context. Preserve unavailable listings with their source failure records.
+  Confirmed YouTube Flash launchers have `playbackStatus: external-video`; show
+  their explanation/source link without loading Ruffle. Do not claim downloaded
+  wrappers contain a self-contained movie. Keep page HTML snapshots unexecuted.
 
 - `wipeout!` is a third playlist entry with a `songs` manifest and a shuffled
   queue. Keep all ten songs per cycle and prevent adjacent repeats across cycles.

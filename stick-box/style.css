@@ -64,6 +64,17 @@ h1 span { color: var(--accent); display: inline-block; transform: rotate(-3deg);
 .shelf-link { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 36px; color: var(--accent); font-size: 12px; }
 .fights-library { padding-top: 42px; }
 .series-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.series-grid { align-items: start; }
+.library-search { margin: 0 0 25px; }
+.library-search label { display: block; color: var(--muted); font-size: 12px; margin-bottom: 8px; }
+.library-search input { display: block; width: min(100%, 540px); min-height: 46px; background: #191d19; border: 1px solid #526047; color: var(--ink); border-radius: 0; padding: 11px 14px; font: 14px 'Segoe UI', Arial, sans-serif; }
+.library-search input::placeholder { color: #99a58e; }
+.library-search p, .archive-availability { color: var(--muted); font-size: 12px; }
+.series-episodes summary { cursor: pointer; color: var(--accent); min-height: 44px; padding-block: 10px; border-top: 1px solid var(--line); font-size: 13px; }
+.series-episodes summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.series-episodes .episode-links { padding: 8px 2px 4px; max-height: 330px; overflow-y: auto; }
+.unavailable-entry a { color: #c6a88c; border-style: dashed; }
+.watch-episode-list { max-height: 60vh; overflow-y: auto; }
 .series-card { min-width: 0; border: 1px solid var(--line); background: var(--panel); }
 .series-cover { display: block; overflow: hidden; background: #080a08; border-bottom: 1px solid var(--line); }
 .series-cover img { display: block; width: 100%; height: auto; aspect-ratio: 368 / 76; object-fit: cover; }
@@ -86,6 +97,7 @@ h1 span { color: var(--accent); display: inline-block; transform: rotate(-3deg);
 .movie-mount { position: absolute; inset: 0; }
 .movie-mount ruffle-player { display: block; width: 100%; height: 100%; }
 .player-message { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 20px; background: #111413; color: var(--muted); text-align: center; }
+.external-source { color: var(--accent); text-decoration: underline; text-underline-offset: 4px; }
 .player-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 12px; border-top: 1px solid var(--line); background: #1b2119; }
 .player-controls button, .player-message button { border: 1px solid #4c5842; background: transparent; color: var(--ink); padding: 9px 12px; min-height: 42px; cursor: pointer; font: 12px 'Segoe UI', Arial, sans-serif; }
 .player-controls button:hover:not(:disabled), .player-message button:hover { border-color: var(--accent); color: var(--accent); }

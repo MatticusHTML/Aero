@@ -1,5 +1,6 @@
 """Regression checks for authored stage colors in compressed and raw SWFs."""
 import struct
+import lzma
 import unittest
 import zlib
 
@@ -18,6 +19,12 @@ def background(rgb):
 
 
 class StageBackgroundTests(unittest.TestCase):
+    def test_lzma_compressed_movie(self):
+        raw = movie(background((255, 255, 255)))
+        alone = lzma.compress(raw[8:], format=lzma.FORMAT_ALONE)
+        zws = b"ZWS\x0f" + raw[4:8] + struct.pack("<I", len(alone) - 8) + alone[:5] + alone[13:]
+        self.assertEqual(swf_metadata(zws)["stageBackground"], "#ffffff")
+
     def test_authored_light_dark_and_gray_colors(self):
         for compressed in (False, True):
             for rgb, expected in [((255, 255, 255), "#ffffff"), ((0, 0, 0), "#000000"), ((221, 221, 221), "#dddddd")]:

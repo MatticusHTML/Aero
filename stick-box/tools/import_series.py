@@ -6,10 +6,12 @@ Existing files are verified and reused. The importer never executes source HTML.
 import hashlib
 import html
 import json
+import lzma
 import re
 import time
 import urllib.parse
 import urllib.request
+import urllib.error
 import zlib
 from datetime import datetime, timezone
 from pathlib import Path
@@ -36,6 +38,12 @@ def download(url):
                 }:
                     raise ValueError("Unexpected redirect host")
                 return response.read()
+        except urllib.error.HTTPError as error:
+            if error.code < 500 and error.code != 429:
+                raise
+            if attempt == 2:
+                raise
+            time.sleep(1 + attempt)
         except (OSError, TimeoutError):
             if attempt == 2:
                 raise
@@ -51,15 +59,29 @@ def source(url, name):
     path.parent.mkdir(parents=True, exist_ok=True)
     if not path.exists():
         path.write_bytes(download(url))
-    return path.read_text(encoding="utf-8", errors="replace")
+    raw = path.read_bytes()
+    try:
+        return raw.decode("utf-8")
+    except UnicodeDecodeError:
+        return raw.decode("windows-1252", errors="replace")
+
+
+def swf_body(data):
+    if data[:3] not in (b"FWS", b"CWS", b"ZWS"):
+        raise ValueError("Not a supported original SWF file")
+    if data[:3] == b"ZWS":
+        # Flash's LZMA header stores compressed length in place of the standard
+        # 8-byte uncompressed size. Reconstruct an LZMA-Alone stream to decode.
+        body = lzma.decompress(data[12:17] + b"\xff" * 8 + data[17:], format=lzma.FORMAT_ALONE)
+    else:
+        body = zlib.decompress(data[8:]) if data[:3] == b"CWS" else data[8:]
+    if int.from_bytes(data[4:8], "little") != len(body) + 8:
+        raise ValueError("SWF size check failed (possibly an incomplete download)")
+    return body
 
 
 def swf_metadata(data):
-    if data[:3] not in (b"FWS", b"CWS"):
-        raise ValueError("Not a supported original SWF file")
-    body = zlib.decompress(data[8:]) if data[:3] == b"CWS" else data[8:]
-    if int.from_bytes(data[4:8], "little") != len(body) + 8:
-        raise ValueError("SWF size check failed (possibly an incomplete download)")
+    body = swf_body(data)
     bits = "".join(f"{byte:08b}" for byte in body[:18])
     n = int(bits[:5], 2)
     values = []
@@ -103,12 +125,18 @@ def swf_metadata(data):
 def main():
     catalog_path = ROOT / "catalog.json"
     known_hashes = {}
+    previous = {"series": []}
     if catalog_path.exists():
         previous = json.loads(catalog_path.read_text(encoding="utf-8"))
         known_hashes = {episode["file"]: episode["sha256"]
                         for series in previous["series"] for episode in series["episodes"]}
-    catalog = {"archivedAt": datetime.now(timezone.utc).isoformat(), "series": []}
-    failures = []
+    catalog = {**previous, "archivedAt": previous.get("archivedAt", datetime.now(timezone.utc).isoformat()),
+               "updatedAt": datetime.now(timezone.utc).isoformat(), "series": []}
+    refreshed_ids = {episode["id"] for group in previous["series"]
+                     if group["id"] in {item[0] for item in SERIES} for episode in group["episodes"]}
+    errors_path = ROOT / "archive" / "import-errors.json"
+    failures = [entry for entry in json.loads(errors_path.read_text(encoding="utf-8"))
+                if entry["id"] not in refreshed_ids] if errors_path.exists() else []
     for series_id, title, page, pattern in SERIES:
         series_url = "https://www.stickpage.com/" + page
         page_html = source(series_url, series_id)
@@ -173,9 +201,11 @@ def main():
                 failures.append({"id": episode_id, "error": str(error)})
                 print(f"FAILED {label}: {error}", flush=True)
         catalog["series"].append(series)
+    updated_ids = {group["id"] for group in catalog["series"]}
+    catalog["series"].extend(group for group in previous["series"] if group["id"] not in updated_ids)
     (ROOT / "catalog.json").write_text(json.dumps(catalog, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     (ROOT / "archive" / "import-errors.json").write_text(json.dumps(failures, indent=2) + "\n", encoding="utf-8")
-    count = sum(len(series["episodes"]) for series in catalog["series"])
+    count = len({episode["id"] for series in catalog["series"] for episode in series["episodes"]})
     print(f"Preserved {count} entries; {len(failures)} failures.", flush=True)
     if failures:
         raise SystemExit(1)
