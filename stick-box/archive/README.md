@@ -14,6 +14,12 @@ creator, description, original page and download URLs, local paths, byte count,
 SHA-256, and SWF dimensions/version/frame rate. Ordering follows the source series
 pages, including the separate 4A/4B parts and the two Shock tributes.
 
+`stageBackground` records the original SWF's SetBackgroundColor tag (or `null`
+when none is present). The player uses `backgroundColor: null` so each movie
+renders its own stage colors, including changes during playback. Dark site
+styling applies only outside the movie. Do not replace authored backgrounds with
+a dark-mode color: black figures in Shock depend on their original light stage.
+
 `sources/*.html.txt` are unexecuted snapshots of the series, title, and playback
 pages. They are for provenance, not embedded into Stick Box. Titles/descriptions
 are rendered as text. Creator spelling and descriptions follow the source.
@@ -43,6 +49,9 @@ Review metadata and file changes before committing a refreshed catalog.
 
 Run `python stick-box/tools/verify_archive.py` to check all file hashes, byte
 counts, thumbnails, and source snapshots without making network requests.
+It also verifies recorded stage background colors against the original files.
+Run `python -B stick-box/tools/test_swf_metadata.py` for the background parser's
+regression tests, including white, black, gray, missing, and truncated color tags.
 
 These works remain attributed to their original creators. Stick Box is an
 independent tribute, not the official Stickpage website.

@@ -26,6 +26,8 @@ existing local Ruffle runtime when an episode is opened.
 
 Original creator credits, descriptions, thumbnails, source-page snapshots, and
 SHA-256 file hashes are preserved. See [archive details](stick-box/archive/README.md).
+Each animation keeps its authored stage background; the website's dark theme
+applies to the surrounding interface rather than replacing movie colors.
 All playback is local and does not depend on Stickpage remaining online. Serve
 the repository over HTTP(S), such as GitHub Pages, for the player and catalog.
 

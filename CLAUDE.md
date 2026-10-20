@@ -293,7 +293,13 @@ shuffled (`mmShuffle`, Fisher–Yates) into 16 `.mm-card` buttons.
 - Stick Box uses the bundled Ruffle V1 `resume()`, `suspend()`, `suspended`, and
   `volume` APIs for playback. Keep networking/script access and outbound URLs
   disabled for archived SWFs. Some movies have their own Start menus. Preserve
-  original files byte-for-byte. No Ruffle or SWF loads on the collection page.
+  the SWF's authored stage background: keep `backgroundColor: null` in the shared
+  player. Dark mode applies to surrounding page chrome and letterbox space only.
+  Never force black, white, or a catalog color onto every animation. The importer
+  records `stageBackground` from the SWF tag for archive verification; it must
+  not be used as a runtime override (the movie can change colors as it plays).
+  Visually check both light and dark movies when changing player configuration.
+  Preserve original files byte-for-byte. No Ruffle or SWF loads on the collection page.
   `stickbox.volume` is independent of all Aero audio preferences. Page hiding
   pauses the runtime; Restart destroys the old player before creating a new one.
   Keep the generation guard so stale loads cannot re-enable controls.

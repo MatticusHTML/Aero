@@ -67,12 +67,36 @@ def swf_metadata(data):
         value = int(bits[5 + i * n:5 + (i + 1) * n], 2)
         values.append(value - (1 << n) if value & (1 << (n - 1)) else value)
     offset = (5 + 4 * n + 7) // 8
+    # Tag 9 is SetBackgroundColor. Keep this for auditing, never as a player
+    # override: the SWF may change its own stage color later during playback.
+    background = None
+    position = offset + 4
+    while position + 2 <= len(body):
+        header = int.from_bytes(body[position:position + 2], "little")
+        position += 2
+        code, length = header >> 6, header & 63
+        if length == 63:
+            if position + 4 > len(body):
+                raise ValueError("Truncated SWF tag header")
+            length = int.from_bytes(body[position:position + 4], "little")
+            position += 4
+        if position + length > len(body):
+            raise ValueError("Truncated SWF tag data")
+        if code == 9:
+            if length != 3:
+                raise ValueError("Invalid SWF background color tag")
+            background = "#" + body[position:position + 3].hex()
+            break
+        position += length
+        if code == 0:
+            break
     return {
         "width": round((values[1] - values[0]) / 20),
         "height": round((values[3] - values[2]) / 20),
         "frameRate": int.from_bytes(body[offset:offset + 2], "little") / 256,
         "frameCount": int.from_bytes(body[offset + 2:offset + 4], "little"),
         "swfVersion": data[3],
+        "stageBackground": background,
     }
 
 

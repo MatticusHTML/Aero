@@ -75,7 +75,9 @@
         url: episode.file,
         autoplay: 'off',
         splashScreen: false,
-        backgroundColor: '#080a08',
+        // Let each SWF control its stage color; site dark mode is chrome only.
+        // An explicit null also cancels any inherited Ruffle background override.
+        backgroundColor: null,
         letterbox: 'on',
         allowScriptAccess: false,
         allowNetworking: 'none',

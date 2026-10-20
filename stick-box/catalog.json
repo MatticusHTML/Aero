@@ -23,7 +23,8 @@
           "height": 400,
           "frameRate": 16.0,
           "frameCount": 3242,
-          "swfVersion": 6
+          "swfVersion": 6,
+          "stageBackground": "#000000"
         },
         {
           "id": "killingspree2",
@@ -42,7 +43,8 @@
           "height": 400,
           "frameRate": 12.0,
           "frameCount": 2568,
-          "swfVersion": 6
+          "swfVersion": 6,
+          "stageBackground": "#000000"
         },
         {
           "id": "killingspree3",
@@ -61,7 +63,8 @@
           "height": 400,
           "frameRate": 14.0,
           "frameCount": 5776,
-          "swfVersion": 6
+          "swfVersion": 6,
+          "stageBackground": "#000000"
         },
         {
           "id": "killingspree4a",
@@ -80,7 +83,8 @@
           "height": 400,
           "frameRate": 16.0,
           "frameCount": 4873,
-          "swfVersion": 6
+          "swfVersion": 6,
+          "stageBackground": "#000000"
         },
         {
           "id": "killingspree4b",
@@ -99,7 +103,8 @@
           "height": 400,
           "frameRate": 16.0,
           "frameCount": 3418,
-          "swfVersion": 6
+          "swfVersion": 6,
+          "stageBackground": "#000000"
         },
         {
           "id": "killingspree5",
@@ -118,7 +123,8 @@
           "height": 400,
           "frameRate": 16.0,
           "frameCount": 9620,
-          "swfVersion": 6
+          "swfVersion": 6,
+          "stageBackground": "#000000"
         },
         {
           "id": "killingspree6",
@@ -137,7 +143,8 @@
           "height": 400,
           "frameRate": 18.0,
           "frameCount": 10057,
-          "swfVersion": 8
+          "swfVersion": 8,
+          "stageBackground": "#000000"
         }
       ]
     },
@@ -163,7 +170,8 @@
           "height": 400,
           "frameRate": 24.0,
           "frameCount": 2975,
-          "swfVersion": 8
+          "swfVersion": 8,
+          "stageBackground": "#ffffff"
         },
         {
           "id": "shock2",
@@ -182,7 +190,8 @@
           "height": 400,
           "frameRate": 24.0,
           "frameCount": 4904,
-          "swfVersion": 8
+          "swfVersion": 8,
+          "stageBackground": "#ffffff"
         },
         {
           "id": "shock3",
@@ -201,7 +210,8 @@
           "height": 400,
           "frameRate": 30.0,
           "frameCount": 10924,
-          "swfVersion": 8
+          "swfVersion": 8,
+          "stageBackground": "#dddddd"
         },
         {
           "id": "shockmore",
@@ -220,7 +230,8 @@
           "height": 350,
           "frameRate": 19.96875,
           "frameCount": 9450,
-          "swfVersion": 8
+          "swfVersion": 8,
+          "stageBackground": "#999999"
         },
         {
           "id": "shocktribute",
@@ -239,7 +250,8 @@
           "height": 400,
           "frameRate": 24.0,
           "frameCount": 2503,
-          "swfVersion": 9
+          "swfVersion": 9,
+          "stageBackground": "#ffffff"
         }
       ]
     }
