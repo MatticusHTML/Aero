@@ -11,8 +11,14 @@ Static site, no build step, deploys straight to GitHub Pages.
 
 ## Files
 
-- `index.html` — the entire site. CSS in `<style>`, JS in `<script>` (one IIFE
+- `index.html` — the Aero desktop. CSS in `<style>`, JS in `<script>` (one IIFE
   at the bottom of the file).
+- `stick-box/` — a separate dark Stickpage tribute and animation library.
+  `catalog.json` holds preserved metadata for seven Killing Spree and five Shock
+  entries. `library.js` renders series links; `watch.html?episode=<id>` and
+  `player.js` load one local SWF through the existing `games/ruffle/` runtime.
+  Keep paths relative for GitHub Pages. Source snapshots, SWFs, thumbnails, and
+  hashes live under `archive/`; the importer is `tools/import_series.py`.
 - `music/` — drop MP3 files here.
 - `README.md` — human-facing setup/deploy instructions.
 
@@ -35,6 +41,13 @@ The name is a plain hardcoded string in `.splash-name` (same pattern as the
 Start Menu's `.start-menu-header` "Matticus") — change it there if needed.
 
 ## Stickman greeting
+
+The permanent seated `#stickbox-launch` button beside the taskbar clock is
+separate from the greeting scene. It opens the native `#stickbox-invite` modal
+with Stay in Aero and Enter Stick Box actions. Escape, Stay, and clicking the
+backdrop dismiss it and restore focus to the launcher. Only the Enter link
+navigates to `stick-box/` in the same tab. Keep the launcher keyboard accessible
+and visible alongside the clock on narrow screens.
 
 After the splash is fully hidden, startStickmanScene() plays one CSS scene per
 page load. The stickman jogs in from the right along the taskbar top (40px above
@@ -276,6 +289,14 @@ shuffled (`mmShuffle`, Fisher–Yates) into 16 `.mm-card` buttons.
 - Font: Tahoma/Verdana stack throughout (period-accurate for the XP era).
 
 ## Conventions
+
+- Stick Box uses the bundled Ruffle V1 `resume()`, `suspend()`, `suspended`, and
+  `volume` APIs for playback. Keep networking/script access and outbound URLs
+  disabled for archived SWFs. Some movies have their own Start menus. Preserve
+  original files byte-for-byte. No Ruffle or SWF loads on the collection page.
+  `stickbox.volume` is independent of all Aero audio preferences. Page hiding
+  pauses the runtime; Restart destroys the old player before creating a new one.
+  Keep the generation guard so stale loads cannot re-enable controls.
 
 - `wipeout!` is a third playlist entry with a `songs` manifest and a shuffled
   queue. Keep all ten songs per cycle and prevent adjacent repeats across cycles.

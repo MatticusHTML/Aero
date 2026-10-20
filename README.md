@@ -6,6 +6,29 @@ No build step. The desktop and original minigames live in `index.html`;
 Oriental Flirting Game and Office Kissing run from `games/` with a shared,
 bundled Ruffle Flash player. Penguin Diner 2 uses its locally bundled HTML5 runtime.
 
+## Stick Box
+
+Click the seated stickman beside Aero's taskbar clock. His invitation lets you
+stay in Aero or enter **Stick Box**, a separate dark page at `stick-box/`.
+Escape or clicking outside the invitation also dismisses it.
+
+Stick Box has **Stick Games**, **Stick Fights**, and **Stick Humor** categories.
+The Fights library preserves all seven Killing Spree entries and five Shock
+entries from their original series pages, including Shock More and Shock Tribute.
+Games and Humor are empty for now. The header and footer link back to Aero.
+
+Choose an episode to open its player, with **Play/Pause**, **Mute**, **Volume**,
+**Restart**, **Fullscreen**, and Previous/Next episode links. Volume is remembered
+independently from Aero. Some originals have a second Start/Play button inside
+their own menu. Backgrounding the page pauses playback. The homepage loads only
+the catalog and thumbnail images; the player loads a single local SWF and the
+existing local Ruffle runtime when an episode is opened.
+
+Original creator credits, descriptions, thumbnails, source-page snapshots, and
+SHA-256 file hashes are preserved. See [archive details](stick-box/archive/README.md).
+All playback is local and does not depend on Stickpage remaining online. Serve
+the repository over HTTP(S), such as GitHub Pages, for the player and catalog.
+
 ## wipeout!
 
 Select **wipeout!** in the music player to shuffle ten songs by The Neighbourhood

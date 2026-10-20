@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111413">
+  <meta name="description" content="Watch preserved Stickpage animations in Stick Box, with playback and volume controls.">
+  <title>Watch — Stick Box</title>
+  <link rel="icon" href="mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script src="../games/ruffle/ruffle.js" defer></script>
+  <script src="player.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#watch-main">Skip to the player</a>
+  <header class="site-header wrap">
+    <a class="wordmark" href="./" aria-label="Stick Box home"><img src="mark.svg" width="37" height="37" alt=""><span>STICK<span class="wordmark-box">BOX</span></span></a>
+    <nav aria-label="Categories"><a href="./#stick-games">Games</a><a href="./#fights-library">Fights</a><a href="./#stick-humor">Humor</a></nav>
+    <a class="aero-link" href="../">↖ Back to Aero</a>
+  </header>
+  <main class="watch-main wrap" id="watch-main">
+    <a class="back-collection" href="./#fights-library">← Back to the collection</a>
+    <div class="watch-heading"><p class="eyebrow" id="watch-series">Stick Fights</p><h1 id="watch-title">Opening the box…</h1><p id="watch-creator" class="watch-creator"></p></div>
+    <div class="watch-layout">
+      <div>
+        <section class="movie-player" id="movie-player" aria-label="Animation player">
+          <div class="player-screen" id="player-screen">
+            <div class="movie-mount" id="movie-mount"></div>
+            <div class="player-message" id="player-message" role="status"><p id="player-message-text">Loading the original animation…</p><button id="player-retry" type="button" hidden>Try again</button></div>
+          </div>
+          <div class="player-controls" aria-label="Playback controls">
+            <button id="movie-toggle" type="button" disabled>▶ Play</button>
+            <button id="movie-restart" type="button" disabled>↺ Restart</button>
+            <div class="volume-controls"><button id="movie-mute" type="button" aria-pressed="false" disabled>Mute</button><label for="movie-volume">Volume</label><input id="movie-volume" type="range" min="0" max="100" value="70" disabled><output id="volume-value" for="movie-volume">70%</output></div>
+            <button id="movie-fullscreen" type="button" disabled>⛶ Fullscreen</button>
+          </div>
+        </section>
+        <p class="playback-hint" id="playback-hint" aria-live="polite">Press Play to start. Some originals also have a Start button inside the animation.</p>
+        <div class="episode-pagination"><a id="previous-episode" hidden>← Previous</a><a id="next-episode" hidden>Next →</a></div>
+        <section class="episode-about" aria-labelledby="about-title"><h2 id="about-title">From the original page</h2><p id="episode-description"></p><p class="source-credit"><a id="original-page" target="_blank" rel="noopener noreferrer">Original Stickpage page ↗</a><a id="original-download" download>Download original SWF ↓</a></p></section>
+      </div>
+      <aside class="episode-sidebar" aria-labelledby="episode-list-title"><p class="eyebrow">Keep watching</p><h2 id="episode-list-title">In this series</h2><ol id="episode-list" class="watch-episode-list"></ol><a class="sidebar-back" href="./#fights-library">Browse both series ↗</a></aside>
+    </div>
+    <noscript><p>Enable JavaScript to use the animation player.</p></noscript>
+  </main>
+  <footer class="site-footer wrap"><p>STICK BOX <span>/ A side door from Project Aero.</span></p><p>Original work belongs to its credited creators.</p><a href="../">Back to Aero ↗</a></footer>
+</body>
+</html>

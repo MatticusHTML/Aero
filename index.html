@@ -628,6 +628,48 @@
     display: flex; align-items: center; border-radius: 3px;
   }
 
+  /* A permanent little guide, separate from the welcome animation. */
+  .stickbox-launch {
+    position: relative; flex: 0 0 54px; align-self: flex-end;
+    height: 68px; margin: 0 4px 2px 8px; padding: 0;
+    border: 0; background: transparent; color: #fff;
+    cursor: pointer; filter: drop-shadow(0 2px 1px rgba(0,0,0,.65));
+  }
+  .stickbox-launch svg { width: 54px; height: 68px; display: block; }
+  .stickbox-launch::before {
+    content: 'Psst… Stick Box'; position: absolute; right: 0; bottom: 70px;
+    padding: 7px 10px; border: 1px solid #333; border-radius: 6px;
+    background: #fffde7; color: #222; font: 12px Tahoma, sans-serif;
+    white-space: nowrap; opacity: 0; pointer-events: none;
+  }
+  .stickbox-launch:hover::before, .stickbox-launch:focus-visible::before { opacity: 1; }
+  .stickbox-launch:hover, .stickbox-launch:focus-visible { color: #d9f69d; }
+  .stickbox-invite {
+    position: fixed; inset: auto 18px 84px auto;
+    width: min(360px, calc(100vw - 32px)); margin: 0; padding: 24px;
+    border: 3px solid #181b20; border-radius: 18px 18px 3px 18px;
+    background: #fffef4; color: #202329;
+    box-shadow: 6px 7px 0 rgba(0,0,0,.28); font: 14px/1.6 Tahoma, sans-serif;
+  }
+  .stickbox-invite::backdrop { background: rgba(1,12,24,.45); }
+  .stickbox-invite h2 { margin: 0 0 10px; font-size: 23px; line-height: 1.2; }
+  .stickbox-invite p { margin: 0 0 18px; }
+  .stickbox-invite .invite-speaker {
+    margin-bottom: 12px; color: #526142; font-size: 11px;
+    font-weight: bold; letter-spacing: .1em; text-transform: uppercase;
+  }
+  .stickbox-invite .invite-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+  .invite-actions a, .invite-actions button {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 44px; padding: 8px 12px; border: 1px solid #333;
+    border-radius: 5px; color: #222; font: bold 12px Tahoma, sans-serif;
+    text-decoration: none; cursor: pointer;
+  }
+  .invite-actions a { background: #d9f69d; }
+  .invite-actions button { background: transparent; }
+  .invite-actions a:hover, .invite-actions button:hover { box-shadow: 2px 2px 0 #222; }
+  .invite-actions :focus-visible { outline: 3px solid #184fb3; outline-offset: 3px; }
+
   .start-menu {
     position: fixed;
     bottom: 40px; left: 4px;
@@ -1190,8 +1232,26 @@
     <button class="task-item" id="taskbar-office" style="display:none;">💋 Office Kissing</button>
     <button class="task-item" id="taskbar-penguin" style="display:none;">🐧 Penguin Diner 2</button>
   </div>
+  <button class="stickbox-launch" id="stickbox-launch" type="button" aria-label="Visit Stick Box" aria-haspopup="dialog" aria-controls="stickbox-invite" aria-expanded="false">
+    <svg viewBox="0 0 54 68" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="25" cy="12" r="7" />
+      <path d="M25 20l-5 20 17 2 7 13M20 40l-9 9 12 7M24 25l13 8 8-4M23 26L11 34 6 32" />
+      <path d="M8 41h37" stroke-width="2" opacity=".65" />
+      <path d="M43 55h6M23 56h6" />
+    </svg>
+  </button>
   <div class="tray"><span id="clock">--:--</span></div>
 </div>
+
+<dialog class="stickbox-invite" id="stickbox-invite" aria-labelledby="stickbox-invite-title" aria-describedby="stickbox-invite-description">
+  <p class="invite-speaker">A word from the little guy</p>
+  <h2 id="stickbox-invite-title">Fancy a little detour?</h2>
+  <p id="stickbox-invite-description">Would you like to leave Project Aero and enter <strong>Stick Box</strong>? It’s where the remnants of Stickpage live on.</p>
+  <div class="invite-actions">
+    <button type="button" id="stickbox-stay" autofocus>Stay in Aero</button>
+    <a href="stick-box/">Enter Stick Box →</a>
+  </div>
+</dialog>
 
 <div class="start-menu" id="start-menu">
   <div class="start-menu-header">Matticus</div>
@@ -2672,6 +2732,26 @@
   }
   updateClock();
   setInterval(updateClock, 1000);
+
+  var stickboxLaunch = document.getElementById('stickbox-launch');
+  var stickboxInvite = document.getElementById('stickbox-invite');
+  stickboxLaunch.addEventListener('click', function() {
+    stickboxInvite.showModal();
+    stickboxLaunch.setAttribute('aria-expanded', 'true');
+  });
+  document.getElementById('stickbox-stay').addEventListener('click', function() {
+    stickboxInvite.close();
+  });
+  stickboxInvite.addEventListener('close', function() {
+    stickboxLaunch.setAttribute('aria-expanded', 'false');
+    stickboxLaunch.focus();
+  });
+  stickboxInvite.addEventListener('click', function(event) {
+    if (event.target !== stickboxInvite) return;
+    var bounds = stickboxInvite.getBoundingClientRect();
+    if (event.clientX < bounds.left || event.clientX > bounds.right ||
+        event.clientY < bounds.top || event.clientY > bounds.bottom) stickboxInvite.close();
+  });
 
   var stickmanScene = document.getElementById('stickman-scene');
   var stickmanActor = document.getElementById('stickman-actor');
