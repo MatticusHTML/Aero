@@ -6,6 +6,15 @@ No build step. The desktop and original minigames live in `index.html`;
 Oriental Flirting Game and Office Kissing run from `games/` with a shared,
 bundled Ruffle Flash player. Penguin Diner 2 uses its locally bundled HTML5 runtime.
 
+## Project Aero logo
+
+The selected glossy glass **A** is used for browser tabs, bookmarks, mobile
+home-screen icons, and link-preview metadata. Root `favicon.ico` contains
+multiple small sizes; PNG exports live in `assets/branding/`. The 512px
+`project-aero.png` is the sharing/logo asset. Generation notes and the original
+prompt are in `assets/branding/README.md`. Update the absolute preview-image
+URLs in the page head if the website moves to another address.
+
 ## Stick Box entrance
 
 Stick Box is now a separate website project. Its full site and preservation

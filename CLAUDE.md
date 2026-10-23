@@ -13,6 +13,10 @@ Static site, no build step, deploys straight to GitHub Pages.
 
 - `index.html` — the Aero desktop. CSS in `<style>`, JS in `<script>` (one IIFE
   at the bottom of the file).
+- `assets/branding/` and root `favicon.ico` — the selected glossy glass A logo,
+  icon exports, and generation notes. The page head sets tab/bookmark icons,
+  Apple touch icons, and absolute Open Graph/Twitter preview-image URLs.
+  Keep local icon paths relative so the GitHub Pages `/Aero/` subpath works.
 - `assets/stickbox/` — the transparent corner stickman and its edit notes.
   Stick Box's actual website/archive is now a separate repository project,
   moved to the user's Stickbox Prep folder; do not restore it under Aero.
