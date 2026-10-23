@@ -87,7 +87,7 @@ start call inside splash dismissal so skipping the splash also works, once only.
   those made the notepad look stuck mid-type. The `note` still shows as the
   opening message (with the typewriter effect) while the track is loaded/paused.
 - Optional `background` field on a track — picks the desktop wallpaper for
-  that track: `"bubbles"` (default if omitted), `"water"` (zen garden), or
+  that track: `"bubbles"` (default if omitted), `"water"` (stream video), or
   `"wipeout"` (palm sunset). `loadTrack()`
   calls `setWallpaper(track.background || 'bubbles')`, which toggles an
   `active` class across the `.wallpaper` layers (matched by `data-wallpaper`)
@@ -292,16 +292,16 @@ shuffled (`mmShuffle`, Fisher–Yates) into 16 `.mm-card` buttons.
   field above). `"bubbles"` — blue-to-mint diagonal gradient
   (`#08356e → #0d6cb8 → #26a9db → #4fd3c4 → #a3ecc9`) with soft white radial
   "bubble" highlights floating on top — deliberately not a recreation of the
-  Windows "Bliss" wallpaper. `"water"` — a mossy zen garden stream and small
-  waterfall, using the optimized `wallpapers/zen-garden.webp` artwork with an
-  inline SVG overlay for falling water, expanding ripples, reflections and mist.
-  The SVG image and all effects share the same coordinates. `fitZenGarden()`
-  updates the viewBox on container resize, keeping the waterfall visible on
-  portrait screens. Do not position effects relative to the viewport separately.
-  All `.zen-motion` animations pause when inactive or the page is hidden;
-  reduced-motion preferences use a still garden. No video, WebGL, canvas render
-  loop, or full-screen filter is needed. Artwork generation notes and the exact
-  prompt live beside the image. `"wipeout"` retains its palm sunset and smoke.
+  Windows "Bliss" wallpaper. `"water"` — the user's real stream video,
+  `wallpapers/stream-loop.mp4`, with `stream-poster.webp` as its still fallback.
+  `syncWaterWallpaper()` loads the movie lazily on selection, keeps it muted,
+  loops it inline, and pauses it when inactive, hidden, or reduced motion is on.
+  Listen for live motion-preference changes. Keep `preload="none"` and the movie
+  URL in `data-src` until playback is needed. Do not route video audio through
+  the music player or add a second soundtrack. Video/poster share a centered
+  cover crop; the removed AI image and SVG animation are no longer used.
+  Source/encoding notes live beside the video. `"wipeout"` retains its palm
+  sunset and smoke.
 - Font: Tahoma/Verdana stack throughout (period-accurate for the XP era).
 
 ## Conventions

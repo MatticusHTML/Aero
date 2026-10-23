@@ -134,15 +134,17 @@ segments: [
 Add a `background` field to switch the desktop wallpaper while that track plays:
 
 ```js
-background: "water"   // zen garden; "bubbles" is the default, or use "wipeout"
+background: "water"   // flowing stream; "bubbles" is the default, or use "wipeout"
 ```
 
 The three wallpapers crossfade when you change tracks. The relaxing water mix
-uses a mossy zen garden with a small waterfall and clear stream. Its optimized
-`wallpapers/zen-garden.webp` artwork is about 553 KB; lightweight SVG/CSS adds
-flowing highlights, ripples and soft mist. The animation pauses when another mix
-is selected or the page is hidden, and becomes still with reduced motion enabled.
-The artwork and effects crop together to keep the waterfall visible on phones.
+uses the user's real stream video in `wallpapers/stream-loop.mp4`. It loops
+silently behind the desktop; the music still comes from the media player.
+The movie is loaded only when this mix is selected and motion is allowed. It
+pauses when another mix is selected or the page is hidden. Reduced-motion mode
+uses `wallpapers/stream-poster.webp`, which also serves as the loading/error
+fallback. Video and poster cover the desktop with the same centered crop.
+Encoding and source notes are in `wallpapers/stream-notes.md`.
 
 To add another wallpaper, add a `.wallpaper[data-wallpaper="..."]` layer + CSS
 in `index.html` (see `CLAUDE.md`) and reference its name here.
