@@ -31,7 +31,9 @@
       radial-gradient(circle at 82% 15%, rgba(255,255,255,0.18), transparent 40%),
       radial-gradient(circle at 60% 78%, rgba(255,255,255,0.12), transparent 50%);
     pointer-events: none;
+    transition: opacity 1.2s ease;
   }
+  .desktop:has(.wallpaper-water.active)::before { opacity: 0; }
 
   .wallpaper {
     position: absolute;
@@ -87,27 +89,42 @@
   }
 
   .wallpaper-water {
-    background:
-      linear-gradient(160deg, rgba(255,255,255,0.12) 0%, transparent 9%, transparent 21%, rgba(255,255,255,0.09) 29%, transparent 41%, transparent 56%, rgba(255,255,255,0.12) 64%, transparent 76%, transparent 91%, rgba(255,255,255,0.09) 100%),
-      linear-gradient(160deg, #03203f 0%, #0a5490 24%, #1483b8 48%, #2fb6c9 72%, #7fe0d6 100%);
-    background-size: 340% 340%, 100% 100%;
-    animation: waterFlow 22s ease-in-out infinite;
+    background: #233e31;
   }
-  @keyframes waterFlow {
-    0%, 100% { background-position: 0% 0%, 0 0; }
-    50% { background-position: 100% 60%, 0 0; }
+  .zen-garden-scene { display: block; width: 100%; height: 100%; }
+  .wallpaper-water .zen-motion { animation-play-state: paused; }
+  .wallpaper-water.active .zen-motion { animation-play-state: running; }
+  .page-hidden .wallpaper-water .zen-motion { animation-play-state: paused; }
+  .zen-fall {
+    fill: none; stroke: #e4fffa; stroke-width: 2;
+    stroke-linecap: round; stroke-dasharray: 8 22 18 34;
+    opacity: .24; animation: zenCascade 2.8s linear infinite;
   }
-
-  .shimmer {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(1px);
-    background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.5), rgba(255,255,255,0.05) 55%, transparent 70%);
-    animation: drift 14s ease-in-out infinite;
+  .zen-fall:nth-child(2n) { animation-duration: 3.6s; animation-delay: -1.4s; opacity: .16; }
+  .zen-fall:nth-child(3n) { animation-delay: -2.2s; stroke-width: 3; }
+  .zen-ripple {
+    fill: none; stroke: #d5f8dc; stroke-width: 1.4;
+    opacity: 0; transform-box: fill-box; transform-origin: center;
+    animation: zenRipple 8s linear infinite;
   }
-  @keyframes drift {
-    0%, 100% { transform: translateX(0); }
-    50% { transform: translateX(30px); }
+  .zen-reflection {
+    fill: none; stroke: #f3f3cd; stroke-width: 1.6; stroke-linecap: round;
+    opacity: .1; animation: zenReflection 11s ease-in-out infinite alternate;
+  }
+  .zen-mist { opacity: .22; animation: zenMist 16s ease-in-out infinite alternate; }
+  @keyframes zenCascade { to { stroke-dashoffset: -82; } }
+  @keyframes zenRipple {
+    0% { transform: scale(.55); opacity: 0; }
+    20% { opacity: .23; }
+    100% { transform: scale(2.7); opacity: 0; }
+  }
+  @keyframes zenReflection {
+    from { transform: translate(-5px, -2px); opacity: .06; }
+    to { transform: translate(8px, 3px); opacity: .26; }
+  }
+  @keyframes zenMist {
+    from { transform: translate(-7px, 0); opacity: .12; }
+    to { transform: translate(9px, -4px); opacity: .28; }
   }
 
   .desktop-icons {
@@ -941,8 +958,8 @@
     .bubble { animation: none; }
     .vis-bar { transition: none; }
     .window.shake { animation: none; }
-    .wallpaper-water { animation: none; }
-    .shimmer { animation: none; }
+    .zen-motion { animation: none !important; }
+    .desktop::before { transition: none; }
     .wallpaper { transition: none; }
     .smoke { animation: none; opacity: .4; }
   }
@@ -981,9 +998,36 @@
     <div class="bubble" style="width:34px; height:34px; top:55%; left:8%; animation-delay:2s;"></div>
     <div class="bubble" style="width:46px; height:46px; top:75%; left:55%; animation-delay:4s;"></div>
   </div>
-  <div class="wallpaper wallpaper-water" data-wallpaper="water">
-    <div class="shimmer" style="width:150px; height:150px; top:18%; left:62%;"></div>
-    <div class="shimmer" style="width:100px; height:100px; top:64%; left:18%; animation-delay:5s;"></div>
+  <div class="wallpaper wallpaper-water" data-wallpaper="water" aria-hidden="true">
+    <svg class="zen-garden-scene" id="zen-garden-scene" viewBox="0 0 1672 941" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" focusable="false">
+      <defs>
+        <clipPath id="zen-fall-clip"><path d="M1205 358L1262 350L1334 346L1361 359L1360 414L1345 473L1368 525L1318 538L1211 535L1194 513L1210 465Z"/></clipPath>
+        <clipPath id="zen-pool-clip"><path d="M849 544L1197 528L1370 538L1418 573L1374 610L1524 643L1551 714L1672 754L1672 941L952 941L839 852L796 762L679 696L549 642L753 621Z"/></clipPath>
+        <radialGradient id="zen-spray"><stop stop-color="#e5fff3" stop-opacity=".75"/><stop offset="1" stop-color="#e5fff3" stop-opacity="0"/></radialGradient>
+      </defs>
+      <image href="wallpapers/zen-garden.webp" width="1672" height="941"/>
+      <g clip-path="url(#zen-fall-clip)">
+        <path class="zen-motion zen-fall" d="M1217 349Q1227 416 1215 524"/>
+        <path class="zen-motion zen-fall" d="M1236 345Q1245 428 1230 534"/>
+        <path class="zen-motion zen-fall" d="M1255 345Q1249 423 1252 530"/>
+        <path class="zen-motion zen-fall" d="M1276 345Q1264 424 1279 535"/>
+        <path class="zen-motion zen-fall" d="M1295 342Q1282 421 1298 531"/>
+        <path class="zen-motion zen-fall" d="M1316 342Q1302 432 1322 536"/>
+        <path class="zen-motion zen-fall" d="M1335 344Q1328 424 1344 529"/>
+      </g>
+      <g clip-path="url(#zen-pool-clip)">
+        <g transform="translate(1280 550)">
+          <ellipse class="zen-motion zen-ripple" rx="48" ry="4"/>
+          <ellipse class="zen-motion zen-ripple" rx="48" ry="4" style="animation-delay:-2.7s"/>
+          <ellipse class="zen-motion zen-ripple" rx="48" ry="4" style="animation-delay:-5.4s"/>
+        </g>
+        <g transform="translate(1090 685)"><ellipse class="zen-motion zen-ripple" rx="37" ry="3" style="animation-delay:-3s;animation-duration:12s"/></g>
+        <g transform="translate(1400 793)"><ellipse class="zen-motion zen-ripple" rx="43" ry="3.5" style="animation-delay:-7s;animation-duration:14s"/></g>
+        <path class="zen-motion zen-reflection" d="M1118 582q32-5 63 0m-207 45q40 5 80-1m129 12q38-5 75-1m-246 73q40-5 77 0m145 70q41 5 91-1"/>
+        <path class="zen-motion zen-reflection" style="animation-delay:-6s;animation-duration:15s" d="M1258 600q28 5 59 0m-197 74q35-6 72-1m145 43q41 5 75 0m-272 86q38-5 72-1m100 54q47 5 92-2"/>
+      </g>
+      <ellipse class="zen-motion zen-mist" cx="1280" cy="531" rx="124" ry="23" fill="url(#zen-spray)"/>
+    </svg>
   </div>
 
   <div class="wallpaper wallpaper-wipeout" data-wallpaper="wipeout" aria-hidden="true">
@@ -1351,7 +1395,7 @@
       file: "music/relaxing-water-music.mp3",
       duration: 5999,
       background: "water",
-      note: "an hour and forty minutes of underwater levels and water temples from a couple decades of nintendo games, laid end to end with actual flowing water sounds mixed underneath. wallpaper's switching to full aero water mode for this one. i'll call out whatever game's water level you're currently drowning in as we go.",
+      note: "an hour and forty minutes of underwater levels and water temples from a couple decades of nintendo games, laid end to end with actual flowing water sounds mixed underneath. a little zen garden, a mossy waterfall, and nowhere to rush. i'll call out each game's water level as we go.",
       segments: [
         { t: "0:00", title: "Zora's Domain (Night) - The Legend of Zelda: Breath of the Wild" },
         { t: "2:27", title: "Deep Sea of Mare - Super Mario Sunshine" },
@@ -1559,6 +1603,20 @@
   }
 
   var wallpaperEls = document.querySelectorAll('.wallpaper');
+  var zenScene = document.getElementById('zen-garden-scene');
+  // Crop artwork and water effects together, keeping the waterfall in view on phones.
+  function fitZenGarden() {
+    var bounds = zenScene.parentElement.getBoundingClientRect();
+    if (!bounds.width || !bounds.height) return;
+    var scale = Math.max(bounds.width / 1672, bounds.height / 941);
+    var width = bounds.width / scale, height = bounds.height / scale;
+    zenScene.setAttribute('viewBox', [(1672 - width) * .76, (941 - height) * .5, width, height].join(' '));
+  }
+  if (window.ResizeObserver) {
+    var zenResizeObserver = new ResizeObserver(fitZenGarden);
+    zenResizeObserver.observe(zenScene.parentElement);
+  } else window.addEventListener('resize', fitZenGarden);
+  fitZenGarden();
   function updatePageVisibility() {
     document.documentElement.classList.toggle('page-hidden', document.hidden);
   }

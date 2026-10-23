@@ -125,10 +125,18 @@ segments: [
 Add a `background` field to switch the desktop wallpaper while that track plays:
 
 ```js
-background: "water"   // or "bubbles" (the default if you leave this out)
+background: "water"   // zen garden; "bubbles" is the default, or use "wipeout"
 ```
 
-The two wallpapers crossfade when you change tracks. To add a third, add a new `.wallpaper[data-wallpaper="..."]` layer + CSS in `index.html` (see `CLAUDE.md`) and reference its name here.
+The three wallpapers crossfade when you change tracks. The relaxing water mix
+uses a mossy zen garden with a small waterfall and clear stream. Its optimized
+`wallpapers/zen-garden.webp` artwork is about 553 KB; lightweight SVG/CSS adds
+flowing highlights, ripples and soft mist. The animation pauses when another mix
+is selected or the page is hidden, and becomes still with reduced motion enabled.
+The artwork and effects crop together to keep the waterfall visible on phones.
+
+To add another wallpaper, add a `.wallpaper[data-wallpaper="..."]` layer + CSS
+in `index.html` (see `CLAUDE.md`) and reference its name here.
 
 Where to find actual royalty-free tracks that fit the vibe: Free Music Archive, Pixabay Music, and the YouTube Audio Library all have decent chillwave/downtempo/ambient stuff.
 

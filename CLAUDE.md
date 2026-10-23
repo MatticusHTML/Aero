@@ -83,10 +83,11 @@ start call inside splash dismissal so skipping the splash also works, once only.
   those made the notepad look stuck mid-type. The `note` still shows as the
   opening message (with the typewriter effect) while the track is loaded/paused.
 - Optional `background` field on a track — picks the desktop wallpaper for
-  that track: `"bubbles"` (default if omitted) or `"water"`. `loadTrack()`
+  that track: `"bubbles"` (default if omitted), `"water"` (zen garden), or
+  `"wipeout"` (palm sunset). `loadTrack()`
   calls `setWallpaper(track.background || 'bubbles')`, which toggles an
   `active` class across the `.wallpaper` layers (matched by `data-wallpaper`)
-  in `#desktop`. Both layers are always in the DOM, stacked with `z-index:-1`
+  in `#desktop`. All three layers are in the DOM, stacked with `z-index:-1`
   and crossfaded via opacity transition — add a new wallpaper by adding
   another `.wallpaper[data-wallpaper="..."]` div plus its CSS, no JS changes
   needed beyond tagging the track.
@@ -283,13 +284,20 @@ shuffled (`mmShuffle`, Fisher–Yates) into 16 `.mm-card` buttons.
   (`#8ff2e6` / `#2aa9d6`) for the visualizer and slider thumbs.
 - Notepad body: plain white, monospace text (`Lucida Console`/`Courier New`),
   matches real old Notepad.
-- Desktop background: two wallpapers, swapped per track (see `background`
+- Desktop background: three wallpapers, swapped per track (see `background`
   field above). `"bubbles"` — blue-to-mint diagonal gradient
   (`#08356e → #0d6cb8 → #26a9db → #4fd3c4 → #a3ecc9`) with soft white radial
   "bubble" highlights floating on top — deliberately not a recreation of the
-  Windows "Bliss" wallpaper. `"water"` — deep blue-to-aqua gradient with
-  slowly animated diagonal current bands (`waterFlow` keyframes) and drifting
-  `.shimmer` highlights, for tracks with water/ambient vibes.
+  Windows "Bliss" wallpaper. `"water"` — a mossy zen garden stream and small
+  waterfall, using the optimized `wallpapers/zen-garden.webp` artwork with an
+  inline SVG overlay for falling water, expanding ripples, reflections and mist.
+  The SVG image and all effects share the same coordinates. `fitZenGarden()`
+  updates the viewBox on container resize, keeping the waterfall visible on
+  portrait screens. Do not position effects relative to the viewport separately.
+  All `.zen-motion` animations pause when inactive or the page is hidden;
+  reduced-motion preferences use a still garden. No video, WebGL, canvas render
+  loop, or full-screen filter is needed. Artwork generation notes and the exact
+  prompt live beside the image. `"wipeout"` retains its palm sunset and smoke.
 - Font: Tahoma/Verdana stack throughout (period-accurate for the XP era).
 
 ## Conventions
