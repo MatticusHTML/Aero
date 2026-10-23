@@ -18,7 +18,13 @@ index. It preserves 266 unique original files, grouped in source order, with
 search by title, creator, or collection. Shared titles reuse one original file
 while their episode navigation stays within the selected collection. Four
 unavailable source downloads remain listed rather than silently disappearing.
-Games and Humor are empty for now. The header and footer link back to Aero.
+Stick Humor contains only Alan Becker's original **Animator vs. Animation**,
+**Animator vs. Animation 2**, and **Animator vs. Animation 3**, in that order.
+Games is empty for now. The header and footer link back to Aero.
+
+The corner stickman is part of the desktop background layer: app windows cover
+him normally. He hides while the wipeout! playlist is selected (including when
+paused) and returns when another playlist is selected.
 
 Choose an episode to open its player, with **Play/Pause**, **Mute**, **Volume**,
 **Restart**, **Fullscreen**, and Previous/Next episode links. Volume is remembered
@@ -35,7 +41,7 @@ Each animation keeps its authored stage background; the website's dark theme
 applies to the surrounding interface rather than replacing movie colors.
 Self-contained animations play locally and do not depend on Stickpage remaining
 online. Serve the repository over HTTP(S) for the player and catalog.
-The full preserved SWF collection is about 1.69 GB. External-video launchers are
+The full preserved SWF collection is about 1.71 GB. External-video launchers are
 the exception: their original SWFs are saved, but their videos are not embedded
 in those files and still require the external source.
 

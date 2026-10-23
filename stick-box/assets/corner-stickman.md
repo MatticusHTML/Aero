@@ -8,7 +8,8 @@ remain opaque; the background and spaces between limbs are transparent.
 The original generated alpha is retained. Aero crops transparent padding in CSS
 to the visible bounds `(250, 24)`–`(739, 1596)`, ignoring very faint stray pixels.
 The planted foot meets the 40px taskbar top; the raised foot meets the right edge.
-A small CSS edge light keeps the black silhouette visible on the wipeout wallpaper.
+The launcher is a desktop background decoration below every app window and is
+hidden while the wipeout playlist is selected. It returns with other playlists.
 The cigarette smoke is part of the still image, with no extra animation work.
 
 ## Final edit prompt

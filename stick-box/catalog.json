@@ -1,6 +1,6 @@
 {
   "archivedAt": "2026-10-20T16:37:53.272550+00:00",
-  "updatedAt": "2026-10-20T17:40:48.687702+00:00",
+  "updatedAt": "2026-10-23T15:46:50.023657+00:00",
   "source": "https://www.stickpage.com/stickfights.shtml",
   "series": [
     {
@@ -5622,6 +5622,75 @@
           "source": "https://www.stickpage.com/assailant.shtml"
         }
       ]
+    },
+    {
+      "id": "animator-vs-animation",
+      "title": "Animator vs. Animation",
+      "category": "humor",
+      "source": "https://stickpage.com/animatorvsanimation.shtml",
+      "episodes": [
+        {
+          "id": "animatorvsanimation",
+          "title": "Animator vs. Animation",
+          "creator": "Alan Becker",
+          "description": "Things take a turn for the worse when an animator finds himself fighting against his own creation: a stick figure with a will to survive, using creative tactics. Who will prevail? A very well done animation and for sure one of the best animations on Stickpage.",
+          "source": "https://stickpage.com/animatorvsanimation.shtml",
+          "playSource": "https://stickpage.com/animatorvsanimationplay.shtml",
+          "originalFile": "https://farm.stickpage.com/animatorvsanimation.swf",
+          "file": "archive/animator-vs-animation/animatorvsanimation.swf",
+          "thumbnail": "archive/animator-vs-animation/animatorvsanimation.jpg",
+          "thumbnailSource": "https://static.stickpage.com/img/game_thumbs_wide/animatorvsanimation.jpg",
+          "bytes": 1330443,
+          "sha256": "2d7e7bc6c963cb8acfb0ea6178fd45eca21ed44df43c7301abd096c2c86be17f",
+          "width": 550,
+          "height": 400,
+          "frameRate": 16.0,
+          "frameCount": 1905,
+          "swfVersion": 8,
+          "stageBackground": "#ffffff"
+        },
+        {
+          "id": "animatorvsanimation2",
+          "title": "Animator vs. Animation 2",
+          "creator": "Alan Becker",
+          "description": "There is no stopping him! Watch as he breaks out of flash and onto your desktop! The chosen one will take out any computer icons that stand in his way: Firefox, AOL, who will stop him? Once again Alan Becker makes a classic quality flash movie and raises the bar with Part 2 of Animator vs Animation.",
+          "source": "https://stickpage.com/animatorvsanimation2.shtml",
+          "playSource": "https://stickpage.com/animatorvsanimation2play.shtml",
+          "originalFile": "https://farm.stickpage.com/animatorvsanimation2.swf",
+          "file": "archive/animator-vs-animation/animatorvsanimation2.swf",
+          "thumbnail": "archive/animator-vs-animation/animatorvsanimation2.jpg",
+          "thumbnailSource": "https://static.stickpage.com/img/game_thumbs_wide/animatorvsanimation2.jpg",
+          "bytes": 4277168,
+          "sha256": "a1974c07f933e98627388ab6e55b06f41d54cf196a6169a16fd05b95c7d6872d",
+          "width": 550,
+          "height": 400,
+          "frameRate": 20.0,
+          "frameCount": 4065,
+          "swfVersion": 8,
+          "stageBackground": "#ffffff"
+        },
+        {
+          "id": "animatorvsanimation3",
+          "title": "Animator vs. Animation 3",
+          "creator": "Alan Becker",
+          "description": "The Chosen One is back; and this time he will meet his match... The Dark Lord!",
+          "source": "https://stickpage.com/animatorvsanimation3.shtml",
+          "playSource": "https://stickpage.com/animatorvsanimation3play.shtml",
+          "originalFile": "https://farm.stickpage.com/animatorvsanimation3.swf",
+          "file": "archive/animator-vs-animation/animatorvsanimation3.swf",
+          "thumbnail": "archive/animator-vs-animation/animatorvsanimation3.jpg",
+          "thumbnailSource": "https://static.stickpage.com/img/game_thumbs_wide/animatorvsanimation3.jpg",
+          "bytes": 6833381,
+          "sha256": "dc012fffe3d3cc630dcffbc16fe5de78fd9097cee16ad020b6286a6e55185521",
+          "width": 550,
+          "height": 400,
+          "frameRate": 24.0,
+          "frameCount": 12023,
+          "swfVersion": 9,
+          "stageBackground": "#ffffff"
+        }
+      ],
+      "unavailable": []
     }
   ]
 }

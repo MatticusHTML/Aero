@@ -632,6 +632,7 @@
   .stickbox-launch {
     --stickbox-height: 152px;
     position: fixed; right: 0; bottom: 40px;
+    z-index: 0; /* Desktop decoration, below icons and every app window. */
     width: calc(var(--stickbox-height) * .311069); height: var(--stickbox-height); margin: 0; padding: 0;
     border: 0; background: transparent;
     cursor: pointer; -webkit-tap-highlight-color: transparent;
@@ -643,9 +644,7 @@
     height: auto; left: -51.1247%; top: -1.52672%;
     filter: drop-shadow(0 0 1px rgba(255,255,255,.5));
   }
-  body:has(.wallpaper-wipeout.active) .stickbox-character img {
-    filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 1px rgba(255,255,255,.5));
-  }
+  .desktop:has(.wallpaper-wipeout.active) .stickbox-launch { display: none; }
   .stickbox-launch::before {
     content: 'Psst… Stick Box'; position: absolute; right: 76px; bottom: 112px;
     padding: 7px 10px; border: 1px solid #333; border-radius: 6px;
@@ -989,6 +988,10 @@
     <div class="smoke"></div><div class="smoke"></div>
   </div>
 
+  <button class="stickbox-launch" id="stickbox-launch" type="button" aria-label="Visit Stick Box" aria-haspopup="dialog" aria-controls="stickbox-invite" aria-expanded="false">
+    <span class="stickbox-character" aria-hidden="true"><img src="stick-box/assets/corner-stickman.png" alt="" width="970" height="1621" draggable="false"></span>
+  </button>
+
   <div class="desktop-icons">
     <div class="icon" tabindex="0"><div class="icon-glyph">🎵</div><span>My Music</span></div>
     <div class="icon" tabindex="0"><div class="icon-glyph">🗑️</div><span>Recycle Bin</span></div>
@@ -1247,9 +1250,6 @@
     <button class="task-item" id="taskbar-office" style="display:none;">💋 Office Kissing</button>
     <button class="task-item" id="taskbar-penguin" style="display:none;">🐧 Penguin Diner 2</button>
   </div>
-  <button class="stickbox-launch" id="stickbox-launch" type="button" aria-label="Visit Stick Box" aria-haspopup="dialog" aria-controls="stickbox-invite" aria-expanded="false">
-    <span class="stickbox-character" aria-hidden="true"><img src="stick-box/assets/corner-stickman.png" alt="" width="970" height="1621" draggable="false"></span>
-  </button>
   <div class="tray"><span id="clock">--:--</span></div>
 </div>
 

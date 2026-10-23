@@ -3,17 +3,17 @@
   var grid = document.getElementById('series-grid');
   var search = document.getElementById('library-search');
   var results = document.getElementById('library-results');
+  var humorGrid = document.getElementById('humor-grid');
   function watchLink(group, episode) {
     return 'watch.html?series=' + encodeURIComponent(group.id) + '&episode=' + encodeURIComponent(episode.id);
   }
   function matches(episode, term) {
     return (episode.title + ' ' + (episode.creator || '')).toLowerCase().includes(term);
   }
-  function render(catalog) {
-    var term = search.value.trim().toLowerCase();
+  function renderGroups(groups, grid, term) {
     var shown = 0;
     grid.replaceChildren();
-    catalog.series.forEach(function (group) {
+    groups.forEach(function (group) {
       var groupMatches = !term || group.title.toLowerCase().includes(term);
       var episodes = group.episodes.filter(function (episode) { return groupMatches || matches(episode, term); });
       var unavailable = (group.unavailable || []).filter(function (entry) { return groupMatches || matches(entry, term); });
@@ -51,7 +51,7 @@
         ? 'By ' + creators.join(' · ') : 'Various creators. Original source order.';
       var details = document.createElement('details');
       details.className = 'series-episodes';
-      details.open = Boolean(term);
+      details.open = Boolean(term) || group.category === 'humor';
       var summary = document.createElement('summary');
       var titleCount = episodes.length + unavailable.length;
       summary.textContent = 'Browse ' + titleCount + (titleCount === 1 ? ' title' : ' titles');
@@ -81,8 +81,14 @@
       card.appendChild(body);
       grid.appendChild(card);
     });
-    results.textContent = term ? shown + ' matching collections' : catalog.series.length + ' collections · choose one to browse';
     if (!shown) grid.textContent = 'No titles match that search. Try a different name or creator.';
+    return shown;
+  }
+  function render(catalog) {
+    var term = search.value.trim().toLowerCase();
+    var groups = catalog.series.filter(function (group) { return (group.category || 'fights') === 'fights'; });
+    var shown = renderGroups(groups, grid, term);
+    results.textContent = term ? shown + ' matching collections' : groups.length + ' collections · choose one to browse';
   }
   fetch('catalog.json').then(function (response) {
     if (!response.ok) throw new Error('Catalog unavailable');
@@ -91,14 +97,18 @@
     var identifiers = new Set();
     var unavailable = new Set();
     var external = new Set();
+    var fightIds = new Set();
+    var humorIds = new Set();
     catalog.series.forEach(function (group) {
       group.episodes.forEach(function (episode) {
         identifiers.add(episode.id);
+        (group.category === 'humor' ? humorIds : fightIds).add(episode.id);
         if (episode.playbackStatus === 'external-video') external.add(episode.id);
       });
       (group.unavailable || []).forEach(function (entry) { unavailable.add(entry.id); });
     });
-    document.getElementById('fight-count').textContent = identifiers.size + ' titles';
+    document.getElementById('fight-count').textContent = fightIds.size + ' titles';
+    document.getElementById('humor-count').textContent = humorIds.size + ' titles';
     document.getElementById('collection-count').textContent = catalog.series.length + ' collections. ' + identifiers.size + ' originals preserved.';
     if (unavailable.size) {
       var note = document.createElement('p');
@@ -115,7 +125,15 @@
     search.disabled = false;
     search.addEventListener('input', function () { render(catalog); });
     render(catalog);
+    renderGroups(catalog.series.filter(function (group) { return group.category === 'humor'; }), humorGrid, '');
+    // Catalog cards change section positions after the browser's first hash jump.
+    if (location.hash === '#humor-library' || location.hash === '#fights-library') {
+      requestAnimationFrame(function () {
+        document.getElementById(location.hash.slice(1)).scrollIntoView({ block: 'start' });
+      });
+    }
   }).catch(function () {
     grid.textContent = 'The collection could not load. Please refresh to try again.';
+    humorGrid.textContent = 'The collection could not load. Please refresh to try again.';
   });
 }());

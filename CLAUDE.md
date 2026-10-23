@@ -14,7 +14,10 @@ Static site, no build step, deploys straight to GitHub Pages.
 - `index.html` — the Aero desktop. CSS in `<style>`, JS in `<script>` (one IIFE
   at the bottom of the file).
 - `stick-box/` — a separate dark Stickpage tribute and animation library.
-  `catalog.json` holds preserved metadata for the 19 Stick Fights collections.
+  `catalog.json` holds preserved metadata for the 19 Stick Fights collections
+  plus the approved three-episode Animator vs. Animation collection in Humor.
+  A group's `category: "humor"` selects the Humor section; absent category means
+  Fights for compatibility. Category counts and watch-page back links follow it.
   `library.js` renders searchable, collapsible collection lists;
   `watch.html?series=<group>&episode=<id>` and
   `player.js` load one local SWF through the existing `games/ruffle/` runtime.
@@ -53,6 +56,9 @@ navigates to `stick-box/` in the same tab. Keep the launcher keyboard accessible
 and visible above the clock on narrow screens. Its transparent character image
 is `stick-box/assets/corner-stickman.png`; CSS crops the transparent padding.
 Keep its planted foot at the 40px taskbar top and raised foot at the right edge.
+The launcher lives inside `#desktop` at z-index 0, below icons/app windows,
+outside the taskbar's higher stacking context. Windows must cover it normally.
+Hide it whenever the wipeout wallpaper/playlist is selected, even when paused.
 
 After the splash is fully hidden, startStickmanScene() plays one CSS scene per
 page load. The stickman jogs in from the right along the taskbar top (40px above
@@ -311,6 +317,8 @@ shuffled (`mmShuffle`, Fisher–Yates) into 16 `.mm-card` buttons.
   Titles may appear in multiple collections: reuse the same file/hash, count
   unique IDs, and include the collection ID in watch links so Previous/Next stay
   in context. Preserve unavailable listings with their source failure records.
+  `tools/import_animator.py` imports only Animator vs. Animation 1, 2, and 3.
+  Keep all three under Humor; do not expand Humor without the user's request.
   Confirmed YouTube Flash launchers have `playbackStatus: external-video`; show
   their explanation/source link without loading Ruffle. Do not claim downloaded
   wrappers contain a self-contained movie. Keep page HTML snapshots unexecuted.

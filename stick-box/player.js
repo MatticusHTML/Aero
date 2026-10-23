@@ -165,7 +165,11 @@
     episode = id ? series.episodes.find(function (item) { return item.id === id; }) : series.episodes[0];
     document.title = episode.title + ' — Stick Box';
     document.getElementById('watch-title').textContent = episode.title;
-    document.getElementById('watch-series').textContent = 'Stick Fights / ' + series.title;
+    var categoryName = series.category === 'humor' ? 'Stick Humor' : 'Stick Fights';
+    var libraryAnchor = series.category === 'humor' ? 'humor-library' : 'fights-library';
+    document.getElementById('watch-series').textContent = categoryName + ' / ' + series.title;
+    document.querySelector('.back-collection').href = './#' + libraryAnchor;
+    document.querySelector('.sidebar-back').href = './#' + libraryAnchor;
     document.getElementById('watch-creator').textContent = 'By ' + episode.creator;
     document.getElementById('episode-description').textContent = episode.description;
     document.getElementById('original-page').href = episode.source;

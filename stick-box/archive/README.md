@@ -22,6 +22,16 @@ pages, including the separate 4A/4B parts and the two Shock tributes.
 by collections reuse the same file, and the watch URL includes a collection ID
 to preserve its episode order.
 
+Stick Humor adds only the three requested Animator vs. Animation originals by
+Alan Becker, in original/2/3 order. `tools/import_animator.py` reuses the shared
+preservation helpers and imports only those exact pages, without crawling Humor
+or changing the Fights collections. The three files total 12,440,992 bytes,
+bringing the complete archive to 269 files / 1,706,610,417 bytes. Their catalog
+group has `category: "humor"`; missing categories retain the Fights default.
+All three were checked beyond their opening screens, with external play/pause,
+volume/mute, trilogy navigation, and mobile layout. Original white stages and
+in-movie menus are retained. This does not claim a complete viewing of every ending.
+
 `stageBackground` records the original SWF's SetBackgroundColor tag (or `null`
 when none is present). The player uses `backgroundColor: null` so each movie
 renders its own stage colors, including changes during playback. Dark site
