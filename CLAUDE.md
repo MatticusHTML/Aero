@@ -13,18 +13,9 @@ Static site, no build step, deploys straight to GitHub Pages.
 
 - `index.html` — the Aero desktop. CSS in `<style>`, JS in `<script>` (one IIFE
   at the bottom of the file).
-- `stick-box/` — a separate dark Stickpage tribute and animation library.
-  `catalog.json` holds preserved metadata for the 19 Stick Fights collections
-  plus the approved three-episode Animator vs. Animation collection in Humor.
-  A group's `category: "humor"` selects the Humor section; absent category means
-  Fights for compatibility. Category counts and watch-page back links follow it.
-  `library.js` renders searchable, collapsible collection lists;
-  `watch.html?series=<group>&episode=<id>` and
-  `player.js` load one local SWF through the existing `games/ruffle/` runtime.
-  Keep paths relative for GitHub Pages. Source snapshots, SWFs, thumbnails, and
-  hashes live under `archive/`. `tools/expand_fights.py` imports the full index;
-  `tools/import_series.py` retains the original two-series importer and shared
-  SWF parsing. Run `tools/audit_dependencies.py --write` after expanding.
+- `assets/stickbox/` — the transparent corner stickman and its edit notes.
+  Stick Box's actual website/archive is now a separate repository project,
+  moved to the user's Stickbox Prep folder; do not restore it under Aero.
 - `music/` — drop MP3 files here.
 - `README.md` — human-facing setup/deploy instructions.
 
@@ -52,9 +43,11 @@ The permanent leaning `#stickbox-launch` button above the taskbar clock is
 separate from the greeting scene. It opens the native `#stickbox-invite` modal
 with Stay in Aero and Enter Stick Box actions. Escape, Stay, and clicking the
 backdrop dismiss it and restore focus to the launcher. Only the Enter link
-navigates to `stick-box/` in the same tab. Keep the launcher keyboard accessible
+navigates to `STICKBOX_URL` in the same tab. Its configured destination is
+`https://matticushtml.github.io/Stickbox/`. If the setting is ever cleared,
+hide Enter and show the coming-soon message. Keep the launcher keyboard accessible
 and visible above the clock on narrow screens. Its transparent character image
-is `stick-box/assets/corner-stickman.png`; CSS crops the transparent padding.
+is `assets/stickbox/corner-stickman.png`; CSS crops the transparent padding.
 Keep its planted foot at the 40px taskbar top and raised foot at the right edge.
 The launcher lives inside `#desktop` at z-index 0, below icons/app windows,
 outside the taskbar's higher stacking context. Windows must cover it normally.
@@ -301,27 +294,9 @@ shuffled (`mmShuffle`, Fisher–Yates) into 16 `.mm-card` buttons.
 
 ## Conventions
 
-- Stick Box uses the bundled Ruffle V1 `resume()`, `suspend()`, `suspended`, and
-  `volume` APIs for playback. Keep networking/script access and outbound URLs
-  disabled for archived SWFs. Some movies have their own Start menus. Preserve
-  the SWF's authored stage background: keep `backgroundColor: null` in the shared
-  player. Dark mode applies to surrounding page chrome and letterbox space only.
-  Never force black, white, or a catalog color onto every animation. The importer
-  records `stageBackground` from the SWF tag for archive verification; it must
-  not be used as a runtime override (the movie can change colors as it plays).
-  Visually check both light and dark movies when changing player configuration.
-  Preserve original files byte-for-byte. No Ruffle or SWF loads on the collection page.
-  `stickbox.volume` is independent of all Aero audio preferences. Page hiding
-  pauses the runtime; Restart destroys the old player before creating a new one.
-  Keep the generation guard so stale loads cannot re-enable controls.
-  Titles may appear in multiple collections: reuse the same file/hash, count
-  unique IDs, and include the collection ID in watch links so Previous/Next stay
-  in context. Preserve unavailable listings with their source failure records.
-  `tools/import_animator.py` imports only Animator vs. Animation 1, 2, and 3.
-  Keep all three under Humor; do not expand Humor without the user's request.
-  Confirmed YouTube Flash launchers have `playbackStatus: external-video`; show
-  their explanation/source link without loading Ruffle. Do not claim downloaded
-  wrappers contain a self-contained movie. Keep page HTML snapshots unexecuted.
+- Keep the Stick Box entrance external: `STICKBOX_URL` is the only
+  destination setting. Never point it back to a removed local `stick-box/` path.
+  The standalone site carries its own preservation rules and player runtime.
 
 - `wipeout!` is a third playlist entry with a `songs` manifest and a shuffled
   queue. Keep all ten songs per cycle and prevent adjacent repeats across cycles.

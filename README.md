@@ -6,50 +6,23 @@ No build step. The desktop and original minigames live in `index.html`;
 Oriental Flirting Game and Office Kissing run from `games/` with a shared,
 bundled Ruffle Flash player. Penguin Diner 2 uses its locally bundled HTML5 runtime.
 
-## Stick Box
+## Stick Box entrance
 
-Click the leaning stickman above Aero's taskbar clock. His invitation lets you
-stay in Aero or enter **Stick Box**, a separate dark page at `stick-box/`.
-Escape or clicking outside the invitation also dismisses it.
+Stick Box is now a separate website project. Its full site and preservation
+archive were moved out of Aero into the user's **Stickbox Prep** folder for a
+new repository. Aero retains only the corner character, invitation and
+external link; its own games and Ruffle runtime remain here.
 
-Stick Box has **Stick Games**, **Stick Fights**, and **Stick Humor** categories.
-The Fights library mirrors all 19 collections linked from Stickpage's Fights
-index. It preserves 266 unique original files, grouped in source order, with
-search by title, creator, or collection. Shared titles reuse one original file
-while their episode navigation stays within the selected collection. Four
-unavailable source downloads remain listed rather than silently disappearing.
-Stick Humor contains only Alan Becker's original **Animator vs. Animation**,
-**Animator vs. Animation 2**, and **Animator vs. Animation 3**, in that order.
-Games is empty for now. The header and footer link back to Aero.
+The character assets live in `assets/stickbox/`. Windows cover him normally,
+and he hides while wipeout! is selected, including when paused. Clicking him
+opens an invitation; Escape, Stay, and the backdrop dismiss it.
 
-The corner stickman is part of the desktop background layer: app windows cover
-him normally. He hides while the wipeout! playlist is selected (including when
-paused) and returns when another playlist is selected.
+`STICKBOX_URL` in `index.html` points to <https://matticushtml.github.io/Stickbox/>.
+The invitation's Enter Stick Box link opens that independent site in the same tab.
+Stick Box already links back to <https://matticushtml.github.io/Aero/>.
 
-Choose an episode to open its player, with **Play/Pause**, **Mute**, **Volume**,
-**Restart**, **Fullscreen**, and Previous/Next episode links. Volume is remembered
-independently from Aero. Some originals have a second Start/Play button inside
-their own menu. Backgrounding the page pauses playback. The homepage loads only
-the catalog and thumbnail images; the player loads a single local SWF and the
-existing local Ruffle runtime when an episode is opened. Confirmed old YouTube
-launchers are labeled as external-video dependencies and link to the original
-video instead of opening a nonfunctional Flash player.
-
-Original creator credits, descriptions, thumbnails, source-page snapshots, and
-SHA-256 file hashes are preserved. See [archive details](stick-box/archive/README.md).
-Each animation keeps its authored stage background; the website's dark theme
-applies to the surrounding interface rather than replacing movie colors.
-Self-contained animations play locally and do not depend on Stickpage remaining
-online. Serve the repository over HTTP(S) for the player and catalog.
-The full preserved SWF collection is about 1.71 GB. External-video launchers are
-the exception: their original SWFs are saved, but their videos are not embedded
-in those files and still require the external source.
-
-The complete archive currently runs locally. Before publishing it, move the SWFs
-to object storage such as Cloudflare R2 and update their catalog URLs; the media
-alone exceeds [GitHub Pages' 1 GB published-site limit](https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits).
-Keep local preservation copies and their checksums. Do not publish this entire
-media directory through GitHub Pages as-is.
+Moving working files does not remove archive copies from older Git commits.
+Git history was preserved; any history-size cleanup is separate work.
 
 ## wipeout!
 

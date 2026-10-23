@@ -680,6 +680,8 @@
     text-decoration: none; cursor: pointer;
   }
   .invite-actions a { background: #d9f69d; }
+  .invite-actions [hidden] { display: none; }
+  #stickbox-coming-soon { align-self: center; color: #526142; font-size: 12px; }
   .invite-actions button { background: transparent; }
   .invite-actions a:hover, .invite-actions button:hover { box-shadow: 2px 2px 0 #222; }
   .invite-actions :focus-visible { outline: 3px solid #184fb3; outline-offset: 3px; }
@@ -989,7 +991,7 @@
   </div>
 
   <button class="stickbox-launch" id="stickbox-launch" type="button" aria-label="Visit Stick Box" aria-haspopup="dialog" aria-controls="stickbox-invite" aria-expanded="false">
-    <span class="stickbox-character" aria-hidden="true"><img src="stick-box/assets/corner-stickman.png" alt="" width="970" height="1621" draggable="false"></span>
+    <span class="stickbox-character" aria-hidden="true"><img src="assets/stickbox/corner-stickman.png" alt="" width="970" height="1621" draggable="false"></span>
   </button>
 
   <div class="desktop-icons">
@@ -1259,7 +1261,8 @@
   <p id="stickbox-invite-description">Would you like to leave Project Aero and enter <strong>Stick Box</strong>? It’s where the remnants of Stickpage live on.</p>
   <div class="invite-actions">
     <button type="button" id="stickbox-stay" autofocus>Stay in Aero</button>
-    <a href="stick-box/">Enter Stick Box →</a>
+    <a id="stickbox-enter" hidden>Enter Stick Box →</a>
+    <span id="stickbox-coming-soon">Stick Box — coming soon</span>
   </div>
 </dialog>
 
@@ -2745,6 +2748,17 @@
 
   var stickboxLaunch = document.getElementById('stickbox-launch');
   var stickboxInvite = document.getElementById('stickbox-invite');
+  // The independent Stick Box website; keep navigation in this tab.
+  var STICKBOX_URL = 'https://matticushtml.github.io/Stickbox/';
+  var stickboxEnter = document.getElementById('stickbox-enter');
+  if (STICKBOX_URL) {
+    stickboxEnter.href = STICKBOX_URL;
+    stickboxEnter.hidden = false;
+    document.getElementById('stickbox-coming-soon').hidden = true;
+  } else {
+    document.getElementById('stickbox-invite-description').textContent =
+      'Stick Box is getting its own website. This little guy will take you there once it’s ready.';
+  }
   stickboxLaunch.addEventListener('click', function() {
     stickboxInvite.showModal();
     stickboxLaunch.setAttribute('aria-expanded', 'true');
