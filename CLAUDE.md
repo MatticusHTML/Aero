@@ -23,10 +23,25 @@ Static site, no build step, deploys straight to GitHub Pages.
 - `music/` — drop MP3 files here.
 - `README.md` — human-facing setup/deploy instructions.
 
+## Select-a-user screen
+
+`#user-select` (`z-index:2001`) is the first thing on every load: an XP-style
+"To begin, click your user name" logon with two profiles, Dianna and Matticus
+(`.us-user[data-user]` buttons; generic inline-SVG silhouette avatars, swap in
+real pictures later). It is purely cosmetic — no password, no account, nothing
+persisted, and it shows on every load. Everything else in `<body>` is made
+`inert` until a profile is picked. `chooseUser(name)` sets `currentUser`, writes
+the name into `#start-menu-header`, and fades the screen out. Only **Dianna**
+runs the splash below (revealed underneath as the logon fades); **Matticus**
+skips straight to the desktop. The stickman greeting says "Have fun <name>!"
+for whoever logged in. The "Turn off computer" button shows the black
+"safe to close this tab" screen for 1.7s. To add a profile, add another
+`.us-user` button; only the splash is Dianna-specific (`name === 'Dianna'`).
+
 ## Splash screen
 
 `#splash-screen` — a full-viewport overlay (`z-index:2000`, above everything
-else including the taskbar/start menu) shown on every load: an XP-logon-style
+else including the taskbar/start menu) shown only when Dianna's profile is picked (it starts `.hidden`; `showSplash()` reveals it): an XP-logon-style
 "Welcome Dianna" over a dark blue radial gradient, with `.splash-bubble`
 divs rising and fading via the `splashRise` keyframe (reuses the same
 radial-gradient "soft bubble" look as the desktop wallpaper's `.bubble`, just

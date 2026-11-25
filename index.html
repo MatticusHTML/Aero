@@ -942,6 +942,96 @@
     .splash-screen { transition: none; }
   }
 
+  /* ---- "Select a user" screen (XP logon style; no real sign-in) ---- */
+  .user-select {
+    position: fixed;
+    inset: 0;
+    z-index: 2001;
+    display: flex;
+    flex-direction: column;
+    background: #5a7edc;
+    color: #fff;
+    font-family: Tahoma, Verdana, sans-serif;
+    transition: opacity 0.5s ease;
+  }
+  .user-select.fade-out { opacity: 0; pointer-events: none; }
+  .user-select.hidden { display: none; }
+  .us-top { height: 14%; min-height: 70px; background: linear-gradient(180deg, #00309c, #1d4fc4); border-bottom: 2px solid #8fb2f5; }
+  .us-bottom {
+    height: 17%; min-height: 84px;
+    background: linear-gradient(180deg, #00309c, #00247a);
+    border-top: 2px solid transparent;
+    border-image: linear-gradient(90deg, #00309c 0%, #f2a24a 50%, #00309c 100%) 1;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    padding: 0 28px;
+  }
+  .us-main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    background: radial-gradient(circle at 0% 0%, #9bb6f5 0%, #5a7edc 38%, #5a7edc 100%);
+    position: relative;
+  }
+  .us-main::before {
+    content: ""; position: absolute; left: 50%; top: 12%; bottom: 12%; width: 1px;
+    background: linear-gradient(180deg, transparent, rgba(255,255,255,0.65), transparent);
+  }
+  .us-brand { justify-self: end; padding-right: 56px; text-align: right; }
+  .us-brand img { width: 96px; height: 96px; display: block; margin-left: auto; filter: drop-shadow(0 4px 10px rgba(0,20,80,0.45)); }
+  .us-title { font-size: 34px; font-weight: bold; font-style: italic; letter-spacing: 1px; text-shadow: 0 2px 6px rgba(0,20,80,0.5); margin-top: 8px; }
+  .us-title span { font-weight: 300; }
+  .us-prompt { font-size: 18px; margin-top: 14px; color: #dbe7ff; }
+  .us-users { padding-left: 56px; display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+  .us-user {
+    display: flex; align-items: center; gap: 14px;
+    min-width: 260px;
+    padding: 10px 16px 10px 10px;
+    background: transparent; border: 0; border-radius: 8px;
+    color: #fff; font: inherit; font-size: 20px; text-align: left; cursor: pointer;
+  }
+  .us-user:hover, .us-user:focus-visible {
+    background: linear-gradient(90deg, rgba(0,35,130,0.55), rgba(0,35,130,0));
+    outline: none;
+  }
+  .us-user:focus-visible { box-shadow: 0 0 0 2px #fff; }
+  .us-avatar {
+    width: 64px; height: 64px; flex: none;
+    border-radius: 8px;
+    border: 3px solid #e8eefc;
+    box-shadow: 0 3px 8px rgba(0,20,80,0.45);
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+  .us-avatar svg { display: block; width: 100%; height: 100%; }
+  .us-user:hover .us-avatar, .us-user:focus-visible .us-avatar { border-color: #ffd36b; }
+  .us-turnoff {
+    display: flex; align-items: center; gap: 10px;
+    background: transparent; border: 0; color: #fff; font: inherit; font-size: 17px; cursor: pointer;
+    padding: 6px 8px; border-radius: 6px;
+  }
+  .us-turnoff:hover, .us-turnoff:focus-visible { background: rgba(255,255,255,0.14); outline: none; }
+  .us-turnoff-icon {
+    width: 30px; height: 30px; border-radius: 6px; flex: none;
+    background: linear-gradient(180deg, #f08a63, #d2461c); border: 2px solid #fff;
+    display: flex; align-items: center; justify-content: center; font-size: 16px;
+  }
+  .us-hint { max-width: 330px; font-size: 13px; line-height: 1.45; color: #cfdcff; }
+  .us-off { position: absolute; inset: 0; background: #000; display: none; align-items: center; justify-content: center; text-align: center; padding: 20px; font-size: 20px; }
+  .user-select.turning-off .us-off { display: flex; }
+  @media (max-width: 700px) {
+    .us-main { grid-template-columns: 1fr; align-content: center; gap: 22px; }
+    .us-main::before { display: none; }
+    .us-brand { justify-self: center; padding: 0; text-align: center; }
+    .us-brand img { margin: 0 auto; width: 64px; height: 64px; }
+    .us-title { font-size: 26px; }
+    .us-users { padding: 0; align-items: center; }
+    .us-hint { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .user-select { transition: none; }
+  }
+
   button:focus-visible, input:focus-visible, textarea:focus-visible, .icon:focus-visible {
     outline: 2px solid #fff;
     outline-offset: 2px;
@@ -967,7 +1057,37 @@
 </style>
 </head>
 <body>
-<div class="splash-screen" id="splash-screen" aria-hidden="true">
+<div class="user-select" id="user-select" role="dialog" aria-modal="true" aria-labelledby="us-title">
+  <div class="us-top"></div>
+  <div class="us-main">
+    <div class="us-brand">
+      <img src="assets/branding/icon-192.png" alt="">
+      <div class="us-title" id="us-title"><span>Project</span> Aero</div>
+      <div class="us-prompt">To begin, click your user name</div>
+    </div>
+    <div class="us-users">
+      <button type="button" class="us-user" data-user="Dianna">
+        <span class="us-avatar" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><defs><linearGradient id="us-bg-d" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb1d0"/><stop offset="1" stop-color="#e0568f"/></linearGradient></defs><rect width="64" height="64" fill="url(#us-bg-d)"/><circle cx="32" cy="24" r="12" fill="#fff" opacity="0.92"/><path d="M8 64c0-16 10-24 24-24s24 8 24 24z" fill="#fff" opacity="0.92"/></svg>
+        </span>
+        Dianna
+      </button>
+      <button type="button" class="us-user" data-user="Matticus">
+        <span class="us-avatar" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><defs><linearGradient id="us-bg-m" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8ff2e6"/><stop offset="1" stop-color="#1f86c8"/></linearGradient></defs><rect width="64" height="64" fill="url(#us-bg-m)"/><circle cx="32" cy="24" r="12" fill="#fff" opacity="0.92"/><path d="M8 64c0-16 10-24 24-24s24 8 24 24z" fill="#fff" opacity="0.92"/></svg>
+        </span>
+        Matticus
+      </button>
+    </div>
+  </div>
+  <div class="us-bottom">
+    <button type="button" class="us-turnoff" id="us-turnoff"><span class="us-turnoff-icon" aria-hidden="true">⏻</span> Turn off computer</button>
+    <div class="us-hint">Pick a profile to hop in. No password, no account, just for fun.</div>
+  </div>
+  <div class="us-off" id="us-off">It is now safe to close this tab.</div>
+</div>
+
+<div class="splash-screen hidden" id="splash-screen" aria-hidden="true">
   <div class="splash-bubbles">
     <div class="splash-bubble" style="left:8%; width:38px; height:38px; animation-delay:0s;"></div>
     <div class="splash-bubble" style="left:20%; width:24px; height:24px; animation-delay:0.6s;"></div>
@@ -1275,7 +1395,7 @@
 </dialog>
 
 <div class="start-menu" id="start-menu">
-  <div class="start-menu-header">Matticus</div>
+  <div class="start-menu-header" id="start-menu-header">Matticus</div>
   <div class="start-menu-item" id="menu-player" tabindex="0">🎵 Windows Media Player</div>
   <div class="start-menu-item" id="menu-notepad" tabindex="0">📝 Notepad</div>
   <div class="start-menu-divider"></div>
@@ -2815,6 +2935,7 @@
   var stickmanActor = document.getElementById('stickman-actor');
   var stickmanBubble = document.getElementById('stickman-bubble');
   var stickmanStarted = false;
+  var currentUser = 'Dianna';
   function finishStickmanScene() {
     stickmanScene.hidden = true;
     stickmanScene.removeAttribute('data-phase');
@@ -2822,7 +2943,7 @@
   }
   function greetStickman() {
     stickmanScene.dataset.phase = 'greeting';
-    stickmanBubble.textContent = 'Have fun Dianna!';
+    stickmanBubble.textContent = 'Have fun ' + currentUser + '!';
     setTimeout(function() {
       if (reduceMotion) finishStickmanScene();
       else stickmanScene.dataset.phase = 'leaving';
@@ -2843,8 +2964,19 @@
     });
   }
 
+  // ---- Select-a-user screen. Cosmetic only: no sign-in. ----
+  // Dianna's profile gets the "Welcome Dianna" splash; Matticus skips it.
   var splashEl = document.getElementById('splash-screen');
-  if (splashEl) {
+  var userSelectEl = document.getElementById('user-select');
+  var startMenuHeader = document.getElementById('start-menu-header');
+  var inertedEls = [];
+  Array.prototype.forEach.call(document.body.children, function(el) {
+    if (el === userSelectEl || el === splashEl || el.tagName === 'SCRIPT') return;
+    el.inert = true;
+    inertedEls.push(el);
+  });
+
+  function showSplash() {
     var splashDismissed = false;
     var dismissSplash = function() {
       if (splashDismissed) return;
@@ -2855,11 +2987,34 @@
         startStickmanScene();
       }, reduceMotion ? 0 : 700);
     };
+    splashEl.classList.remove('hidden');
     splashEl.addEventListener('click', dismissSplash);
     setTimeout(dismissSplash, reduceMotion ? 900 : 2600);
-  } else {
-    startStickmanScene();
   }
+
+  var userChosen = false;
+  function chooseUser(name) {
+    if (userChosen) return;
+    userChosen = true;
+    currentUser = name;
+    if (startMenuHeader) startMenuHeader.textContent = name;
+    inertedEls.forEach(function(el) { el.inert = false; });
+    // The splash sits just under the logon screen, so it is revealed as the logon fades.
+    if (name === 'Dianna') showSplash();
+    userSelectEl.classList.add('fade-out');
+    setTimeout(function() {
+      userSelectEl.classList.add('hidden');
+      if (name !== 'Dianna') startStickmanScene();
+    }, reduceMotion ? 0 : 500);
+  }
+  Array.prototype.forEach.call(userSelectEl.querySelectorAll('.us-user'), function(btn) {
+    btn.addEventListener('click', function() { chooseUser(btn.dataset.user); });
+  });
+  document.getElementById('us-turnoff').addEventListener('click', function() {
+    userSelectEl.classList.add('turning-off');
+    setTimeout(function() { userSelectEl.classList.remove('turning-off'); }, 1700);
+  });
+  userSelectEl.querySelector('.us-user').focus();
 
   loadTrack(0, false);
 })();
