@@ -942,6 +942,96 @@
     .splash-screen { transition: none; }
   }
 
+  /* ---- Checkers (online two-player + chat) ---- */
+  #checkers-window { width: 680px; }
+  .ck-body { display: flex; gap: 12px; padding: 10px; align-items: stretch; }
+  .ck-game { flex: none; display: flex; flex-direction: column; gap: 8px; width: 360px; max-width: 100%; }
+  .ck-status {
+    min-height: 34px; padding: 6px 8px; border-radius: 4px;
+    background: #fffbe6; border: 1px solid #d9cf8c; color: #3b3300;
+    font-size: 12px; line-height: 1.35;
+  }
+  .ck-status.mine { background: #e3f9ee; border-color: #8cd0ae; color: #0d3b24; font-weight: bold; }
+  .ck-status.over { background: #e9eefc; border-color: #9db2ee; color: #14307a; font-weight: bold; }
+  .ck-players { display: flex; gap: 6px; }
+  .ck-player {
+    flex: 1; display: flex; align-items: center; gap: 6px;
+    padding: 4px 8px; border-radius: 4px; font-size: 12px;
+    background: #f4f2e6; border: 1px solid #b8b5a5;
+  }
+  .ck-player.turn { box-shadow: 0 0 0 2px #2aa9d6; background: #e8f8fd; }
+  .ck-player .ck-name { font-weight: bold; white-space: nowrap; }
+  .ck-player .ck-meta { margin-left: auto; color: #555; white-space: nowrap; }
+  .ck-dot { width: 9px; height: 9px; border-radius: 50%; background: #a8a8a8; flex: none; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.25); }
+  .ck-dot.on { background: #34c759; }
+  .ck-swatch { width: 12px; height: 12px; border-radius: 50%; flex: none; }
+  /* Piece art comes from assets/pieces/<skin>.png; the server decides which skin each side uses. */
+  .ck-body { --skin-d: url('assets/pieces/emerald.png'); --skin-m: url('assets/pieces/goth.png'); }
+  .ck-swatch.d, .ck-piece.d { background: var(--skin-d) center / cover no-repeat; }
+  .ck-swatch.m, .ck-piece.m { background: var(--skin-m) center / cover no-repeat; }
+  .ck-board {
+    display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); grid-template-rows: repeat(8, minmax(0, 1fr));
+    width: 100%; aspect-ratio: 1; max-width: 360px;
+    border: 3px solid #0c4bc0; border-radius: 3px;
+    box-shadow: 0 3px 10px rgba(0,20,60,0.35);
+  }
+  .ck-board[hidden] { display: none; }
+  .ck-sq { position: relative; padding: 0; border: 0; margin: 0; min-width: 0; min-height: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+  .ck-sq.light { background: #f6efd9; }
+  .ck-sq.dark { background: #3d5a80; cursor: default; }
+  button.ck-sq { font: inherit; }
+  .ck-sq.last { background: #4f7bb0; }
+  .ck-sq.canmove { cursor: pointer; }
+  .ck-sq.canmove .ck-piece { box-shadow: 0 0 0 2px #fff6a8, 0 2px 3px rgba(0,0,0,0.5); }
+  .ck-sq.sel { background: #e6b422; }
+  .ck-sq.target { background: #3f9a6a; cursor: pointer; }
+  .ck-sq.target::after { content: ""; width: 30%; height: 30%; border-radius: 50%; background: rgba(255,255,255,0.8); }
+  .ck-sq:focus-visible { outline: 2px solid #fff; outline-offset: -3px; }
+  .ck-piece {
+    width: 82%; aspect-ratio: 1; border-radius: 50%; flex: none;
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.55));
+    display: flex; align-items: center; justify-content: center;
+    color: #ffd84a; font-size: 20px; line-height: 1;
+    text-shadow: 0 0 3px #000, 0 0 3px #000, 0 1px 2px #000;
+  }
+  .ck-actions .sa-btn[aria-expanded="true"] { background: linear-gradient(180deg, #8ff2e6, #2aa9d6); font-weight: bold; }
+  .ck-skins {
+    width: 100%; max-width: 360px; aspect-ratio: 1; overflow-y: auto;
+    border: 3px solid #0c4bc0; border-radius: 3px; background: #1f3350; color: #fff;
+    padding: 8px; display: flex; flex-direction: column; gap: 6px;
+  }
+  .ck-skins[hidden] { display: none; }
+  .ck-skins-head { font-size: 12px; font-weight: bold; text-align: center; }
+  .ck-skin-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; flex: 1; align-content: start; }
+  .ck-skin {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    padding: 4px 2px; border: 2px solid transparent; border-radius: 6px;
+    background: rgba(255,255,255,0.07); color: #fff; font: inherit; font-size: 10px; cursor: pointer;
+  }
+  .ck-skin img { width: 100%; max-width: 48px; aspect-ratio: 1; display: block; }
+  .ck-skin:hover { background: rgba(255,255,255,0.18); }
+  .ck-skin.mine { border-color: #8ff2e6; background: rgba(143,242,230,0.2); font-weight: bold; }
+  .ck-skin.taken { opacity: 0.4; cursor: not-allowed; }
+  .ck-skin:focus-visible { outline: 2px solid #fff; }
+  .ck-actions { display: flex; gap: 6px; align-items: center; }
+  .ck-actions .ck-conn { margin-left: auto; font-size: 11px; color: #555; }
+  .ck-chat { flex: 1; min-width: 0; display: flex; flex-direction: column; border: 1px solid #b8b5a5; border-radius: 4px; background: #fff; }
+  .ck-chat-head { padding: 4px 8px; font-size: 12px; font-weight: bold; background: #ece9d8; border-bottom: 1px solid #b8b5a5; border-radius: 4px 4px 0 0; }
+  .ck-log { flex: 1; min-height: 200px; max-height: 340px; overflow-y: auto; padding: 6px 8px; font-size: 12px; display: flex; flex-direction: column; gap: 4px; }
+  .window.maximized .ck-body { flex: 1; }
+  .window.maximized .ck-log { max-height: none; }
+  .ck-msg { overflow-wrap: anywhere; line-height: 1.35; }
+  .ck-msg b { color: #b3205f; }
+  .ck-msg.matticus b { color: #0e6f93; }
+  .ck-msg.me { text-align: right; }
+  .ck-msg.sys { text-align: center; color: #666; font-style: italic; }
+  .ck-form { display: flex; gap: 4px; padding: 6px; border-top: 1px solid #b8b5a5; }
+  .ck-form input { flex: 1; min-width: 0; font: inherit; font-size: 12px; padding: 4px 6px; border: 1px solid #7f9db9; border-radius: 3px; }
+  .task-item.has-new { animation: ckPulse 1.2s ease-in-out infinite; }
+  @keyframes ckPulse { 0%, 100% { background-color: rgba(255,255,255,0.12); } 50% { background-color: rgba(255,200,60,0.55); } }
+  @media (prefers-reduced-motion: reduce) { .task-item.has-new { animation: none; background-color: rgba(255,200,60,0.55); } }
+  @media (max-width: 860px) { .ck-body { flex-wrap: wrap; } .ck-game { width: 100%; } .ck-chat { flex-basis: 100%; } }
+
   /* ---- "Select a user" screen (XP logon style; no real sign-in) ---- */
   .user-select {
     position: fixed;
@@ -1248,6 +1338,45 @@
     </div>
   </div>
 
+  <div class="window closed" id="checkers-window" data-closable="true" style="left: 300px; top: 80px;">
+    <div class="titlebar">
+      <span>🔴 Checkers</span>
+      <div class="buttons">
+        <button class="min" aria-label="Minimize">_</button>
+        <button class="max" aria-label="Maximize">□</button>
+        <button class="close" aria-label="Close">✕</button>
+      </div>
+    </div>
+    <div class="ck-body">
+      <div class="ck-game">
+        <div class="ck-status" id="ck-status" aria-live="polite">Connecting…</div>
+        <div class="ck-players">
+          <div class="ck-player" id="ck-p-me"><span class="ck-dot"></span><span class="ck-swatch"></span><span class="ck-name"></span><span class="ck-meta"></span></div>
+          <div class="ck-player" id="ck-p-opp"><span class="ck-dot"></span><span class="ck-swatch"></span><span class="ck-name"></span><span class="ck-meta"></span></div>
+        </div>
+        <div class="ck-board" id="ck-board" role="group" aria-label="Checkers board"></div>
+        <div class="ck-skins" id="ck-skins" hidden>
+          <div class="ck-skins-head">Pick your pieces</div>
+          <div class="ck-skin-grid" id="ck-skin-grid"></div>
+        </div>
+        <div class="ck-actions">
+          <button class="sa-btn" id="ck-resign">🏳️ Resign</button>
+          <button class="sa-btn" id="ck-rematch" hidden>🔄 Rematch</button>
+          <button class="sa-btn" id="ck-skin-btn" aria-expanded="false" aria-controls="ck-skins">🎨 Pieces</button>
+          <span class="ck-conn" id="ck-conn"></span>
+        </div>
+      </div>
+      <div class="ck-chat">
+        <div class="ck-chat-head">💬 Chat</div>
+        <div class="ck-log" id="ck-log" role="log" aria-live="polite" aria-label="Chat messages"></div>
+        <form class="ck-form" id="ck-form" autocomplete="off">
+          <input type="text" id="ck-input" maxlength="300" placeholder="Say something…" aria-label="Chat message">
+          <button class="sa-btn" type="submit" id="ck-send">Send</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <div class="window closed" id="memorymatch-window" data-closable="true" style="left: 420px; top: 260px;">
     <div class="titlebar">
       <span>🧠 Memory Match</span>
@@ -1375,6 +1504,7 @@
     <button class="task-item" id="taskbar-sandart" style="display:none;">🏖️ Sand Art</button>
     <button class="task-item" id="taskbar-fallingsand" style="display:none;">⏳ Falling Sand</button>
     <button class="task-item" id="taskbar-minesweeper" style="display:none;">💣 Minesweeper</button>
+    <button class="task-item" id="taskbar-checkers" style="display:none;">🔴 Checkers</button>
     <button class="task-item" id="taskbar-memorymatch" style="display:none;">🧠 Memory Match</button>
     <button class="task-item" id="taskbar-oriental" style="display:none;">💘 Oriental Flirting</button>
     <button class="task-item" id="taskbar-office" style="display:none;">💋 Office Kissing</button>
@@ -1402,6 +1532,7 @@
   <div class="start-menu-item" id="menu-sandart" tabindex="0">🏖️ Sand Art</div>
   <div class="start-menu-item" id="menu-fallingsand" tabindex="0">⏳ Falling Sand</div>
   <div class="start-menu-item" id="menu-minesweeper" tabindex="0">💣 Minesweeper</div>
+  <div class="start-menu-item" id="menu-checkers" tabindex="0">🔴 Checkers <span class="hint">(2 players)</span></div>
   <div class="start-menu-item" id="menu-memorymatch" tabindex="0">🧠 Memory Match</div>
   <div class="start-menu-item" id="menu-oriental" role="button" tabindex="0">💘 Oriental Flirting Game</div>
   <div class="start-menu-item" id="menu-office" role="button" tabindex="0">💋 Office Kissing</div>
@@ -1897,6 +2028,7 @@
     { win: document.getElementById('sandart-window'), btn: document.getElementById('taskbar-sandart') },
     { win: document.getElementById('fallingsand-window'), btn: document.getElementById('taskbar-fallingsand') },
     { win: document.getElementById('minesweeper-window'), btn: document.getElementById('taskbar-minesweeper') },
+    { win: document.getElementById('checkers-window'), btn: document.getElementById('taskbar-checkers') },
     { win: document.getElementById('memorymatch-window'), btn: document.getElementById('taskbar-memorymatch') },
     { win: document.getElementById('oriental-window'), btn: document.getElementById('taskbar-oriental') },
     { win: document.getElementById('office-window'), btn: document.getElementById('taskbar-office') },
@@ -1970,6 +2102,7 @@
     if (!sandartWin.classList.contains('closed')) saStartLoopIfNeeded();
     var fallingSandWin = document.getElementById('fallingsand-window');
     if (!fallingSandWin.classList.contains('closed')) fsStartLoopIfNeeded();
+    ckSync();
   }
 
   function bringToFront(el) {
@@ -2114,6 +2247,14 @@
   document.getElementById('menu-minesweeper').addEventListener('click', function() {
     openWindow(document.getElementById('minesweeper-window'), document.getElementById('taskbar-minesweeper'));
     startMenu.classList.remove('open');
+  });
+  function launchCheckers() {
+    openWindow(document.getElementById('checkers-window'), document.getElementById('taskbar-checkers'));
+    startMenu.classList.remove('open');
+  }
+  document.getElementById('menu-checkers').addEventListener('click', launchCheckers);
+  document.getElementById('menu-checkers').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); launchCheckers(); }
   });
   document.getElementById('menu-memorymatch').addEventListener('click', function() {
     openWindow(document.getElementById('memorymatch-window'), document.getElementById('taskbar-memorymatch'));
@@ -2650,6 +2791,378 @@
   function fsStartLoopIfNeeded() {
     if (!fsLoopRunning) { fsLoopRunning = true; requestAnimationFrame(fsLoop); }
   }
+
+  // ---- Checkers (online, two players, with chat) ----
+  // The rules, board, chat history and score all live on a Cloudflare Worker
+  // (see worker/). It saves everything after each move, so the game and the
+  // chat are still there when either of us closes the site and comes back.
+  // This window only draws what the server sends and forwards clicks/chat.
+  // Deployed relay address, e.g. 'wss://aero-games.<account>.workers.dev'.
+  // For local testing, localStorage 'aero-games-url' overrides it.
+  var CK_WS_BASE = '';
+  var ck = {
+    ws: null, you: null, side: null, state: null, score: { D: 0, M: 0 },
+    skins: { D: 'emerald', M: 'goth' },
+    online: { Dianna: false, Matticus: false }, chat: [], selected: null,
+    waiting: false, conn: 'idle', retry: 0, retryTimer: null, pingTimer: null
+  };
+  var ckWin = document.getElementById('checkers-window');
+  var ckBtn = document.getElementById('taskbar-checkers');
+  var ckBoardEl = document.getElementById('ck-board');
+  var ckSquares = [];
+  var ckStatusEl = document.getElementById('ck-status');
+  var ckLogEl = document.getElementById('ck-log');
+  var ckInput = document.getElementById('ck-input');
+  var ckSendBtn = document.getElementById('ck-send');
+  var ckResignBtn = document.getElementById('ck-resign');
+  var ckRematchBtn = document.getElementById('ck-rematch');
+  var ckConnEl = document.getElementById('ck-conn');
+  var CK_NAMES = { D: 'Dianna', M: 'Matticus' };
+  // Piece looks (art in assets/pieces/<id>.png; ids must match worker/src/room.js SKIN_IDS).
+  var CK_SKINS = [
+    ['emerald', 'Emerald'], ['goth', 'Goth'], ['aqua', 'Aqua Bubble'], ['bubblegum', 'Bubblegum'],
+    ['sunset', 'Sunset Orb'], ['amethyst', 'Amethyst'], ['dewdrop', 'Dewdrop'], ['frost', 'Frost'],
+    ['kiss', 'Kiss'], ['pearl', 'Pearl']
+  ];
+  var ckBodyEl = ckWin.querySelector('.ck-body');
+  var ckSkinsEl = document.getElementById('ck-skins');
+  var ckSkinBtn = document.getElementById('ck-skin-btn');
+  var ckSkinButtons = {};
+  CK_SKINS.forEach(function(s) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'ck-skin';
+    var img = document.createElement('img');
+    img.src = 'assets/pieces/' + s[0] + '.png';
+    img.alt = '';
+    img.width = 48; img.height = 48;
+    var label = document.createElement('span');
+    label.textContent = s[1];
+    b.appendChild(img);
+    b.appendChild(label);
+    b.addEventListener('click', function() {
+      if (b.classList.contains('taken') || b.classList.contains('mine')) return;
+      ckSend({ t: 'skin', skin: s[0] });
+    });
+    document.getElementById('ck-skin-grid').appendChild(b);
+    ckSkinButtons[s[0]] = { el: b, name: s[1] };
+  });
+  function ckSetPickerOpen(open) {
+    ckSkinsEl.hidden = !open;
+    ckBoardEl.hidden = open;
+    ckSkinBtn.setAttribute('aria-expanded', String(open));
+    if (open) { var first = ckSkinsEl.querySelector('.ck-skin.mine') || ckSkinsEl.querySelector('.ck-skin'); if (first) first.focus(); }
+    else ckSkinBtn.focus();
+  }
+  ckSkinBtn.addEventListener('click', function() { ckSetPickerOpen(ckSkinsEl.hidden); });
+  ckSkinsEl.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') { e.stopPropagation(); ckSetPickerOpen(false); }
+  });
+  // Push the chosen skins into CSS and refresh the picker's mine/taken states.
+  function ckApplySkins() {
+    ckBodyEl.style.setProperty('--skin-d', "url('assets/pieces/" + ck.skins.D + ".png')");
+    ckBodyEl.style.setProperty('--skin-m', "url('assets/pieces/" + ck.skins.M + ".png')");
+    var side = ck.side || (currentUser === 'Matticus' ? 'M' : 'D');
+    var oppSide = side === 'D' ? 'M' : 'D';
+    CK_SKINS.forEach(function(s) {
+      var entry = ckSkinButtons[s[0]];
+      var mine = ck.skins[side] === s[0];
+      var taken = ck.skins[oppSide] === s[0];
+      entry.el.classList.toggle('mine', mine);
+      entry.el.classList.toggle('taken', taken);
+      entry.el.setAttribute('aria-pressed', String(mine));
+      entry.el.setAttribute('aria-label', entry.name + (mine ? ' (your pieces)' : taken ? ' (in use by ' + CK_NAMES[oppSide] + ')' : ''));
+      entry.el.title = taken ? 'In use by ' + CK_NAMES[oppSide] : entry.name;
+    });
+  }
+
+  function ckBaseUrl() {
+    var override = '';
+    try { override = localStorage.getItem('aero-games-url') || ''; } catch (e) {}
+    return (override || CK_WS_BASE).replace(/\/$/, '');
+  }
+
+  // Board squares are built once; index i is the display position (0 = top-left).
+  // Dianna sees her pieces at the bottom; Matticus's view is rotated 180 degrees
+  // so his pieces are at the bottom too. boardIndex() maps display -> game index.
+  function ckBoardIndex(i) { return ck.side === 'M' ? 63 - i : i; }
+  for (var ckI = 0; ckI < 64; ckI++) {
+    (function(i) {
+      var dark = (Math.floor(i / 8) + (i % 8)) % 2 === 1;
+      var el = document.createElement(dark ? 'button' : 'div');
+      el.className = 'ck-sq ' + (dark ? 'dark' : 'light');
+      if (dark) {
+        el.type = 'button';
+        el.addEventListener('click', function() { ckSquareClick(ckBoardIndex(i)); });
+      }
+      ckBoardEl.appendChild(el);
+      ckSquares.push(el);
+    })(ckI);
+  }
+
+  function ckSend(obj) {
+    if (ck.ws && ck.ws.readyState === 1) { ck.ws.send(JSON.stringify(obj)); return true; }
+    return false;
+  }
+
+  function ckSetConn(state) { ck.conn = state; ckRender(); }
+
+  function ckConnect() {
+    if (ck.ws && (ck.ws.readyState === 0 || ck.ws.readyState === 1)) return;
+    var base = ckBaseUrl();
+    if (!base || !currentUser) { ckRender(); return; }
+    clearTimeout(ck.retryTimer);
+    var ws;
+    try { ws = new WebSocket(base + '/ws/checkers?user=' + encodeURIComponent(currentUser)); }
+    catch (e) { ckSetConn('closed'); ckScheduleRetry(); return; }
+    ck.ws = ws;
+    ckSetConn('connecting');
+    ws.onopen = function() {
+      ck.retry = 0;
+      ck.pingTimer = setInterval(function() { if (ws.readyState === 1) ws.send('ping'); }, 25000);
+    };
+    ws.onmessage = function(event) {
+      if (event.data === 'pong') return;
+      var msg;
+      try { msg = JSON.parse(event.data); } catch (e) { return; }
+      ckHandle(msg);
+    };
+    ws.onclose = function() {
+      clearInterval(ck.pingTimer);
+      if (ck.ws !== ws) return;
+      ck.ws = null;
+      ck.waiting = false;
+      ckSetConn('closed');
+      ckScheduleRetry();
+    };
+  }
+
+  function ckScheduleRetry() {
+    clearTimeout(ck.retryTimer);
+    if (ckWin.classList.contains('closed')) return;
+    ck.retry = Math.min(ck.retry + 1, 6);
+    ck.retryTimer = setTimeout(ckConnect, Math.min(1000 * Math.pow(2, ck.retry - 1), 15000));
+  }
+
+  function ckDisconnect() {
+    clearTimeout(ck.retryTimer);
+    clearInterval(ck.pingTimer);
+    var ws = ck.ws;
+    ck.ws = null;
+    ck.conn = 'idle';
+    if (ws) { try { ws.close(1000, 'window closed'); } catch (e) {} }
+  }
+
+  // Called from updateTaskbarActiveStates(): connect while the window is open
+  // (minimized counts as open), disconnect when it is closed.
+  function ckSync() {
+    if (!ck) return;
+    if (ckWin.classList.contains('closed')) { if (ck.ws || ck.conn !== 'idle') ckDisconnect(); }
+    else ckConnect();
+    if (focusedWindow === ckWin && !isWindowHidden(ckWin)) ckBtn.classList.remove('has-new');
+  }
+
+  function ckAlertIfAway() {
+    if (isWindowHidden(ckWin) || focusedWindow !== ckWin) ckBtn.classList.add('has-new');
+  }
+
+  function ckHandle(msg) {
+    if (msg.t === 'hello') {
+      ck.you = msg.you;
+      ck.side = msg.you === 'Matticus' ? 'M' : 'D';
+      ck.state = msg.state;
+      ck.score = msg.score;
+      ck.online = msg.online;
+      ck.chat = msg.chat;
+      ck.skins = msg.skins || ck.skins;
+      ck.selected = null;
+      ck.waiting = false;
+      ck.conn = 'open';
+      ckApplySkins();
+      ckRenderLog();
+      ckRender();
+    } else if (msg.t === 'state') {
+      var wasMine = ck.state && ck.state.turn === ck.side && ck.state.status === 'playing';
+      ck.state = msg.state;
+      ck.score = msg.score;
+      ck.selected = null;
+      ck.waiting = false;
+      if (!wasMine && msg.state.status === 'playing' && msg.state.turn === ck.side) ckAlertIfAway();
+      ckRender();
+    } else if (msg.t === 'chat') {
+      ck.chat.push(msg.msg);
+      if (ck.chat.length > 200) ck.chat.shift();
+      ckAppendMsg(msg.msg);
+      if (msg.msg.user && msg.msg.user !== ck.you) ckAlertIfAway();
+    } else if (msg.t === 'skins') {
+      ck.skins = msg.skins;
+      ckApplySkins();
+    } else if (msg.t === 'presence') {
+      ck.online = msg.online;
+      ckRender();
+    } else if (msg.t === 'error') {
+      ck.waiting = false;
+      ckStatusEl.textContent = msg.message;
+      ckStatusEl.className = 'ck-status';
+    }
+  }
+
+  function ckMyTurn() {
+    return !!ck.state && ck.state.status === 'playing' && ck.state.turn === ck.side && ck.conn === 'open';
+  }
+
+  function ckSquareClick(bi) {
+    if (!ckMyTurn() || ck.waiting) return;
+    var legal = ck.state.legal;
+    if (ck.selected !== null) {
+      var hit = legal.filter(function(m) { return m.from === ck.selected && m.to === bi; })[0];
+      if (hit) {
+        ck.waiting = true;
+        if (!ckSend({ t: 'move', from: hit.from, to: hit.to })) ck.waiting = false;
+        return;
+      }
+    }
+    var mine = ck.state.board[bi] && ck.state.board[bi].o === ck.side;
+    var movable = legal.some(function(m) { return m.from === bi; });
+    ck.selected = mine && movable ? bi : null;
+    ckRender();
+  }
+
+  function ckRender() {
+    var configured = !!ckBaseUrl();
+    var st = ck.state;
+    var side = ck.side || (currentUser === 'Matticus' ? 'M' : 'D');
+    var oppSide = side === 'D' ? 'M' : 'D';
+    var myTurn = ckMyTurn();
+
+    // Auto-select the piece that must keep jumping.
+    if (myTurn && st.chain !== null && ck.selected === null) ck.selected = st.chain;
+
+    var targets = {};
+    var movable = {};
+    if (myTurn) {
+      st.legal.forEach(function(m) {
+        movable[m.from] = true;
+        if (ck.selected === m.from) targets[m.to] = true;
+      });
+    }
+    var lastPath = st ? st.lastPath : [];
+
+    for (var i = 0; i < 64; i++) {
+      var el = ckSquares[i];
+      if (el.tagName !== 'BUTTON') continue;
+      var bi = ckBoardIndex(i);
+      var piece = st ? st.board[bi] : null;
+      var cls = 'ck-sq dark';
+      if (lastPath.indexOf(bi) !== -1) cls += ' last';
+      if (movable[bi]) cls += ' canmove';
+      if (ck.selected === bi) cls += ' sel';
+      if (targets[bi]) cls += ' target';
+      el.className = cls;
+      el.innerHTML = '';
+      if (piece) {
+        var p = document.createElement('span');
+        p.className = 'ck-piece ' + piece.o.toLowerCase();
+        if (piece.k) p.textContent = '♛';
+        el.appendChild(p);
+      }
+      var label = 'Row ' + (Math.floor(bi / 8) + 1) + ', column ' + ((bi % 8) + 1) + ': ';
+      label += piece ? (piece.o === side ? 'your ' : CK_NAMES[piece.o] + '’s ') + (piece.k ? 'king' : 'piece') : 'empty';
+      if (targets[bi]) label += ', you can move here';
+      el.setAttribute('aria-label', label);
+    }
+
+    // Player chips: me first, opponent second.
+    function chip(id, s) {
+      var c = document.getElementById(id);
+      var name = CK_NAMES[s];
+      c.querySelector('.ck-dot').className = 'ck-dot' + (ck.online[name] ? ' on' : '');
+      c.querySelector('.ck-swatch').className = 'ck-swatch ' + s.toLowerCase();
+      c.querySelector('.ck-name').textContent = s === side ? name + ' (you)' : name;
+      var left = st ? st.board.filter(function(q) { return q && q.o === s; }).length : 12;
+      var meta = c.querySelector('.ck-meta');
+      meta.textContent = left + ' · 🏆' + (ck.score[s] || 0);
+      meta.title = left + ' pieces left · ' + (ck.score[s] || 0) + ' wins';
+      c.classList.toggle('turn', !!st && st.status === 'playing' && st.turn === s);
+    }
+    chip('ck-p-me', side);
+    chip('ck-p-opp', oppSide);
+
+    // Status line.
+    var text, cls2 = 'ck-status';
+    var oppName = CK_NAMES[oppSide];
+    if (!configured) {
+      text = 'Online play is not switched on yet. The games relay still needs to be deployed (see worker/README.md).';
+    } else if (ck.conn !== 'open' || !st) {
+      text = ck.conn === 'closed' ? 'Connection lost. Reconnecting…' : 'Connecting to the game room…';
+    } else if (st.status === 'over') {
+      text = (st.winner === side ? 'You win!' : oppName + ' wins.') + ' (' + st.reason + ')';
+      cls2 += ' over';
+    } else if (myTurn) {
+      var mustJump = st.legal.some(function(m) { return Math.abs(m.to - m.from) > 9; });
+      text = st.chain !== null ? 'Keep jumping!' : mustJump ? 'Your turn. You must capture!' : 'Your turn.';
+      cls2 += ' mine';
+    } else {
+      text = 'Waiting for ' + oppName + '…';
+      if (!ck.online[oppName]) text += ' (they’re away, the game is saved)';
+    }
+    ckStatusEl.textContent = text;
+    ckStatusEl.className = cls2;
+
+    var over = !!st && st.status === 'over';
+    ckResignBtn.hidden = over;
+    ckResignBtn.disabled = ck.conn !== 'open' || !st;
+    ckRematchBtn.hidden = !over;
+    ckRematchBtn.disabled = ck.conn !== 'open';
+    ckInput.disabled = ck.conn !== 'open';
+    ckSendBtn.disabled = ck.conn !== 'open';
+    ckSkinBtn.disabled = ck.conn !== 'open';
+    if (ck.conn !== 'open' && !ckSkinsEl.hidden) ckSetPickerOpen(false);
+    ckConnEl.textContent = !configured ? 'offline' : ck.conn === 'open' ? 'connected' : ck.conn === 'closed' ? 'reconnecting…' : '';
+  }
+
+  function ckMsgNode(m) {
+    var d = document.createElement('div');
+    var time = new Date(m.ts);
+    var hh = time.getHours() % 12 || 12;
+    var mm = ('0' + time.getMinutes()).slice(-2);
+    d.title = hh + ':' + mm + (time.getHours() >= 12 ? ' PM' : ' AM');
+    if (!m.user) {
+      d.className = 'ck-msg sys';
+      d.textContent = m.text;
+    } else {
+      d.className = 'ck-msg' + (m.user === 'Matticus' ? ' matticus' : '') + (m.user === ck.you ? ' me' : '');
+      var b = document.createElement('b');
+      b.textContent = m.user + ': ';
+      d.appendChild(b);
+      d.appendChild(document.createTextNode(m.text));
+    }
+    return d;
+  }
+  function ckRenderLog() {
+    ckLogEl.innerHTML = '';
+    ck.chat.forEach(function(m) { ckLogEl.appendChild(ckMsgNode(m)); });
+    ckLogEl.scrollTop = ckLogEl.scrollHeight;
+  }
+  function ckAppendMsg(m) {
+    var nearBottom = ckLogEl.scrollHeight - ckLogEl.scrollTop - ckLogEl.clientHeight < 60;
+    ckLogEl.appendChild(ckMsgNode(m));
+    while (ckLogEl.children.length > 200) ckLogEl.removeChild(ckLogEl.firstChild);
+    if (nearBottom || m.user === ck.you) ckLogEl.scrollTop = ckLogEl.scrollHeight;
+  }
+
+  document.getElementById('ck-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var text = ckInput.value.trim();
+    if (!text) return;
+    if (ckSend({ t: 'chat', text: text })) ckInput.value = '';
+  });
+  ckResignBtn.addEventListener('click', function() {
+    if (ck.state && ck.state.status === 'playing' && window.confirm('Resign this game?')) ckSend({ t: 'resign' });
+  });
+  ckRematchBtn.addEventListener('click', function() { ckSend({ t: 'rematch' }); });
+  ckApplySkins();
+  ckRender();
 
   // ---- Minesweeper ----
   var MS_COLS = 9, MS_ROWS = 9, MS_MINES = 10;

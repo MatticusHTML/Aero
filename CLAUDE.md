@@ -299,6 +299,51 @@ shuffled (`mmShuffle`, Fisher–Yates) into 16 `.mm-card` buttons.
   short, contained transform on a single small element, not the kind of
   large/parallax motion that convention is meant to guard against.
 
+### Checkers specifics (online, two players, with chat)
+
+`#checkers-window` (`ck`-prefixed) is the one game that needs a server. The
+static site can't relay moves, so a Cloudflare Worker in `worker/` owns the game:
+
+- `worker/src/checkers.js` — pure American-checkers rules (forced captures,
+  multi-jump chains, crowning ends the turn). No imports, so it is testable
+  anywhere. Board = 64 cells, `row*8+col`; `D` (Dianna) starts at the bottom and
+  moves up, `M` (Matticus) starts at the top. The first mover alternates each rematch.
+- `worker/src/room.js` — the Durable Object `GameRoom`: validates every move
+  server-side, broadcasts state, handles chat (300 chars, last 200 kept), keeps a
+  win tally, and **saves board + chat + score to storage after every change** (that
+  is what lets a game survive both players closing the site). Uses the WebSocket
+  Hibernation API, so nothing lives only in memory. Plain class (no
+  `cloudflare:workers` import) so it can be driven with fake sockets in tests.
+- `worker/src/index.js` — Worker entry: `/ws/checkers?user=Dianna|Matticus`,
+  Origin allow-list (the Pages site + localhost). `worker/README.md` has deploy steps.
+- The client never implements rules: the server sends the board plus the list of
+  legal `{from,to}` moves, and the window just draws it, highlights targets, and
+  sends `move`/`chat`/`resign`/`rematch`. Matticus's board is rotated 180° so his
+  pieces are at the bottom (`ckBoardIndex`). A multi-jump keeps the same player's
+  turn and the window auto-selects the piece that must keep jumping.
+- The connection follows the window: `ckSync()` (called from
+  `updateTaskbarActiveStates()`) connects while the window is open (minimized
+  counts) and disconnects on close, so the presence dots are honest. Auto-reconnect
+  with backoff, 25s `ping` keep-alive. The profile chosen on the select-a-user
+  screen (`currentUser`) is the player identity; the taskbar button pulses
+  (`.has-new`) for an opponent's chat or when it becomes your turn while unfocused.
+- Piece skins: ten Aero-style PNGs in `assets/pieces/` (see its README for how
+  they were made). Each player picks their own via the 🎨 Pieces button (the picker
+  replaces the board while open). The choice is **stored on the server** (`skins`
+  in `GameRoom`, defaults Dianna = `emerald`, Matticus = `goth`) and broadcast, so
+  both players see the same art, and the server refuses a skin the opponent is
+  using so the sides can't look alike. The page applies skins through the CSS
+  variables `--skin-d`/`--skin-m` on `.ck-body` (`ckApplySkins()`). Ids live in two
+  places that must match: `SKIN_IDS` in `worker/src/room.js` and `CK_SKINS` in
+  `index.html`. Kings are a gold ♛ overlay, no extra art. The board grid uses
+  fixed `repeat(8, minmax(0,1fr))` rows: with auto rows, a row holding a king grew
+  taller and squashed the pieces.
+- `CK_WS_BASE` is empty until the Worker is deployed; then the window shows a
+  "not switched on yet" message. `localStorage['aero-games-url']` overrides it for
+  local testing. Chat is rendered with `textContent` only (no HTML injection).
+- No Node on the dev machine at the time of writing: rules and room were tested in
+  the browser pane by importing the modules and using fake sockets.
+
 ## Design system
 
 - XP title bar blue: gradient from `#5aa6ff` → `#0c4bc0`.
