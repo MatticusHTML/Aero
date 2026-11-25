@@ -34,7 +34,10 @@ persisted, and it shows on every load. Everything else in `<body>` is made
 the name into `#start-menu-header`, and fades the screen out. Only **Dianna**
 runs the splash below (revealed underneath as the logon fades); **Matticus**
 skips straight to the desktop. The stickman greeting says "Have fun <name>!"
-for whoever logged in. The "Turn off computer" button shows the black
+for whoever logged in. Picking a profile also plays `assets/audio/xp-startup.mp3`
+at 30% volume through its own `Audio` object (not the jukebox `#audio-el`, so
+the player's volume/state are untouched); a blocked or failed play is ignored.
+The "Turn off computer" button shows the black
 "safe to close this tab" screen for 1.7s. To add a profile, add another
 `.us-user` button; only the splash is Dianna-specific (`name === 'Dianna'`).
 

@@ -2997,6 +2997,13 @@
     if (userChosen) return;
     userChosen = true;
     currentUser = name;
+    // Startup chime at 30%. Separate from the jukebox, so its volume slider is untouched.
+    try {
+      var chime = new Audio('assets/audio/xp-startup.mp3');
+      chime.volume = 0.3;
+      var played = chime.play();
+      if (played && played.catch) played.catch(function() {});
+    } catch (e) {}
     if (startMenuHeader) startMenuHeader.textContent = name;
     inertedEls.forEach(function(el) { el.inert = false; });
     // The splash sits just under the logon screen, so it is revealed as the logon fades.
