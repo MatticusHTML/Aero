@@ -2,6 +2,11 @@ name = "aero-games"
 main = "src/index.js"
 compatibility_date = "2025-01-01"
 
+# Public address is https://aero-games.<account>.workers.dev. Preview URLs are
+# off: only the main deployment should ever be reachable.
+workers_dev = true
+preview_urls = false
+
 [[durable_objects.bindings]]
 name = "GAME_ROOM"
 class_name = "GameRoom"
