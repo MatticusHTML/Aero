@@ -338,9 +338,66 @@ static site can't relay moves, so a Cloudflare Worker in `worker/` owns the game
   `index.html`. Kings are a gold ♛ overlay, no extra art. The board grid uses
   fixed `repeat(8, minmax(0,1fr))` rows: with auto rows, a row holding a king grew
   taller and squashed the pieces.
-- `CK_WS_BASE` is empty until the Worker is deployed; then the window shows a
-  "not switched on yet" message. `localStorage['aero-games-url']` overrides it for
-  local testing. Chat is rendered with `textContent` only (no HTML injection).
+- **Chat style** (`✍️ Style` button in the chat header): each player has a color
+  (50 contrast-checked swatches, `CK_COLORS`) and a font (`CK_FONTS`: 7 fun,
+  3 classic). It is stored on the server per player (`styles` in `GameRoom`,
+  validated: `#rrggbb` + a known font id) and **stamped onto every chat message at
+  send time** as `msg.s`, so history keeps the look each message was sent in. Old
+  messages with no `s` render in the default style, never the sender's current one.
+  Font ids exist in two places that must match: `FONT_IDS` in `worker/src/room.js`
+  and `CK_FONTS` in `index.html`. The 7 fun fonts are SIL-OFL files in
+  `assets/fonts/` (see its README), declared as `CK ...` `@font-face` families and
+  only fetched when used; classic fonts are system fonts (Georgia, Verdana,
+  Courier New). Hovering a chat line for 1 second shows its date and time in a
+  custom tooltip (`#ck-tip`; not available on touch).
+- **Sound** (`🔊 Sound` popup) is **local to each browser** (localStorage
+  `aero-ck-audio-<profile>`), not on the server, because it only affects whoever
+  set it. One 0-100% volume (default 25%), a switch per event (your turn, new
+  chat message, new match, you win, you lose), and a clip choice for the two
+  notification events (Notification 1-4, so both may use the same one). New match
+  = 90% `new-match-primary`, 10% `new-match-alt`; losing picks randomly between the
+  lose clips; winning has one clip. Those lists are `CK_RESULT_CLIPS` (`[file,
+  weight]`), so adding a file to a list adds it to the random mix. Sounds fire from
+  state *transitions* in `ckHandle` (never on join/reconnect), and starting a new
+  game stops any long result sound still playing. Files are in `assets/sounds/`.
+- **History** (`📜 History` button; its own draggable window `#ckhist-window`,
+  `ckh`-prefixed JS in the Checkers block): lists every game ("Game 3", date
+  started, who won, how many turns) and replays any recorded game turn by turn.
+  The server records each game as plain numbers (`worker/src/history.js`): a game
+  is a list of turns, a turn is a list of hops, a hop is one integer `from*64+to`
+  (about 650 bytes per game). The page rebuilds each position by replaying them
+  (`ckhApplyTurn`: move the piece, remove the jumped piece `(from+to)/2`, crown on
+  the far row), so there is no rules engine or stored boards on the client. Each
+  finished game is its own storage key `g<n>`; `history` holds the summaries and
+  `cur` the game in progress. The list comes with `hello` and `history` broadcasts
+  (game start/finish); a game's moves are fetched on demand (`game` message, only
+  to the asker) and finished games are cached. The viewer has Back/Next, a slider,
+  Play (one turn per 0.9 s), a clickable turn list, arrow keys/Home/End, captured
+  pieces marked with a red cross, and a live game follows new moves. It uses the
+  viewer's own perspective (Matticus's board is rotated) and `a1` is always
+  Dianna's bottom-left. Closing the Checkers window closes History with it.
+  **Games played before history existed** (`migrateLegacy`, one-time backfill
+  from the score and the chat's "X wins!" / "New game!" system messages) are listed
+  winner-only, with a finish date when known, and can't be opened. A game already
+  in progress at migration is recorded from the current board onward
+  (`partial`/`init`).
+- **Rematch / Resign** both ask "are you sure?" through an in-window bar
+  (`ckAsk`), with "No" focused and Esc cancelling; a pending question closes itself
+  if the game state changes underneath it. Rematch only needs the clicker's
+  confirmation, not the opponent's.
+- **Deal-in animation**: on a new game every piece drops onto the board one by one
+  (`ckStartDealing`, random 5-7 s total, per-piece `--deal-delay`). Clicking the
+  board, a move arriving, or a new state skips it. `ckRender` reuses existing piece
+  elements so unrelated re-renders don't restart the animation.
+- **Game over effects** last 15 s (`CK_FX_MS`): the winner gets canvas confetti
+  cannons + fireworks and CSS sweeping party lights; the loser's board goes
+  greyscale. A new game, closing the window, or reconnecting cuts them off
+  (`ckStopFx`). Under `prefers-reduced-motion` the deal-in, confetti and lights are
+  skipped (greyscale and sounds still happen).
+- `CK_WS_BASE` points at the deployed Worker (`wss://aero-games.matticus-ai.workers.dev`);
+  if it were ever empty the window would show a "not switched on yet" message.
+  `localStorage['aero-games-url']` overrides it for local testing. Chat is rendered
+  with `textContent` and validated style values only (no HTML injection).
 - No Node on the dev machine at the time of writing: rules and room were tested in
   the browser pane by importing the modules and using fake sockets.
 

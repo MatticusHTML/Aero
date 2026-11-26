@@ -13,6 +13,14 @@ page; this is the one small server-side piece it needs.
 - After every change it saves the board, chat history (last 200 messages) and
   score to Durable Object storage. Closing the site, going offline, or the
   Worker being unloaded loses nothing. The game is exactly where you left it.
+- Every game is recorded turn by turn as plain numbers (`src/history.js`), about
+  650 bytes a game, each finished game under its own storage key, so the site's
+  History window can replay any of them. Games from before this existed are listed
+  winner-only.
+- It also remembers each player's piece skin and chat style (color + font), and
+  stamps the sender's style onto every chat message when it is sent, so chat
+  history keeps the look each message had. Sound settings are NOT stored here;
+  they live in each player's own browser.
 - Only requests from `https://matticushtml.github.io` (and `localhost` /
   `127.0.0.1` for testing) are accepted. This is a courtesy lock, not real
   security: the profile screen on the site is cosmetic.
